@@ -1,0 +1,14 @@
+'1555398805796':
+  alias: Play camera video on down stair Apple TV
+  sequence:
+  - data:
+      entity_id: camera.drive_way
+      media_player: media_player.down_stairs
+    service: camera.play_stream
+'1555399079539':
+  alias: Stop playing video on the down stairs Apple TV
+  sequence:
+  - data:
+      command: menu
+      entity_id: remote.down_stairs
+    service: remote.send_command

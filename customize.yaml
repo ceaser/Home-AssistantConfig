@@ -1,0 +1,52 @@
+device_tracker.clarry_2d4a73f8_5728_4c29_96e6_e69a239bd340:
+  hidden: true
+binary_sensor.remote_ui:
+  hidden: true
+sensor.drive_way_motion_detected:
+  friendly_name: Driveway Motion Detected
+device_tracker.tile_12a30813c9c31a80:
+  friendly_name: Vitara
+device_tracker.tile_83f4c0f5ba2795a4:
+  friendly_name: Ceaser’s Keys
+device_tracker.tile_p_e616442dc555a2ceebbb2e71b7f34c2e:
+  friendly_name: Ceaser’s iPhone Tile App
+device_tracker.0x4950686f6e65:
+  friendly_name: Ceaser’s iPhone
+device_tracker.ipad_mini:
+  friendly_name: Ceaser’s iPad Mini
+sensor.drive_way_sd_used:
+  friendly_name: Driveway Capacity
+camera.drive_way:
+  friendly_name: Driveway
+climate.hallway:
+  friendly_name: Thermostat
+binary_sensor.hallway_thermostat_fan:
+  friendly_name: Fan
+binary_sensor.hallway_thermostat_has_leaf:
+  friendly_name: Thermostat Eco Mode
+sensor.hallway_thermostat_humidity:
+  friendly_name: Humidity
+binary_sensor.hallway_thermostat_online:
+  friendly_name: Thermostat Online
+sensor.hallway_thermostat_hvac_state:
+  friendly_name: ' HVAC State'
+binary_sensor.hallway_thermostat_is_locked:
+  friendly_name: Thermostat Locked
+binary_sensor.hallway_thermostat_is_using_emergency_heat:
+  friendly_name: Thermostat Emergency Heat
+sensor.home_eta:
+  friendly_name: Home ETA
+sensor.hallway_thermostat_operation_mode:
+  friendly_name: Thermostat Operation Modes
+sensor.hallway_thermostat_target:
+  friendly_name: Thermostat Target
+sensor.hallway_thermostat_temperature:
+  friendly_name: Thermostat Temperature
+device_tracker.iphone:
+  friendly_name: Sarah's iPhone
+sensor.iphone_battery_level:
+  friendly_name: Sarah's iPhone Battery Level
+sensor.iphone_battery_state:
+  friendly_name: Sarah's iPhone Battery State
+device_tracker.cearah_iphone:
+  friendly_name: Cearah's iPhone

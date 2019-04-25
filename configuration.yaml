@@ -1,0 +1,286 @@
+homeassistant:
+  # List of folders that can be used as sources for sending file.
+  # Use http://.../local/ to access the files in this directory
+  # Required for the camera.record service
+  whitelist_external_dirs: /config/www
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude:  !secret home_latitude
+  longitude: !secret home_longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: !secret home_elevation
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Denver
+  # Customization file
+  customize: !include customize.yaml
+  auth_providers:
+  - type: homeassistant  
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Show the introduction message on startup.
+#introduction:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+http:
+  base_url: !secret base_url
+  use_x_forwarded_for: true
+  trusted_proxies: 192.168.8.2
+  ip_ban_enabled: true
+  login_attempts_threshold: 10
+
+# Discover some devices automatically
+discovery:
+
+# Version of the JavaScript to serve.
+# es5 - transpiled so old browsers understand it
+# latest - not transpiled, so will work on recent browsers
+# auto - version based on the User-Agent
+frontend:
+  javascript_version: latest
+
+# Sensors
+sensor:
+  # Weather prediction numbers reported for https://www.yr.no
+  # 1;Clear sky
+  # 2;Fair
+  # 3;Partly cloudy
+  # 4;Cloudy
+  # 5;Rain showers
+  # 6;Rain showers and thunder
+  # 7;Sleet showers
+  # 8;Snow showers
+  # 9;Rain
+  # 10;Heavy rain
+  # 11;Heavy rain and thunder
+  # 12;Sleet
+  # 13;Snow
+  # 14;Snow and thunder
+  # 15;Fog
+  # 20;Sleet showers and thunder
+  # 21;Snow showers and thunder
+  # 22;Rain and thunder
+  # 23;Sleet and thunder
+  # 24;Light rain showers and thunder
+  # 25;Heavy rain showers and thunder
+  # 26;Lights sleet showers and thunder
+  # 27;Heavy sleet showers and thunder
+  # 28;Lights snow showers and thunder
+  # 29;Heavy snow showers and thunder
+  # 30;Light rain and thunder
+  # 31;Light sleet and thunder
+  # 32;Heavy sleet and thunder
+  # 33;Light snow and thunder
+  # 34;Heavy snow and thunder
+  # 40;Light rain showers
+  # 41;Heavy rain showers
+  # 42;Light sleet showers
+  # 43;Heavy sleet showers
+  # 44;Light snow showers
+  # 45;Heavy snow showers
+  # 46;Light rain
+  # 47;Light sleet
+  # 48;Heavy sleet
+  # 49;Light snow
+  # 50;Heavy snow
+  #
+  # Example mapping the values to the meaning
+  # {% set yrarray = ["None","Clear sky", "Fair", "Partly cloudy", "Cloudy", "Rain showers", "Rain showers and thunder", "Sleet showers", "Snow showers", "Rain", "Heavy rain", "Heavy rain and thunder", "Sleet", "Snow", "Snow and thunder", "Fog", "None", "None", "None", "None", "Sleet showers and thunder", "Snow showers and thunder", "Rain and thunder", "Sleet and thunder", "Light rain showers and thunder", "Heavy rain showers and thunder", "Lights sleet showers and thunder", "Heavy sleet showers and thunder", "Lights snow showers and thunder", "Heavy snow showers and thunder", "Light rain and thunder", "Light sleet and thunder", "Heavy sleet and thunder", "Light snow and thunder", "Heavy snow and thunder", "None", "None", "None", "None", "None", "Light rain showers", "Heavy rain showers", "Light sleet showers", "Heavy sleet showers", "Light snow showers", "Heavy snow showers", "Light rain", "Light sleet", "Heavy sleet", "Light snow", "Heavy snow"] %}
+#The weather forecast for today is {{ yrarray[states.sensor.yr_symbol.state|int] }} with a temperature of {{ states.sensor.yr_temperature.state }} degrees.
+#
+#  - platform: yr
+#    name: Weather
+#    forecast: 24
+#    monitored_conditions:
+#      - temperature
+#      - symbol
+#      - precipitation
+#  - platform: random
+  - platform: darksky
+    api_key: !secret darksky_api_key
+    forecast:
+      - 0
+    hourly_forecast:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+    monitored_conditions:
+      - summary
+      - icon
+      - temperature
+      - precip_probability
+weather:
+  - platform: darksky
+    api_key: !secret darksky_api_key
+
+binary_sensor:
+  - platform: workday
+    country: US
+
+# Text to speech
+tts:
+  - platform: google
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+# iOS platform
+ios:
+
+input_boolean:
+  # State to prevent multiple recordings
+  driveway_recording:
+    name: Is the driveway camera recording? 
+    initial: off
+
+# Laview Halo One
+camera:
+  - platform: ffmpeg
+    name: Doorbell 
+    input: !secret doorbell_url 
+
+# Amcrest camera
+amcrest:
+  - host: 192.168.3.2
+    name: Drive Way
+    username: !secret camera_username
+    password: !secret camera_password
+    #port: 80
+    stream_source: snapshot
+    resolution: low
+    sensors:
+      - motion_detector
+      - sdcard
+    switches:
+      - motion_detection
+      - motion_recording
+
+# Provides a way to proxy live streams through Home Assistant
+# https://www.home-assistant.io/components/stream/
+stream: 
+
+# Allows other components to process video and audio streams
+# https://www.home-assistant.io/components/ffmpeg/
+ffmpeg:
+  ffmpeg_bin: /usr/bin/ffmpeg
+
+# Apple TV remove and media_player
+apple_tv:
+  - host: 192.168.75.11
+    login_id: !secret apple_login_id
+    name: Apple TV (Down Stairs)
+    start_off: false
+    credentials: !secret downstairs_password
+  - host: 192.168.75.10
+    login_id: !secret apple_login_id
+    name: Apple TV (Up Stairs)
+    start_off: false
+    credentials: !secret upstairs_password 
+
+zone:
+  # This will override the default home zone
+  - name: Home
+    latitude:  !secret home_latitude
+    longitude: !secret home_longitude
+    radius: 200
+    icon: mdi:account-multiple
+
+  - name: !secret work_name
+    latitude: !secret work_latitude 
+    longitude: !secret work_longitude 
+    icon: mdi:worker
+
+  - name: !secret school_name 
+    latitude: !secret school_latitude 
+    longitude: !secret school_longitude 
+    radius: 100
+    icon: mdi:school
+
+  # Train Stations
+  - name: !secret train_one_name 
+    latitude: !secret train_one_latitude 
+    longitude: !secret train_one_longitude
+    radius: 250
+    icon: mdi:train 
+
+  - name: !secret train_two_name 
+    latitude: !secret train_two_latitude 
+    longitude: !secret train_two_longitude
+    radius: 100
+    icon: mdi:train 
+
+  - name: !secret train_three_name 
+    latitude: !secret train_three_latitude 
+    longitude: !secret train_three_longitude
+    radius: 250
+    icon: mdi:train 
+
+# Integrate with Nest
+nest:
+  client_id: !secret nest_client_id
+  client_secret: !secret nest_client_secret
+
+device_tracker:
+  - platform: tile
+    username: !secret tile_username1
+    password: !secret tile_password1
+
+# Send event on file changes. Used to connect camera.record and notify services.
+# See https://www.home-assistant.io/components/folder_watcher/ for more info
+folder_watcher:
+  - folder: /config/www
+    patterns:
+      - '*.mp4'
+      - '*.jpg'
+
+# Notify group
+notify:
+  - name: MotionDetectGroup
+    platform: group
+    services:
+      - service: ios_0x4950686f6e65
+      - service: ios_iphone
+
+# Echo integration. See https://www.home-assistant.io/components/alexa/
+# for more information.
+alexa:
+
+intent_script:
+  AMAZON.HelpIntent:
+    speech:
+      type: plain
+      text: This is the Help intent.
+
+  WhereAreWeIntent:
+    speech:
+      type: plain
+      text: This is the Where Are We Intent .
+
+  LocateIntent:
+    speech:
+      type: plain
+      text: >
+        {%- for state in states.person -%}
+          {%- if state.name.lower() == User.lower() -%}
+            {{ state.name }} is at {{ state.state }}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- for state in states.device_tracker -%}
+          {%- if state.name.lower() == User.lower() -%}
+            {{ state.name }} is at {{ state.state }}
+          {%- endif -%}
+        {%- else -%}
+          I am sorry. I do not know where {{User}} is.
+        {%- endfor -%}
+
