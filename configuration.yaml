@@ -249,6 +249,22 @@ folder_watcher:
       - '*.mp4'
       - '*.jpg'
 
+image_processing:
+  - platform: tensorflow
+    source:
+      - entity_id: camera.drive_way
+    file_out:
+#      - "/home/homeassistant/.homeassistant/www/{{ camera_entity.split('.')[1] }}_latest.jpg"
+      - "/home/homeassistant/.homeassistant/www/{{ camera_entity.split('.')[3] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg"
+    model:
+      graph: /home/homeassistant/.homeassistant/tensorflow/frozen_inference_graph.pb
+      categories:
+        - person
+        - car
+        - truck
+        - cat
+        - dog
+
 # Notify group
 notify:
   - name: MotionDetectGroup
