@@ -2,7 +2,7 @@ homeassistant:
   # List of folders that can be used as sources for sending file.
   # Use http://.../local/ to access the files in this directory
   # Required for the camera.record service
-  whitelist_external_dirs: /config/www
+  whitelist_external_dirs: /home/homeassistant/.homeassistant/www
   # Name of the location where Home Assistant is running
   name: Home
   # Location required to calculate the time the sun rises and sets
@@ -18,6 +18,9 @@ homeassistant:
   customize: !include customize.yaml
   auth_providers:
   - type: homeassistant  
+
+lovelace:
+  mode: yaml
 
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
@@ -157,10 +160,11 @@ amcrest:
     username: !secret camera_username
     password: !secret camera_password
     #port: 80
-    stream_source: snapshot
+    stream_source: rtsp
     resolution: low
+    binary_sensors:
+      - motion_detected
     sensors:
-      - motion_detector
       - sdcard
     switches:
       - motion_detection
@@ -239,7 +243,7 @@ device_tracker:
 # Send event on file changes. Used to connect camera.record and notify services.
 # See https://www.home-assistant.io/components/folder_watcher/ for more info
 folder_watcher:
-  - folder: /config/www
+  - folder: /home/homeassistant/.homeassistant/www
     patterns:
       - '*.mp4'
       - '*.jpg'
