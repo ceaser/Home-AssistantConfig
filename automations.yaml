@@ -1,15 +1,18 @@
 - id: '1555386666740'
-  alias: Record video when motion is detected
+  alias: Record when motion is detected
   trigger:
-  - entity_id: sensor.drive_way_motion_detected
+  - entity_id: binary_sensor.drive_way_motion_detected
     from: 'False'
     platform: state
     to: 'True'
   condition:
-    condition: state
+  - condition: state
     entity_id: input_boolean.driveway_recording
     state: 'off'
   action:
+  - data:
+      entity_id: input_boolean.driveway_recording
+    service: input_boolean.turn_on
   - data:
       duration: 30
       entity_id: camera.drive_way
@@ -17,22 +20,22 @@
         }}_{{ now().hour }}_{{ now().minute }}.mp4
       lookback: 10
     service: camera.record
-  initial_state: false
+  initial_state: true
 - id: '1555392247802'
-  alias: Notify Ceaser where the Vitara is parked
+  alias: Notify where the Vitara is parked
   trigger:
   - entity_id: person.ceaser
     event: enter
     platform: zone
     zone: zone.roy_station
   condition:
-    condition: and
+  - condition: and
     conditions:
     - condition: state
       entity_id: binary_sensor.workday_sensor
       state: 'on'
-    - condition: time
-      before: '14:00:00'
+    - before: '19:00:00'
+      condition: time
   action:
   - data:
       message: The Vitara is parked at the {{ states("device_tracker.tile_12a30813c9c31a80")
@@ -40,18 +43,13 @@
     service: notify.ios_0x4950686f6e65
   initial_state: true
 - id: '1555474993145'
-  alias: Notify when driveway video is recorded
+  alias: Notify drive way (Old)
   trigger:
   - event_data:
       event_type: created
     event_type: folder_watcher
     platform: event
-  condition:
-  - before: '22:00:00'
-    condition: time
-  - condition: state
-    entity_id: input_boolean.driveway_recording
-    state: 'on'
+  condition: []
   action:
   - data_template:
       data:
@@ -64,31 +62,71 @@
       message: '{{ trigger.event.data.file  }}'
       title: Drive Way Motion Detected
     service: notify.motiondetectgroup
-  - data:
-      entity_id: driveway_recording
-    service: input_boolean.turn_off
-  - data:
-      entity_id: input_boolean.driveway_recording
-    service: input_boolean.turn_off
   initial_state: false
 - id: '1555510731190'
-  alias: Capture snapshot when motion is detected
+  alias: Snapshot when motion is detected
   trigger:
-  - entity_id: sensor.drive_way_motion_detected
+  - entity_id: binary_sensor.drive_way_motion_detected
     from: 'False'
     platform: state
     to: 'True'
-  condition:
-  - condition: state
-    entity_id: input_boolean.driveway_recording
-    state: 'off'
+  condition: []
   action:
   - data:
       entity_id: camera.drive_way
       filename: /config/www/driveway_{{ now().year }}_{{ now().month }}_{{ now().day  }}_{{
         now().hour }}_{{ now().minute }}.jpg
     service: camera.snapshot
-  - data:
-      entity_id: input_boolean.driveway_recording
-    service: input_boolean.turn_on
   initial_state: false
+- id: '1556512960337'
+  alias: Toggle drive way recording
+  trigger:
+  - event_data:
+      event_type: created
+    event_type: folder_watcher
+    platform: event
+  condition:
+  - condition: state
+    entity_id: input_boolean.driveway_recording
+    state: 'on'
+  action:
+  - alias: ''
+    data:
+      entity_id: input_boolean.driveway_recording
+    service: input_boolean.turn_off
+  initial_state: true
+- id: '1556676481241'
+  alias: Scan for objects when motion detected
+  trigger:
+  - entity_id: binary_sensor.drive_way_motion_detected
+    from: 'False'
+    platform: state
+    to: 'True'
+  condition: []
+  action:
+  - data:
+      entity_id: image_processing.tensorflow_drive_way
+    service: image_processing.scan
+  initial_state: true
+- id: '1556680616498'
+  alias: Notify drive way
+  trigger:
+  - event_data:
+      event_type: created
+    event_type: folder_watcher
+    platform: event
+  condition: []
+  action:
+  - data_template:
+      data:
+        attachment:
+          hide-thumbnail: false
+          url: https://hassio.divergentlogic.com/local/{{ trigger.event.data.file
+            }}
+        subtitle: Swipe left to view
+        thread-id: motion-detected
+      message: '{{ state_attr(''image_processing.tensorflow_drive_way'',''matches'').keys()|list|unique|list|join|title
+        }} in the driveway'
+      title: Drive Way Motion Detected
+    service: notify.motiondetectgroup
+  initial_state: true
