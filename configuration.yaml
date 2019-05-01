@@ -152,6 +152,7 @@ camera:
   - platform: ffmpeg
     name: Doorbell 
     input: !secret doorbell_url 
+    extra_arguments: -vf "scale=iw/4:ih/4" -q:v 2
 
 # Amcrest camera
 amcrest:
