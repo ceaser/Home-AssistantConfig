@@ -1,0 +1,164 @@
+title: Home
+views:
+- badges: []
+  cards:
+#  - camera_image: camera.drive_way
+#    entities: []
+#    - entity: automation.notify_when_driveway_video_is_recorded
+#      icon: mdi:message
+#    title: Drive way
+#    type: picture-glance
+  - entity: camera.drive_way
+    type: picture-entity
+  - entity: camera.doorbell
+    type: picture-entity
+  - entity: climate.hallway
+    type: thermostat
+  - entity: weather.dark_sky
+    type: weather-forecast
+  - entities:
+    - entity: sensor.hallway_thermostat_temperature
+      name: Inside
+    - entity: sensor.dark_sky_temperature
+      name: Outside
+    title: Temperature
+    type: history-graph
+  - entity: media_player.up_stairs_3
+    type: media-control
+  - entity: media_player.down_stairs_4
+    type: media-control
+  path: default_view
+  title: Home
+- badges: []
+  cards:
+  - cards:
+    - entity: sensor.0x4950686f6e65_battery_level
+      max: 100
+      min: 0
+      severity:
+        green: 50
+        red: 10
+        yellow: 20
+      theme: default
+      type: gauge
+    - entities:
+      - entity: sensor.0x4950686f6e65_battery_state
+      show_icon: false
+      show_name: false
+      show_state: true
+      type: glance
+    type: vertical-stack
+  - cards:
+    - entity: sensor.ipad_mini_battery_level
+      max: 100
+      min: 0
+      severity:
+        green: 50
+        red: 10
+        yellow: 20
+      theme: default
+      type: gauge
+    - entities:
+      - entity: sensor.ipad_mini_battery_state
+      show_icon: false
+      show_name: false
+      show_state: true
+      type: glance
+    type: vertical-stack
+  - cards:
+    - aspect_ratio: '1.78'
+      default_zoom: 15
+      entities:
+      - entity: person.ceaser
+      title: Ceaser
+      type: map
+    - entities:
+      - entity: person.ceaser
+      show_icon: false
+      show_name: false
+      show_state: true
+      type: glance
+    type: vertical-stack
+  - cards:
+    - aspect_ratio: '1.78'
+      default_zoom: 15
+      entities:
+      - entity: device_tracker.tile_12a30813c9c31a80
+      title: Grand Vitara
+      type: map
+    - entities:
+      - entity: device_tracker.tile_12a30813c9c31a80
+      show_icon: false
+      show_name: false
+      show_state: true
+      type: glance
+    type: vertical-stack
+  title: Ceaser
+- badges: []
+  cards:
+  - cards:
+    - entity: sensor.iphone_battery_level_2
+      max: 100
+      min: 0
+      severity:
+        green: 50
+        red: 10
+        yellow: 20
+      theme: default
+      type: gauge
+    - entities:
+      - entity: sensor.iphone_battery_state_2
+      show_icon: false
+      show_name: false
+      show_state: true
+      type: glance
+    type: vertical-stack
+  - cards:
+    - aspect_ratio: '1.78'
+      default_zoom: 15
+      entities:
+      - entity: person.cearah
+      title: Cearah
+      type: map
+    - entities:
+      - entity: person.cearah
+      show_icon: false
+      show_name: false
+      show_state: true
+      type: glance
+    type: vertical-stack
+  title: Cearah
+- badges: []
+  cards:
+  - cards:
+    - entity: sensor.iphone_battery_level
+      max: 100
+      min: 0
+      severity:
+        green: 50
+        red: 10
+        yellow: 20
+      theme: default
+      type: gauge
+    - entities:
+      - entity: sensor.iphone_battery_state
+      show_icon: false
+      show_name: false
+      show_state: true
+      type: glance
+    type: vertical-stack
+  - cards:
+    - aspect_ratio: '1.78'
+      default_zoom: 15
+      entities:
+      - entity: person.sarah
+      title: Sarah
+      type: map
+    - entities:
+      - entity: person.sarah
+      show_icon: false
+      show_name: false
+      show_state: true
+      type: glance
+    type: vertical-stack
+  title: Sarah
