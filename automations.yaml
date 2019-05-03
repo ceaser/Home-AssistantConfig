@@ -20,22 +20,22 @@
       data_template:
         entity_id: "image_processing.tensorflow_{{ trigger.entity_id.split('.')[1].split('_')[0] }}"
 
-- id: tf_image_processing_notification
-  alias: 'TF image processing'
-  initial_state: 'on'
-  trigger:
-    - platform: state
-      entity_id:
-        - image_processing.tensorflow_driveway
-  condition:
-    - condition: template
-      value_template: '{{ trigger.to_state.state |int > 0 }}'
-  action:
-    - service: logbook.log
-      data_template:
-        name: "TF: "
-        message: >-
-          {% for object in state_attr(trigger.entity_id,'matches').keys() -%}{%- if loop.first %}{% elif loop.last %}, {% else %}, {% endif -%}{{ object|title }}{%- endfor %} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }}.
+# - id: tf_image_processing_notification
+#   alias: 'TF image processing'
+#   initial_state: 'on'
+#   trigger:
+#     - platform: state
+#       entity_id:
+#         - image_processing.tensorflow_driveway
+#   condition:
+#     - condition: template
+#       value_template: '{{ trigger.to_state.state |int > 0 }}'
+#   action:
+#     - service: logbook.log
+#       data_template:
+#         name: "TF: "
+#         message: >-
+#           {% for object in state_attr(trigger.entity_id,'matches').keys() -%}{%- if loop.first %}{% elif loop.last %}, {% else %}, {% endif -%}{{ object|title }}{%- endfor %} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }}.
 
 - id: 'record_object_detected'
   alias: Record object detected
@@ -59,13 +59,13 @@
     data_template:
       name: "Record: "
       message: >-
-        Recording from camera.{{ trigger.entity_id.split('.')[1].split('_')[1] }} to /home/homeassistant/.homeassistant/www/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.mp4
+        {% for object in state_attr(trigger.entity_id,'matches').keys() -%}{%- if loop.first %}{% elif loop.last %}, {% else %}, {% endif -%}{{ object|title }}{%- endfor %} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }}. Saving to /local/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.mp4
   - service: camera.record
     data_template:
       duration: 30
       entity_id: camera.{{ trigger.entity_id.split('.')[1].split('_')[1] }}
       filename: /home/homeassistant/.homeassistant/www/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.mp4
-      lookback: 10
+      lookback: 30
 
 - id: notify_camera_videos
   alias: 'Notify camera videos'
