@@ -1,132 +1,152 @@
-- id: '1555386666740'
-  alias: Record when motion is detected
+################################################################################
+# Security 
+################################################################################
+- id: image_processing_scan
+  alias: 'Image Processing Scan'
+  initial_state: 'on'
   trigger:
-  - entity_id: binary_sensor.drive_way_motion_detected
-    from: 'False'
-    platform: state
-    to: 'True'
-  condition:
-  - condition: state
-    entity_id: input_boolean.driveway_recording
-    state: 'off'
+    - platform: state
+      entity_id:
+        - binary_sensor.driveway_motion_detected
+      from: 'off'
+      to: 'on'
   action:
-  - data:
-      entity_id: input_boolean.driveway_recording
-    service: input_boolean.turn_on
-  - data:
+ #    - service: logbook.log
+ #      data_template:
+ #        name: "Image: "
+ #        message: >-
+ #          Scanning image_processing.tensorflow_{{ trigger.entity_id.split('.')[1].split('_')[0] }}
+    - service: image_processing.scan
+      data_template:
+        entity_id: "image_processing.tensorflow_{{ trigger.entity_id.split('.')[1].split('_')[0] }}"
+
+- id: tf_image_processing_notification
+  alias: 'TF image processing'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id:
+        - image_processing.tensorflow_driveway
+  condition:
+    - condition: template
+      value_template: '{{ trigger.to_state.state |int > 0 }}'
+  action:
+    - service: logbook.log
+      data_template:
+        name: "TF: "
+        message: >-
+          {% for object in state_attr(trigger.entity_id,'matches').keys() -%}{%- if loop.first %}{% elif loop.last %}, {% else %}, {% endif -%}{{ object|title }}{%- endfor %} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }}.
+
+- id: 'record_object_detected'
+  alias: Record object detected
+  initial_state: 'on'
+  trigger:
+  - platform: state
+    entity_id:
+      - image_processing.tensorflow_driveway
+  condition:
+  - condition: template
+    value_template: '{{ trigger.to_state.state |int > 0 }}'
+  - condition: template
+    value_template: >
+      {%- if states.automation.record_object_detected.attributes.last_triggered -%}
+        {{ (as_timestamp(now()) - as_timestamp(states.automation.record_object_detected.attributes.last_triggered)) > 40 }}
+      {%- else -%}
+        true
+      {%- endif -%}
+  action:
+  - service: logbook.log
+    data_template:
+      name: "Record: "
+      message: >-
+        Recording from camera.{{ trigger.entity_id.split('.')[1].split('_')[1] }} to /home/homeassistant/.homeassistant/www/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.mp4
+  - service: camera.record
+    data_template:
       duration: 30
-      entity_id: camera.drive_way
-      filename: /config/www/driveway_{{ now().year }}_{{ now().month }}_{{ now().day
-        }}_{{ now().hour }}_{{ now().minute }}.mp4
+      entity_id: camera.{{ trigger.entity_id.split('.')[1].split('_')[1] }}
+      filename: /home/homeassistant/.homeassistant/www/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.mp4
       lookback: 10
-    service: camera.record
-  initial_state: true
-- id: '1555392247802'
-  alias: Notify where the Vitara is parked
+
+- id: notify_camera_videos
+  alias: 'Notify camera videos'
+  initial_state: 'on'
   trigger:
-  - entity_id: person.ceaser
-    event: enter
-    platform: zone
-    zone: zone.roy_station
-  condition:
-  - condition: and
-    conditions:
-    - condition: state
-      entity_id: binary_sensor.workday_sensor
-      state: 'on'
-    - before: '19:00:00'
-      condition: time
-  action:
-  - data:
-      message: The Vitara is parked at the {{ states("device_tracker.tile_12a30813c9c31a80")
-        }}
-    service: notify.ios_0x4950686f6e65
-  initial_state: true
-- id: '1555474993145'
-  alias: Notify drive way (Old)
-  trigger:
-  - event_data:
-      event_type: created
+  - platform: event
     event_type: folder_watcher
-    platform: event
+    event_data:
+      event_type: created
   condition: []
   action:
-  - data_template:
+  - service: notify.motiondetectgroup
+    data_template:
+      title: 'Camera recording'
+      message: 'Motion detected'
       data:
         attachment:
           hide-thumbnail: false
-          url: https://hassio.divergentlogic.com/local/{{ trigger.event.data.file
+          url: /local/{{ trigger.event.data.file
             }}
         subtitle: Swipe left to view
         thread-id: motion-detected
-      message: '{{ trigger.event.data.file  }}'
-      title: Drive Way Motion Detected
-    service: notify.motiondetectgroup
-  initial_state: false
-- id: '1555510731190'
-  alias: Snapshot when motion is detected
+
+- id: notify_camera_pictures
+  alias: 'Notify camera pictures'
+  initial_state: 'off'
   trigger:
-  - entity_id: binary_sensor.drive_way_motion_detected
-    from: 'False'
-    platform: state
-    to: 'True'
-  condition: []
-  action:
-  - data:
-      entity_id: camera.drive_way
-      filename: /config/www/driveway_{{ now().year }}_{{ now().month }}_{{ now().day  }}_{{
-        now().hour }}_{{ now().minute }}.jpg
-    service: camera.snapshot
-  initial_state: false
-- id: '1556512960337'
-  alias: Toggle drive way recording
-  trigger:
-  - event_data:
-      event_type: created
-    event_type: folder_watcher
-    platform: event
+    - platform: state
+      entity_id:
+        - binary_sensor.driveway_motion_detected
+      from: 'off'
+      to: 'on'
   condition:
-  - condition: state
-    entity_id: input_boolean.driveway_recording
-    state: 'on'
+    - condition: template
+      value_template: >
+        {%- if states.automation.notify_camera_pictures.attributes.last_triggered -%}
+          {{ (as_timestamp(now()) - as_timestamp(states.automation.notify_camera_pictures.attributes.last_triggered)) > 300 }}
+        {%- else -%}
+          true
+        {%- endif -%}
   action:
-  - alias: ''
-    data:
-      entity_id: input_boolean.driveway_recording
-    service: input_boolean.turn_off
-  initial_state: true
-- id: '1556676481241'
-  alias: Scan for objects when motion detected
+    - service: notify.ios_0x4950686f6e65
+      data_template:
+        message: "Check {{ trigger.entity_id.split('.')[1].split('_')[0] }} camera."
+        data:
+          push:
+            category: camera
+          entity_id: "camera.{{ trigger.entity_id.split('.')[1].split('_')[0] }}"
+          attachment:
+            url: "{{ states.camera[trigger.entity_id.split('.')[1].split('_')[0]].attributes.entity_picture }}"
+            content-type: jpg
+    - service: logbook.log
+      data_template:
+        name: "Camera activity: "
+        message: >-
+          {%- for state in states if state.entity_id == trigger.entity_id -%}
+            {{ state.attributes.friendly_name }} activated at {{ as_timestamp(now()) | timestamp_custom('%I:%M:%S %p', true) }}.
+          {%- endfor -%}
+
+###############################################################################
+# Reminders 
+################################################################################
+- id: notify_vitara  
+  alias: 'Notify Vitara location'
+  initial_state: 'on'
   trigger:
-  - entity_id: binary_sensor.drive_way_motion_detected
-    from: 'False'
-    platform: state
-    to: 'True'
-  condition: []
+    - platform: zone
+      entity_id: person.ceaser
+      event: enter
+      zone: zone.roy_station
+  condition:
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: binary_sensor.workday_sensor
+        state: 'on'
+      - before: '19:00:00'
+        condition: time
   action:
-  - data:
-      entity_id: image_processing.tensorflow_drive_way
-    service: image_processing.scan
-  initial_state: true
-- id: '1556680616498'
-  alias: Notify drive way
-  trigger:
-  - event_data:
-      event_type: created
-    event_type: folder_watcher
-    platform: event
-  condition: []
-  action:
-  - data_template:
-      data:
-        attachment:
-          hide-thumbnail: false
-          url: https://hassio.divergentlogic.com/local/{{ trigger.event.data.file
-            }}
-        subtitle: Swipe left to view
-        thread-id: motion-detected
-      message: '{{ state_attr(''image_processing.tensorflow_drive_way'',''matches'').keys()|list|unique|list|join|title
-        }} in the driveway'
-      title: Drive Way Motion Detected
-    service: notify.motiondetectgroup
-  initial_state: true
+    - data:
+        message: The Vitara is parked at the {{ states("device_tracker.tile_12a30813c9c31a80")
+          }}
+      service: notify.ios_0x4950686f6e65
+

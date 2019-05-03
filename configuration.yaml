@@ -19,6 +19,10 @@ homeassistant:
   auth_providers:
   - type: homeassistant  
 
+recorder:
+  purge_keep_days: 30
+  db_url: sqlite:////home/homeassistant/.homeassistant/logs
+logbook:
 lovelace:
   mode: yaml
 
@@ -132,7 +136,11 @@ binary_sensor:
 
 # Text to speech
 tts:
-  - platform: google
+  - platform: google_translate
+    service_name: google_say
+    cache: true
+    cache_dir: /home/homeassistant/.homeassistant/tts
+    time_memory: 300
 
 group: !include groups.yaml
 automation: !include automations.yaml
@@ -141,23 +149,20 @@ script: !include scripts.yaml
 # iOS platform
 ios:
 
-input_boolean:
-  # State to prevent multiple recordings
-  driveway_recording:
-    name: Is the driveway camera recording? 
-    initial: off
-
 # Laview Halo One
 camera:
   - platform: ffmpeg
     name: Doorbell 
     input: !secret doorbell_url 
     extra_arguments: -vf "scale=iw/4:ih/4" -q:v 2
+  - platform: local_file
+    name: Driveway TF 
+    file_path: /home/homeassistant/.homeassistant/www/driveway_latest.jpg
 
 # Amcrest camera
 amcrest:
   - host: 192.168.3.2
-    name: Drive Way
+    name: Driveway
     username: !secret camera_username
     password: !secret camera_password
     #port: 80
@@ -247,23 +252,36 @@ folder_watcher:
   - folder: /home/homeassistant/.homeassistant/www
     patterns:
       - '*.mp4'
-      - '*.jpg'
+#      - '*.jpg'
 
 image_processing:
   - platform: tensorflow
+    scan_interval: 10000
     source:
-      - entity_id: camera.drive_way
+      - entity_id: camera.driveway
     file_out:
-#      - "/home/homeassistant/.homeassistant/www/{{ camera_entity.split('.')[1] }}_latest.jpg"
-      - "/home/homeassistant/.homeassistant/www/{{ camera_entity.split('.')[3] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg"
+      - "/home/homeassistant/.homeassistant/www/{{ camera_entity.split('.')[1] }}_latest.jpg"
+      - "/home/homeassistant/.homeassistant/www/{{ camera_entity.split('.')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg"
     model:
       graph: /home/homeassistant/.homeassistant/tensorflow/frozen_inference_graph.pb
       categories:
-        - person
-        - car
-        - truck
-        - cat
-        - dog
+        - category: person
+          area:
+            top: 0.09
+            left: 0.06
+            right: 0.72
+        - category: car
+          area:
+            top: 0.11
+            left: 0.10
+            right: 0.72
+        - category: truck
+          area:
+            top: 0.11
+            left: 0.10
+            right: 0.72
+#        - cat
+#        - dog
 
 # Notify group
 notify:
@@ -271,7 +289,7 @@ notify:
     platform: group
     services:
       - service: ios_0x4950686f6e65
-      - service: ios_iphone
+#      - service: ios_iphone
 
 # Echo integration. See https://www.home-assistant.io/components/alexa/
 # for more information.

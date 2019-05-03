@@ -8,7 +8,7 @@ views:
 #      icon: mdi:message
 #    title: Drive way
 #    type: picture-glance
-  - entity: camera.drive_way
+  - entity: camera.driveway
     type: picture-entity
   - entity: camera.doorbell
     type: picture-entity
@@ -27,6 +27,8 @@ views:
     type: media-control
   - entity: media_player.down_stairs_4
     type: media-control
+  - entity: camera.driveway_tf
+    type: picture-entity
   path: default_view
   title: Home
 - badges: []
