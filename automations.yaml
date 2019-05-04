@@ -11,11 +11,11 @@
       from: 'off'
       to: 'on'
   action:
- #    - service: logbook.log
- #      data_template:
- #        name: "Image: "
- #        message: >-
- #          Scanning image_processing.tensorflow_{{ trigger.entity_id.split('.')[1].split('_')[0] }}
+    - service: logbook.log
+      data_template:
+        name: "Image: "
+        message: >-
+          Scanning image_processing.tensorflow_{{ trigger.entity_id.split('.')[1].split('_')[0] }} at {{ now().strftime('%Y%m%d_%H%M%S') }}.
     - service: image_processing.scan
       data_template:
         entity_id: "image_processing.tensorflow_{{ trigger.entity_id.split('.')[1].split('_')[0] }}"
@@ -50,7 +50,7 @@
   - condition: template
     value_template: >
       {%- if states.automation.record_object_detected.attributes.last_triggered -%}
-        {{ (as_timestamp(now()) - as_timestamp(states.automation.record_object_detected.attributes.last_triggered)) > 40 }}
+        {{ (as_timestamp(now()) - as_timestamp(states.automation.record_object_detected.attributes.last_triggered)) > 60 }}
       {%- else -%}
         true
       {%- endif -%}

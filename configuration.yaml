@@ -236,6 +236,35 @@ zone:
     radius: 250
     icon: mdi:train 
 
+proximity:
+  ceaser:
+    ignored_zones:
+      - rocky_mountain_junior_high
+    devices:
+      - device_tracker.0x4950686f6e65
+    tolerance: 50 # meters
+    unit_of_measurement: mi
+  cearah:
+    ignored_zones:
+      - murray_station
+      - rakuten
+      - salt_lake_central_station
+      - roy_station
+    devices:
+      - device_tracker.cearah_iphone
+    tolerance: 50 # meters
+    unit_of_measurement: mi
+  sarah:
+    ignored_zones:
+      - murray_station
+      - rakuten
+      - salt_lake_central_station
+      - roy_station
+    devices:
+      - device_tracker.iphone
+    tolerance: 50 # meters
+    unit_of_measurement: mi
+
 # Integrate with Nest
 nest:
   client_id: !secret nest_client_id
