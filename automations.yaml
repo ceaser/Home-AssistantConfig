@@ -126,9 +126,50 @@
           {%- endfor -%}
 
 ###############################################################################
+# Climite 
+################################################################################
+- id: climate_away_mode
+  alias: 'Climate Away Mode'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: proximity.cearah
+    - platform: state
+      entity_id: proximity.ceaser
+    - platform: state
+      entity_id: proximity.sarah
+  condition:
+    - condition: template
+      value_template: '{{ states.proximity.cearah.state | int >= 3 and states.proximity.ceaser.state | int >= 3 and states.proximity.sarah.state | int >= 3 }}'
+  action:
+    - service: climate.set_away_mode
+      data:
+        entity_id: climate.hallway
+        away_mode: true
+
+- id: climate_home_mode
+  alias: 'Climate Home Mode'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: proximity.cearah
+    - platform: state
+      entity_id: proximity.ceaser
+    - platform: state
+      entity_id: proximity.sarah
+  condition:
+    - condition: template
+      value_template: '{{ states.proximity.cearah.state | int < 3 or states.proximity.ceaser.state | int < 3 or states.proximity.sarah.state | int < 3 }}'
+  action:
+    - service: climate.set_away_mode
+      data:
+        entity_id: climate.hallway
+        away_mode: false
+
+###############################################################################
 # Reminders 
 ################################################################################
-- id: notify_vitara  
+- id: notify_vitara
   alias: 'Notify Vitara location'
   initial_state: 'on'
   trigger:
@@ -145,8 +186,8 @@
       - before: '19:00:00'
         condition: time
   action:
-    - data:
+    - service: notify.ios_0x4950686f6e65
+      data:
         message: The Vitara is parked at the {{ states("device_tracker.tile_12a30813c9c31a80")
           }}
-      service: notify.ios_0x4950686f6e65
 
