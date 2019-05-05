@@ -23,9 +23,9 @@ views:
       name: Outside
     title: Temperature
     type: history-graph
-  - entity: media_player.up_stairs_3
+  - entity: media_player.upstairs
     type: media-control
-  - entity: media_player.down_stairs_4
+  - entity: media_player.downstairs
     type: media-control
   - entity: camera.driveway_tf
     type: picture-entity

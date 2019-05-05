@@ -1,0 +1,29 @@
+ShowCameraIntent:
+  action:
+    #    - service: logbook.log
+    #      data_template:
+    #        name: "ShowCamera: "
+    #        message: >-
+    #          Streaming camera.{{ Camera | replace(" ", "_") }} to media_player.{{ MediaPlayer | replace(" ", "_") }}
+  - service: camera.play_stream
+    data_template:
+      entity_id: camera.{{ Camera | replace(" ", "_") }}
+      media_player: media_player.{{ MediaPlayer | replace(" ", "_") }}
+  speech:
+    type: plain
+    text: OK
+
+StopCameraIntent:
+  action:
+    #      service: logbook.log
+    #      data_template:
+    #        name: "StopCamera: "
+    #        message: >-
+    #          Stopping media_player.{{ MediaPlayer | replace(" ", "_") }}
+    service: remote.send_command
+    data:
+      command: menu
+      entity_id: media_player.{{ MediaPlayer | replace(" ", "_") }}
+  speech:
+    type: plain
+    text: OK

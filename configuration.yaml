@@ -17,7 +17,9 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
   auth_providers:
-  - type: homeassistant  
+  - type: homeassistant
+  - type: legacy_api_password
+    api_password: !secret http_password
 
 recorder:
   purge_keep_days: 30
@@ -312,31 +314,5 @@ notify:
 # for more information.
 alexa:
 
-intent_script:
-  AMAZON.HelpIntent:
-    speech:
-      type: plain
-      text: This is the Help intent.
-
-  WhereAreWeIntent:
-    speech:
-      type: plain
-      text: This is the Where Are We Intent .
-
-  LocateIntent:
-    speech:
-      type: plain
-      text: >
-        {%- for state in states.person -%}
-          {%- if state.name.lower() == User.lower() -%}
-            {{ state.name }} is at {{ state.state }}
-          {%- endif -%}
-        {%- endfor -%}
-        {%- for state in states.device_tracker -%}
-          {%- if state.name.lower() == User.lower() -%}
-            {{ state.name }} is at {{ state.state }}
-          {%- endif -%}
-        {%- else -%}
-          I am sorry. I do not know where {{User}} is.
-        {%- endfor -%}
+intent_script: !include intent_script.yaml
 

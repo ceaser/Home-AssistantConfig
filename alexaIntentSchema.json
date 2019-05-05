@@ -1,0 +1,95 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "home assistant",
+      "intents": [
+        {
+          "name": "ShowCameraIntent",
+          "slots": [
+            {
+              "name": "Camera",
+              "type": "Camera"
+            },
+            {
+              "name": "MediaPlayer",
+              "type": "MediaPlayer"
+            }
+          ],
+          "samples": [
+            "Show {Camera} camera on {MediaPlayer} tv",
+            "Show the {Camera} camera on the {MediaPlayer} tv",
+            "Show {Camera} camera {MediaPlayer}",
+            "Show {Camera} {MediaPlayer}"
+          ]
+        },
+        {
+          "name": "StopCameraIntent",
+          "slots": [
+            {
+              "name": "MediaPlayer",
+              "type": "MediaPlayer"
+            }
+          ],
+          "samples": [
+            "Stop {MediaPlayer}"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        }
+      ],
+      "types": [
+        {
+          "name": "Camera",
+          "values": [
+            {
+              "name": {
+                "value": "doorbell",
+                "synonyms": [
+                  "porch",
+                  "door",
+                  "front door",
+                  "front porch"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "driveway",
+                "synonyms": [
+                  "drive way"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "MediaPlayer",
+          "values": [
+            {
+              "name": {
+                "value": "downstairs",
+                "synonyms": [
+                  "in the basement",
+                  "basement",
+                  "family room"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "upstairs",
+                "synonyms": [
+                  "up stairs",
+                  "living room"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+
