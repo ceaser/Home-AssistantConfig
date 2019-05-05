@@ -189,12 +189,12 @@ ffmpeg:
 apple_tv:
   - host: 192.168.75.11
     login_id: !secret apple_login_id
-    name: Apple TV (Down Stairs)
+    name: Downstairs 
     start_off: false
     credentials: !secret downstairs_password
   - host: 192.168.75.10
     login_id: !secret apple_login_id
-    name: Apple TV (Up Stairs)
+    name: Upstairs
     start_off: false
     credentials: !secret upstairs_password 
 
