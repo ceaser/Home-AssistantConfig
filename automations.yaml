@@ -150,12 +150,12 @@
       zone: zone.home
   condition:
     - condition: template
-      value_template: {{ 
+      value_template: '{{
         states.climate.hallway.attributes.away_mode == "off" and 
         states.person.cearah.state != "home" and
         states.person.ceaser.state != "home" and
         states.person.sarah.state != "home" and
-        states.person.sandra.state != "home"}}
+        states.person.sandra.state != "home"}}'
   action:
     - service: climate.set_away_mode
       data:
@@ -188,14 +188,14 @@
       zone: zone.home
   condition:
     - condition: template
-      value_template: {{
+      value_template: '{{
         states.climate.hallway.attributes.away_mode == "on" and
         (
           states.person.cearah.state == "home" or
           states.person.ceaser.state == "home" or
           states.person.sarah.state == "home" or
           states.person.sandra.state == "home"
-        ) }}
+        ) }}'
   action:
     - service: climate.set_away_mode
       data:
