@@ -231,3 +231,27 @@
         message: The Vitara is parked at the {{ states("device_tracker.tile_12a30813c9c31a80")
           }}
 
+###############################################################################
+# Echo
+################################################################################
+- id: alexa_morning_volume_kitchen
+  alias: 'Alexa Volume [Morning]: Kitchen'
+  trigger:
+  - platform: time
+    at: '08:00:00'
+  action:
+  - service: media_player.volume_set
+    data:
+      entity_id: media_player.kitchenecho
+      volume_level: '0.60'
+
+- id: alexa_night_volume_kitchen
+  alias: 'Alexa Volume [Night]: Kitchen'
+  trigger:
+  - platform: time
+    at: '22:00:00'
+  action:
+  - service: media_player.volume_set
+    data:
+      entity_id: media_player.kitchenecho
+      volume_level: '0.20'

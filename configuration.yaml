@@ -199,6 +199,14 @@ apple_tv:
     name: Upstairs
     start_off: false
     credentials: !secret upstairs_password 
+alexa_media:
+  accounts:
+    - email: !secret amazon_username1
+      password: !secret amazon_password1
+      url: amazon.com
+#    - email: !secret amazon_username2
+#      password: !secret amazon_password2
+#      url: amazon.com
 
 zone:
   # This will override the default home zone
@@ -314,11 +322,13 @@ image_processing:
 
 # Notify group
 notify:
-  - name: MotionDetectGroup
-    platform: group
+  - platform: group
+    name: MotionDetectGroup
     services:
       - service: ios_0x4950686f6e65
 #      - service: ios_iphone
+  - platform: alexa_media
+    name: alexa_media
 
 # Echo integration. See https://www.home-assistant.io/components/alexa/
 # for more information.
@@ -326,3 +336,8 @@ alexa:
 
 intent_script: !include intent_script.yaml
 
+# TODO: Incorporate custom updater
+# https://github.com/custom-components/custom_updater
+#custom_updater:
+#  component_urls:
+#    - https://raw.githubusercontent.com/keatontaylor/alexa_media_player/master/custom_components.json

@@ -22,6 +22,8 @@ views:
     type: media-control
   - entity: media_player.downstairs
     type: media-control
+  - entity: media_player.kitchenecho
+    type: media-control
   - entity: camera.driveway_tf
     type: picture-entity
   path: default_view
