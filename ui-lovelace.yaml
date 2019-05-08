@@ -1,13 +1,8 @@
 title: Home
 views:
-- badges: []
+- title: Home
+  badges: []
   cards:
-#  - camera_image: camera.drive_way
-#    entities: []
-#    - entity: automation.notify_when_driveway_video_is_recorded
-#      icon: mdi:message
-#    title: Drive way
-#    type: picture-glance
   - entity: camera.driveway
     type: picture-entity
   - entity: camera.doorbell
@@ -30,8 +25,8 @@ views:
   - entity: camera.driveway_tf
     type: picture-entity
   path: default_view
-  title: Home
-- badges: []
+- title: Ceaser
+  badges: []
   cards:
   - cards:
     - entity: sensor.0x4950686f6e65_battery_level
@@ -95,8 +90,8 @@ views:
       show_state: true
       type: glance
     type: vertical-stack
-  title: Ceaser
-- badges: []
+- title: Cearah
+  badges: []
   cards:
   - cards:
     - entity: sensor.iphone_battery_level_2
@@ -129,8 +124,8 @@ views:
       show_state: true
       type: glance
     type: vertical-stack
-  title: Cearah
-- badges: []
+- title: Sarah
+  badges: []
   cards:
   - cards:
     - entity: sensor.iphone_battery_level
@@ -163,4 +158,20 @@ views:
       show_state: true
       type: glance
     type: vertical-stack
-  title: Sarah
+- title: Sandra
+  badges: []
+  cards:
+  - cards:
+    - aspect_ratio: '1.78'
+      default_zoom: 15
+      entities:
+      - entity: person.sandra
+      title: Sandra
+      type: map
+    - entities:
+      - entity: person.sandra
+      show_icon: false
+      show_name: false
+      show_state: true
+      type: glance
+    type: vertical-stack
