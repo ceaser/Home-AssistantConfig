@@ -66,6 +66,12 @@
       entity_id: camera.{{ trigger.entity_id.split('.')[1].split('_')[1] }}
       filename: /home/homeassistant/.homeassistant/www/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.mp4
       lookback: 30
+  - service: logbook.log
+    data_template:
+      name: "Record Finished: "
+      message: >-
+        Finished recording {% for object in state_attr(trigger.entity_id,'matches').keys() -%}{%- if loop.first %}{% elif loop.last %}, {% else %}, {% endif -%}{{ object|title }}{%- endfor %} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }}. Saving to /local/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.mp4
+  - service: camera.record
 
 - id: notify_camera_videos
   alias: 'Notify camera videos'
