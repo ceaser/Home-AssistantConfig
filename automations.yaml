@@ -132,39 +132,79 @@
   alias: 'Climate Away Mode'
   initial_state: 'on'
   trigger:
-    - platform: state
-      entity_id: proximity.cearah
-    - platform: state
-      entity_id: proximity.ceaser
-    - platform: state
-      entity_id: proximity.sarah
+    - platform: zone
+      entity_id: person.ceaser
+      event: leave
+      zone: zone.home
+    - platform: zone
+      entity_id: person.cearah
+      event: leave
+      zone: zone.home
+    - platform: zone
+      entity_id: person.sarah
+      event: leave
+      zone: zone.home
+    - platform: zone
+      entity_id: person.sandra
+      event: leave
+      zone: zone.home
   condition:
     - condition: template
-      value_template: '{{ states.proximity.cearah.state | int >= 3 and states.proximity.ceaser.state | int >= 3 and states.proximity.sarah.state | int >= 3 }}'
+      value_template: {{ 
+        states.climate.hallway.attributes.away_mode == "off" and 
+        states.person.cearah.state != "home" and
+        states.person.ceaser.state != "home" and
+        states.person.sarah.state != "home" and
+        states.person.sandra.state != "home"}}
   action:
     - service: climate.set_away_mode
       data:
         entity_id: climate.hallway
         away_mode: true
+    - service: climate.set_operation_mode
+      data:
+        entity_id: climate.hallway
+        operation_mode: eco
 
 - id: climate_home_mode
   alias: 'Climate Home Mode'
   initial_state: 'on'
   trigger:
-    - platform: state
-      entity_id: proximity.cearah
-    - platform: state
-      entity_id: proximity.ceaser
-    - platform: state
-      entity_id: proximity.sarah
+    - platform: zone
+      entity_id: person.ceaser
+      event: enter
+      zone: zone.home
+    - platform: zone
+      entity_id: person.cearah
+      event: enter
+      zone: zone.home
+    - platform: zone
+      entity_id: person.sarah
+      event: enter
+      zone: zone.home
+    - platform: zone
+      entity_id: person.sandra
+      event: enter
+      zone: zone.home
   condition:
     - condition: template
-      value_template: '{{ states.proximity.cearah.state | int < 3 or states.proximity.ceaser.state | int < 3 or states.proximity.sarah.state | int < 3 }}'
+      value_template: {{
+        states.climate.hallway.attributes.away_mode == "on" and
+        (
+          states.person.cearah.state == "home" or
+          states.person.ceaser.state == "home" or
+          states.person.sarah.state == "home" or
+          states.person.sandra.state == "home"
+        ) }}
   action:
     - service: climate.set_away_mode
       data:
         entity_id: climate.hallway
         away_mode: false
+    - service: climate.set_operation_mode
+      data:
+        entity_id: climate.hallway
+        operation_mode: auto
 
 ###############################################################################
 # Reminders 
