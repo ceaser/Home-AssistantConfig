@@ -264,6 +264,16 @@ device_tracker:
   - platform: tile
     username: !secret tile_username1
     password: !secret tile_password1
+  - platform: unifi
+    username: !secret unifi_username
+    password: !secret unifi_password
+    host: 192.168.1.7
+    port: 8443
+    site_id: default
+    verify_ssl: false
+    ssid_filter:
+      - 'Larry'
+      - 'Larry N'
 
 # Send event on file changes. Used to connect camera.record and notify services.
 # See https://www.home-assistant.io/components/folder_watcher/ for more info
