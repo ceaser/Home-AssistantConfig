@@ -47,13 +47,13 @@
   condition:
   - condition: template
     value_template: '{{ trigger.to_state.state |int > 0 }}'
-  - condition: template
-    value_template: >
-      {%- if states.automation.record_object_detected.attributes.last_triggered -%}
-        {{ (as_timestamp(now()) - as_timestamp(states.automation.record_object_detected.attributes.last_triggered)) > 60 }}
-      {%- else -%}
-        true
-      {%- endif -%}
+#  - condition: template
+#    value_template: >
+#      {%- if states.automation.record_object_detected.attributes.last_triggered -%}
+#        {{ (as_timestamp(now()) - as_timestamp(states.automation.record_object_detected.attributes.last_triggered)) < 60 }}
+#      {%- else -%}
+#        true
+#      {%- endif -%}
   action:
   - service: logbook.log
     data_template:
