@@ -50,3 +50,5 @@ sensor.iphone_battery_state:
   friendly_name: Sarah's iPhone Battery State
 device_tracker.cearah_iphone:
   friendly_name: Cearah's iPhone
+device_tracker.tile_f105743051ac4bd9:
+  friendly_name: Sandra's Keys
