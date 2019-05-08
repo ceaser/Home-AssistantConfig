@@ -282,6 +282,8 @@ device_tracker:
     ssid_filter:
       - 'Larry'
       - 'Larry N'
+    monitored_conditions:
+      - mac
 
 # Send event on file changes. Used to connect camera.record and notify services.
 # See https://www.home-assistant.io/components/folder_watcher/ for more info
