@@ -52,3 +52,9 @@ device_tracker.cearah_iphone:
   friendly_name: Cearah's iPhone
 device_tracker.tile_f105743051ac4bd9:
   friendly_name: Sandra's Keys
+device_tracker.0x4950686f6e65_home_divergentlo:
+  friendly_name: Ceaser's Phone Wifi Connection
+device_tracker.tile_969f352152684c55:
+  friendly_name: Vitara
+device_tracker.tile_e02c6fc0305b42e2:
+  friendly_name: Ceaser's Keys

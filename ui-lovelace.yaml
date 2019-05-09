@@ -82,11 +82,11 @@ views:
     - aspect_ratio: '1.78'
       default_zoom: 15
       entities:
-      - entity: device_tracker.tile_12a30813c9c31a80
+      - entity: device_tracker.tile_969f352152684c55
       title: Grand Vitara
       type: map
     - entities:
-      - entity: device_tracker.tile_12a30813c9c31a80
+      - entity: device_tracker.tile_969f352152684c55
       show_icon: false
       show_name: false
       show_state: true

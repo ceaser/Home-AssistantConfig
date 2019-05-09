@@ -234,7 +234,7 @@
   action:
     - service: notify.ios_0x4950686f6e65
       data:
-        message: The Vitara is parked at the {{ states("device_tracker.tile_12a30813c9c31a80")
+        message: The Vitara is parked at the {{ states("device_tracker.tile_969f352152684c55")
           }}
 
 ###############################################################################
