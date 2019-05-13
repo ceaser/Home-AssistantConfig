@@ -168,7 +168,7 @@ amcrest:
     username: !secret camera_username
     password: !secret camera_password
     #port: 80
-    stream_source: rtsp
+    stream_source: snapshot
     resolution: low
     binary_sensors:
       - motion_detected
@@ -312,11 +312,13 @@ image_processing:
         - category: car
           area:
 #            top: 0.11
+            top: 0.09
             left: 0.10
             right: 0.72
         - category: truck
           area:
 #            top: 0.11
+            top: 0.09
             left: 0.10
             right: 0.72
 #        - cat
