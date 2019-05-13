@@ -244,7 +244,7 @@
   alias: 'Alexa Volume [Morning]: Kitchen'
   trigger:
   - platform: time
-    at: '08:00:00'
+    at: '06:30:00'
   action:
   - service: media_player.volume_set
     data:
