@@ -5,6 +5,7 @@
       entity_id: camera.drive_way
       media_player: media_player.down_stairs
     service: camera.play_stream
+
 '1555399079539':
   alias: Stop playing video on the down stairs Apple TV
   sequence:
@@ -12,3 +13,48 @@
       command: menu
       entity_id: remote.down_stairs
     service: remote.send_command
+
+upstairs_vacuum_toggle:
+  alias: 'Upstairs Vacuum Toggle'
+  sequence:
+  - service: vacuum.start
+    data:
+      entity: vacuum.upstairs
+  - condition: state
+    state: cleaning
+    entity_id: vacuum.upstairs
+    for:
+      seconds: 3
+  - service: vaccum.pause
+    data:
+      entity_id: vacuum.upstairs
+
+basement_vacuum_toggle:
+  alias: 'Basement Vacuum Toggle'
+  sequence:
+  - service: vacuum.start
+    data:
+      entity: vacuum.basement
+  - condition: state
+    state: cleaning
+    entity_id: vacuum.basement
+    for:
+      seconds: 3
+  - service: vaccum.pause
+    data:
+      entity_id: vacuum.basement
+
+driveway_camera_toggle:
+  alias: "Driveway Camera Toggle"
+  sequence:
+  - service: camera.turn_off
+    data:
+      entity_id: camera.driveway
+  - condition: state
+    state: idle
+    entity_id: camera.driveway
+    for:
+      seconds: 3
+  - service: camera.turn_on
+    data:
+      entity_id: camera.driveway

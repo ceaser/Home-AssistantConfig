@@ -261,3 +261,20 @@
     data:
       entity_id: media_player.kitchenecho
       volume_level: '0.20'
+
+- id: capture_cleaning_map
+  alias: 'Update Cleaning Map'
+  initial_state: 'on'
+  trigger:
+  - platform: state
+    entity_id:
+      - vacuum.basement
+      - vacuum.upstairs
+    from: 'cleaning'
+    to: 'docked'
+  condition: []
+  action:
+  - service: camera.snapshot
+    data_template:
+      entity_id: "camera.{{ trigger.entity_id.split('.')[1].split('_')[0] }}_cleaning_map"
+      filename: "/home/homeassistant/.homeassistant/www/{{ trigger.entity_id.split('.')[1].split('_')[0] }}_cleaning_map_latest.jpg"

@@ -25,8 +25,6 @@ recorder:
   purge_keep_days: 30
   db_url: sqlite:////home/homeassistant/.homeassistant/logs
 logbook:
-lovelace:
-  mode: yaml
 
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
@@ -128,6 +126,22 @@ sensor:
       - icon
       - temperature
       - precip_probability
+  - platform: template
+    sensors:
+      basement_vacuum_last_run:
+        value_template: '{{ as_timestamp(states.vacuum.basement.attributes.clean_start) | timestamp_custom("%m.%d.%Y") }}'
+      basement_vacuum_last_sqft:
+        value_template: '{{ (states.vacuum.basement.attributes.clean_area * 10.764) | round(0) }} ft²'
+      basement_vacuum_battery:
+        value_template: '{{ states.vacuum.basement.attributes.battery_level }} %'
+        icon_template: '{{ states.vacuum.basement.attributes.battery_icon }}'
+      upstairs_vacuum_last_run:
+        value_template: '{{ as_timestamp(states.vacuum.upstairs.attributes.clean_start) | timestamp_custom("%m.%d.%Y") }}'
+      upstairs_vacuum_last_sqft:
+        value_template: '{{ (states.vacuum.upstairs.attributes.clean_area * 10.764) | round(0) }} ft²'
+      upstairs_vacuum_battery:
+        value_template: '{{ states.vacuum.upstairs.attributes.battery_level }} %'
+        icon_template: '{{ states.vacuum.upstairs.attributes.battery_icon }}'
 weather:
   - platform: darksky
     api_key: !secret darksky_api_key
@@ -151,8 +165,13 @@ script: !include scripts.yaml
 # iOS platform
 ios:
 
+
+switch:
+  - platform: neato
+
 # Laview Halo One
 camera:
+  - platform: neato
   - platform: ffmpeg
     name: Doorbell 
     input: !secret doorbell_url 
@@ -323,8 +342,20 @@ image_processing:
             right: 0.72
 #        - cat
 #        - dog
+#  - platform: tensorflow
+#    scan_interval: 10
+#    source:
+#      - entity_id: camera.doorbell
+#    file_out:
+#      - "/home/homeassistant/.homeassistant/www/{{ camera_entity.split('.')[1] }}_latest.jpg"
+#      - "/home/homeassistant/.homeassistant/www/{{ camera_entity.split('.')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg"
+#    model:
+#      graph: /home/homeassistant/.homeassistant/tensorflow/frozen_inference_graph.pb
+#      categories:
+#        - person
+#        - cat
+#        - dog
 
-# Notify group
 notify:
   - platform: group
     name: MotionDetectGroup
@@ -333,6 +364,10 @@ notify:
 #      - service: ios_iphone
   - platform: alexa_media
     name: alexa_media
+
+neato:
+  username: !secret neato_username 
+  password: !secret neato_password
 
 # Echo integration. See https://www.home-assistant.io/components/alexa/
 # for more information.
