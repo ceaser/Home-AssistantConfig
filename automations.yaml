@@ -1,5 +1,5 @@
 ################################################################################
-# Security 
+# image_processing_scan triggers a Tensorflow scan when motion is detected
 ################################################################################
 - id: image_processing_scan
   alias: 'Image Processing Scan'
@@ -20,6 +20,9 @@
       data_template:
         entity_id: "image_processing.tensorflow_{{ trigger.entity_id.split('.')[1].split('_')[0] }}"
 
+################################################################################
+# tf_image_processing logs objects found in the image_processing_scan
+################################################################################
 # - id: tf_image_processing_notification
 #   alias: 'TF image processing'
 #   initial_state: 'on'
@@ -37,9 +40,13 @@
 #         message: >-
 #           {% for object in state_attr(trigger.entity_id,'matches').keys() -%}{%- if loop.first %}{% elif loop.last %}, {% else %}, {% endif -%}{{ object|title }}{%- endfor %} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }}.
 
+################################################################################
+# record_object_detected records video of the object detected from
+# image_processing_scan
+################################################################################
 - id: 'record_object_detected'
   alias: Record object detected
-  initial_state: 'on'
+  initial_state: 'off'
   trigger:
   - platform: state
     entity_id:
@@ -47,13 +54,13 @@
   condition:
   - condition: template
     value_template: '{{ trigger.to_state.state |int > 0 }}'
-#  - condition: template
-#    value_template: >
-#      {%- if states.automation.record_object_detected.attributes.last_triggered -%}
-#        {{ (as_timestamp(now()) - as_timestamp(states.automation.record_object_detected.attributes.last_triggered)) < 60 }}
-#      {%- else -%}
-#        true
-#      {%- endif -%}
+  - condition: template
+    value_template: >
+      {%- if states.automation.record_object_detected.attributes.last_triggered -%}
+        {{ (as_timestamp(now()) - as_timestamp(states.automation.record_object_detected.attributes.last_triggered)) < 60 }}
+      {%- else -%}
+        true
+      {%- endif -%}
   action:
   - service: logbook.log
     data_template:
@@ -73,9 +80,12 @@
         Finished recording {% for object in state_attr(trigger.entity_id,'matches').keys() -%}{%- if loop.first %}{% elif loop.last %}, {% else %}, {% endif -%}{{ object|title }}{%- endfor %} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }}. Saving to /local/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.mp4
   - service: camera.record
 
+################################################################################
+# notify_camera_videos sends a notification when a new video is created 
+################################################################################
 - id: notify_camera_videos
   alias: 'Notify camera videos'
-  initial_state: 'on'
+  initial_state: 'off'
   trigger:
   - platform: event
     event_type: folder_watcher
@@ -95,44 +105,200 @@
         subtitle: Swipe left to view
         thread-id: motion-detected
 
-- id: notify_camera_pictures
-  alias: 'Notify camera pictures'
-  initial_state: 'off'
+################################################################################
+# notify_*_camera_pictures sends a picture of the object detected in the
+# image_processing_scan. If has conditions for a specific input_boolean and
+# notify device 
+################################################################################
+- id: notify_ceaser_camera_pictures
+  alias: 'Notify Ceaser camera pictures'
+  initial_state: 'on'
   trigger:
     - platform: state
       entity_id:
-        - binary_sensor.driveway_motion_detected
-      from: 'off'
-      to: 'on'
+      - image_processing.tensorflow_driveway
   condition:
+    - condition: state
+      entity_id: input_boolean.notify_0x4950686f6e65
+      state: 'on'
+    - condition: template
+      value_template: '{{ trigger.to_state.state |int > 0 }}'
     - condition: template
       value_template: >
-        {%- if states.automation.notify_camera_pictures.attributes.last_triggered -%}
-          {{ (as_timestamp(now()) - as_timestamp(states.automation.notify_camera_pictures.attributes.last_triggered)) > 300 }}
+        {%- if states.automation.notify_ceaser_camera_pictures.attributes.last_triggered -%}
+          {{ (as_timestamp(now()) - as_timestamp(states.automation.notify_ceaser_camera_pictures.attributes.last_triggered)) > 30 }}
         {%- else -%}
           true
         {%- endif -%}
   action:
     - service: notify.ios_0x4950686f6e65
       data_template:
-        message: "Check {{ trigger.entity_id.split('.')[1].split('_')[0] }} camera."
+        message: >
+          {{ state_attr(trigger.entity_id,'matches').keys()|list|unique|list|join(', ')|title }} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }} camera.
         data:
           push:
-            category: camera
-          entity_id: "camera.{{ trigger.entity_id.split('.')[1].split('_')[0] }}"
+            category: 'alarm'
+# Stream video
+#          entity_id: "camera.{{ trigger.entity_id.split('.')[1].split('_')[1] }}"
           attachment:
-            url: "{{ states.camera[trigger.entity_id.split('.')[1].split('_')[0]].attributes.entity_picture }}"
+            hide-thumbnail: false
+# Blank with API link
+#            url: >
+#              {{ states.camera[trigger.entity_id.split('.')[1].split('_')[1]].attributes.entity_picture }}
+            url: "/local/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_latest.jpg"
             content-type: jpg
+          subtitle: Swipe left to view
+
+################################################################################
+# notify_*_camera_pictures sends a picture of the object detected in the
+# image_processing_scan. If has conditions for a specific input_boolean and
+# notify device 
+################################################################################
+- id: notify_sarah_camera_pictures
+  alias: 'Notify Sarah camera pictures'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id:
+      - image_processing.tensorflow_driveway
+  condition:
+    - condition: state
+      entity_id: input_boolean.notify_iphone
+      state: 'on'
+    - condition: template
+      value_template: '{{ trigger.to_state.state |int > 0 }}'
+    - condition: template
+      value_template: >
+        {%- if states.automation.notify_sarah_camera_pictures.attributes.last_triggered -%}
+          {{ (as_timestamp(now()) - as_timestamp(states.automation.notify_sarah_camera_pictures.attributes.last_triggered)) > 30 }}
+        {%- else -%}
+          true
+        {%- endif -%}
+  action:
+    - service: notify.ios_iphone
+      data_template:
+        message: >
+          {{ state_attr(trigger.entity_id,'matches').keys()|list|unique|list|join(', ')|title }} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }} camera.
+        data:
+          push:
+            category: 'alarm'
+# Stream video
+#          entity_id: "camera.{{ trigger.entity_id.split('.')[1].split('_')[1] }}"
+          attachment:
+            hide-thumbnail: false
+# Blank with API link
+#            url: >
+#              {{ states.camera[trigger.entity_id.split('.')[1].split('_')[1]].attributes.entity_picture }}
+            url: "/local/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_latest.jpg"
+            content-type: jpg
+          subtitle: Swipe left to view
+
+################################################################################
+# notify_*_camera_pictures sends a picture of the object detected in the
+# image_processing_scan. If has conditions for a specific input_boolean and
+# notify device 
+################################################################################
+- id: notify_cearah_camera_pictures
+  alias: 'Notify Cearah camera pictures'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id:
+      - image_processing.tensorflow_driveway
+  condition:
+    - condition: state
+      entity_id: input_boolean.notify_cearah_iphone
+      state: 'on'
+    - condition: template
+      value_template: '{{ trigger.to_state.state |int > 0 }}'
+    - condition: template
+      value_template: >
+        {%- if states.automation.notify_cearah_camera_pictures.attributes.last_triggered -%}
+          {{ (as_timestamp(now()) - as_timestamp(states.automation.notify_cearah_camera_pictures.attributes.last_triggered)) > 30 }}
+        {%- else -%}
+          true
+        {%- endif -%}
+  action:
+    - service: notify.ios_cearah_iphone
+      data_template:
+        message: >
+          {{ state_attr(trigger.entity_id,'matches').keys()|list|unique|list|join(', ')|title }} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }} camera.
+        data:
+          push:
+            category: 'alarm'
+# Stream video
+#          entity_id: "camera.{{ trigger.entity_id.split('.')[1].split('_')[1] }}"
+          attachment:
+            hide-thumbnail: false
+# Blank with API link
+#            url: >
+#              {{ states.camera[trigger.entity_id.split('.')[1].split('_')[1]].attributes.entity_picture }}
+            url: "/local/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_latest.jpg"
+            content-type: jpg
+          subtitle: Swipe left to view
+
+################################################################################
+# silent_notification disabled a person's notification. This automation is a
+# call back from the notify_*_camera_pictures.
+################################################################################
+- id: silent_notification
+  alias: 'Silent Notifications'
+  initial_state: 'on'
+  trigger:
+    - platform: event
+      event_type: ios.notification_action_fired
+      event_data:
+        actionName: 'DISABLE_PUSH'
+  action:
     - service: logbook.log
       data_template:
-        name: "Camera activity: "
+        name: "Action: "
         message: >-
-          {%- for state in states if state.entity_id == trigger.entity_id -%}
-            {{ state.attributes.friendly_name }} activated at {{ as_timestamp(now()) | timestamp_custom('%I:%M:%S %p', true) }}.
-          {%- endfor -%}
+          Received {{ trigger.event.data }}
+    - service: input_boolean.turn_off
+      data_template:
+        entity_id: 'input_boolean.notify_{{ trigger.event.data.sourceDeviceID }}'
 
-###############################################################################
-# Climite 
+################################################################################
+# notify_alexa sends a announcement to all Amazon Echo when a object is
+# detected from the image_processing_scan
+################################################################################
+- id: notify_alexa
+  alias: 'Notify Alexa'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id:
+      - image_processing.tensorflow_driveway
+  condition:
+    - condition: state
+      entity_id: input_boolean.notify_alexa
+      state: 'on'
+    - condition: template
+      value_template: '{{ trigger.to_state.state |int > 0 }}'
+    - condition: template
+      value_template: >
+        {%- if states.automation.notify_alexa.attributes.last_triggered -%}
+          {{ (as_timestamp(now()) - as_timestamp(states.automation.notify_alexa.attributes.last_triggered)) > 30 }}
+        {%- else -%}
+          true
+        {%- endif -%}
+  action:
+    - service: notify.alexa_media
+      data_template:
+        target:
+          - media_player.kitchenecho
+        title: >
+          "camera.{{ trigger.entity_id.split('.')[1].split('_')[1] }} notification" 
+        message: >
+          {{ state_attr(trigger.entity_id,'matches').keys()|list|unique|list|join(', ')|title }} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }} camera.
+        data:
+          type: announce
+          method: speak
+
+################################################################################
+# climate_away_mode sets the thermostats to eco and away mode when humans are
+# away  
 ################################################################################
 - id: climate_away_mode
   alias: 'Climate Away Mode'
@@ -150,18 +316,13 @@
       entity_id: person.sarah
       event: leave
       zone: zone.home
-    - platform: zone
-      entity_id: person.sandra
-      event: leave
-      zone: zone.home
   condition:
     - condition: template
       value_template: '{{
         states.climate.hallway.attributes.away_mode == "off" and 
         states.person.cearah.state != "home" and
         states.person.ceaser.state != "home" and
-        states.person.sarah.state != "home" and
-        states.person.sandra.state != "home"}}'
+        states.person.sarah.state != "home"}}'
   action:
     - service: climate.set_away_mode
       data:
@@ -172,6 +333,10 @@
         entity_id: climate.hallway
         operation_mode: eco
 
+################################################################################
+# climate_home_mode sets the thermostats to auto mode when humans are
+# home  
+################################################################################
 - id: climate_home_mode
   alias: 'Climate Home Mode'
   initial_state: 'on'
@@ -188,10 +353,6 @@
       entity_id: person.sarah
       event: enter
       zone: zone.home
-    - platform: zone
-      entity_id: person.sandra
-      event: enter
-      zone: zone.home
   condition:
     - condition: template
       value_template: '{{
@@ -199,8 +360,7 @@
         (
           states.person.cearah.state == "home" or
           states.person.ceaser.state == "home" or
-          states.person.sarah.state == "home" or
-          states.person.sandra.state == "home"
+          states.person.sarah.state == "home"
         ) }}'
   action:
     - service: climate.set_away_mode
@@ -211,9 +371,14 @@
       data:
         entity_id: climate.hallway
         operation_mode: auto
+    - service: climate.set_away_mode
+      data:
+        entity_id: climate.hallway
+        away_mode: false
 
-###############################################################################
-# Reminders 
+################################################################################
+# notify_vitara sends an alert where I last parted the second car when I get
+# on the train.
 ################################################################################
 - id: notify_vitara
   alias: 'Notify Vitara location'
@@ -237,8 +402,8 @@
         message: The Vitara is parked at the {{ states("device_tracker.tile_969f352152684c55")
           }}
 
-###############################################################################
-# Echo
+################################################################################
+# alexa_morning_volume_kitcheni raise the volume of the echo to 60%
 ################################################################################
 - id: alexa_morning_volume_kitchen
   alias: 'Alexa Volume [Morning]: Kitchen'
@@ -251,6 +416,9 @@
       entity_id: media_player.kitchenecho
       volume_level: '0.60'
 
+################################################################################
+# alexa_morning_volume_kitcheni reduces the volume of the echo to 20%
+################################################################################
 - id: alexa_night_volume_kitchen
   alias: 'Alexa Volume [Night]: Kitchen'
   trigger:
@@ -262,6 +430,9 @@
       entity_id: media_player.kitchenecho
       volume_level: '0.20'
 
+################################################################################
+# capture_cleaning_map updates the vacuums cleaning map 
+################################################################################
 - id: capture_cleaning_map
   alias: 'Update Cleaning Map'
   initial_state: 'on'

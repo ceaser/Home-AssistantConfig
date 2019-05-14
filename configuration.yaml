@@ -164,7 +164,31 @@ script: !include scripts.yaml
 
 # iOS platform
 ios:
+  push:
+    categories:
+      - name: Alarm
+        identifier: 'alarm'
+        actions:
+          - identifier: 'DISABLE_PUSH'
+            title: 'Turn Off'
+            activationMode: 'background'
+            authenticationRequired: no
+            destructive: yes
+            behavior: 'default'
 
+input_boolean:
+  notify_0x4950686f6e65:
+    name: "Ceaser"
+    icon: mdi:message
+  notify_iphone:
+    name: "Sarah"
+    icon: mdi:message
+  notify_cearah_iphone:
+    name: "Cearah"
+    icon: mdi:message
+  notify_alexa:
+    name: "Amazon Echo"
+    icon: mdi:message
 
 switch:
   - platform: neato
@@ -187,7 +211,7 @@ amcrest:
     username: !secret camera_username
     password: !secret camera_password
     #port: 80
-    stream_source: snapshot
+    stream_source: rtsp
     resolution: low
     binary_sensors:
       - motion_detected
@@ -331,13 +355,13 @@ image_processing:
         - category: car
           area:
 #            top: 0.11
-            top: 0.09
+            top: 0.07
             left: 0.10
             right: 0.72
         - category: truck
           area:
 #            top: 0.11
-            top: 0.09
+            top: 0.07
             left: 0.10
             right: 0.72
 #        - cat

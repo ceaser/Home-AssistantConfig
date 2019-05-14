@@ -7,20 +7,50 @@
                     "badges": [],
                     "cards": [
                         {
+                            "entity": "camera.driveway_tf",
+                            "hold_action": "none",
+                            "name": "Drive Way",
+                            "tap_action": {
+                                "action": "navigate",
+                                "navigation_path": "/lovelace/video"
+                            },
+                            "type": "picture-entity"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "input_boolean.notify_0x4950686f6e65"
+                                },
+                                {
+                                    "entity": "input_boolean.notify_iphone"
+                                },
+                                {
+                                    "entity": "input_boolean.notify_cearah_iphone"
+                                },
+                                {
+                                    "entity": "input_boolean.notify_alexa"
+                                }
+                            ],
+                            "show_header_toggle": true,
+                            "title": "Notifications",
+                            "type": "entities"
+                        }
+                    ],
+                    "icon": "mdi:alarm",
+                    "panel": false,
+                    "path": "alarm",
+                    "title": "Alarm"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
                             "camera_image": "camera.driveway",
-                            "camera_view": "live",
+                            "camera_view": "auto",
                             "entities": [
                                 {
                                     "entity": "script.driveway_camera_toggle",
                                     "icon": "mdi:stop"
-                                },
-                                {
-                                    "entity": "automation.notify_camera_pictures",
-                                    "icon": "mdi:camera"
-                                },
-                                {
-                                    "entity": "automation.notify_camera_videos",
-                                    "icon": "mdi:video"
                                 }
                             ],
                             "hold_action": {
@@ -34,16 +64,51 @@
                             "type": "picture-glance"
                         },
                         {
-                            "entity": "camera.driveway_tf",
-                            "hold_action": "none",
-                            "name": "Latest Object Detected",
-                            "tap_action": "none",
-                            "type": "picture-entity"
-                        },
-                        {
                             "entity": "camera.doorbell",
                             "type": "picture-entity"
+                        }
+                    ],
+                    "icon": "mdi:video",
+                    "path": "video",
+                    "title": "Video"
+                },
+                {
+                    "badges": [
+                        "binary_sensor.hallway_thermostat_fan",
+                        "sensor.hallway_thermostat_hvac_state",
+                        "sensor.dark_sky_precip_probability"
+                    ],
+                    "cards": [
+                        {
+                            "entity": "climate.hallway",
+                            "type": "thermostat"
                         },
+                        {
+                            "entity": "weather.dark_sky",
+                            "type": "weather-forecast"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.hallway_thermostat_temperature",
+                                    "name": "Inside"
+                                },
+                                {
+                                    "entity": "sensor.dark_sky_temperature",
+                                    "name": "Outside"
+                                }
+                            ],
+                            "title": "Temperature",
+                            "type": "history-graph"
+                        }
+                    ],
+                    "icon": "mdi:thermometer",
+                    "path": "climate",
+                    "title": "Climate"
+                },
+                {
+                    "badges": [],
+                    "cards": [
                         {
                             "elements": [
                                 {
@@ -411,29 +476,15 @@
                             ],
                             "image": "/local/basement_cleaning_map_latest.jpg",
                             "type": "picture-elements"
-                        },
-                        {
-                            "entity": "climate.hallway",
-                            "type": "thermostat"
-                        },
-                        {
-                            "entity": "weather.dark_sky",
-                            "type": "weather-forecast"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "sensor.hallway_thermostat_temperature",
-                                    "name": "Inside"
-                                },
-                                {
-                                    "entity": "sensor.dark_sky_temperature",
-                                    "name": "Outside"
-                                }
-                            ],
-                            "title": "Temperature",
-                            "type": "history-graph"
-                        },
+                        }
+                    ],
+                    "icon": "mdi:robot-vacuum",
+                    "path": "vacuum",
+                    "title": "Vacuum"
+                },
+                {
+                    "badges": [],
+                    "cards": [
                         {
                             "entity": "media_player.upstairs",
                             "type": "media-control"
@@ -447,8 +498,9 @@
                             "type": "media-control"
                         }
                     ],
-                    "path": "default_view",
-                    "title": "Home"
+                    "icon": "mdi:remote",
+                    "path": "remote",
+                    "title": "Remote"
                 },
                 {
                     "badges": [],
