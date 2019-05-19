@@ -17,23 +17,48 @@
                             "type": "picture-entity"
                         },
                         {
-                            "entities": [
+                            "cards": [
                                 {
-                                    "entity": "input_boolean.notify_0x4950686f6e65"
+                                    "entities": [
+                                        {
+                                            "entity": "automation.image_processing_scan",
+                                            "name": "Monitor Camera"
+                                        }
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "Security",
+                                    "type": "entities"
                                 },
                                 {
-                                    "entity": "input_boolean.notify_iphone"
-                                },
-                                {
-                                    "entity": "input_boolean.notify_cearah_iphone"
-                                },
-                                {
-                                    "entity": "input_boolean.notify_alexa"
+                                    "card": {
+                                        "entities": [
+                                            {
+                                                "entity": "input_boolean.notify_0x4950686f6e65"
+                                            },
+                                            {
+                                                "entity": "input_boolean.notify_iphone"
+                                            },
+                                            {
+                                                "entity": "input_boolean.notify_cearah_iphone"
+                                            },
+                                            {
+                                                "entity": "input_boolean.notify_alexa"
+                                            }
+                                        ],
+                                        "show_header_toggle": true,
+                                        "title": "Notifications",
+                                        "type": "entities"
+                                    },
+                                    "conditions": [
+                                        {
+                                            "entity": "automation.image_processing_scan",
+                                            "state": "on"
+                                        }
+                                    ],
+                                    "type": "conditional"
                                 }
                             ],
-                            "show_header_toggle": true,
-                            "title": "Notifications",
-                            "type": "entities"
+                            "type": "vertical-stack"
                         }
                     ],
                     "icon": "mdi:alarm",
@@ -45,23 +70,8 @@
                     "badges": [],
                     "cards": [
                         {
-                            "camera_image": "camera.driveway",
-                            "camera_view": "auto",
-                            "entities": [
-                                {
-                                    "entity": "script.driveway_camera_toggle",
-                                    "icon": "mdi:stop"
-                                }
-                            ],
-                            "hold_action": {
-                                "action": "call-service",
-                                "service": "camera.turn_off",
-                                "service_data": {
-                                    "entity_id": "camera.driveway"
-                                }
-                            },
-                            "title": "Drive Way",
-                            "type": "picture-glance"
+                            "entity": "camera.driveway",
+                            "type": "picture-entity"
                         },
                         {
                             "entity": "camera.doorbell",
@@ -74,7 +84,10 @@
                 },
                 {
                     "badges": [
+                        "binary_sensor.hallway_thermostat_online",
+                        "binary_sensor.hallway_thermostat_has_leaf",
                         "binary_sensor.hallway_thermostat_fan",
+                        "binary_sensor.home_away",
                         "sensor.hallway_thermostat_hvac_state",
                         "sensor.dark_sky_precip_probability"
                     ],
@@ -595,7 +608,7 @@
                                     "default_zoom": 15,
                                     "entities": [
                                         {
-                                            "entity": "device_tracker.tile_12a30813c9c31a80"
+                                            "entity": "device_tracker.tile_969f352152684c55"
                                         }
                                     ],
                                     "title": "Grand Vitara",
@@ -604,7 +617,7 @@
                                 {
                                     "entities": [
                                         {
-                                            "entity": "device_tracker.tile_12a30813c9c31a80"
+                                            "entity": "device_tracker.tile_969f352152684c55"
                                         }
                                     ],
                                     "show_icon": false,

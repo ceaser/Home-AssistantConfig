@@ -3,7 +3,7 @@
 ################################################################################
 - id: image_processing_scan
   alias: 'Image Processing Scan'
-  initial_state: 'on'
+  initial_state: 'off'
   trigger:
     - platform: state
       entity_id:
@@ -291,7 +291,7 @@
         title: >
           "camera.{{ trigger.entity_id.split('.')[1].split('_')[1] }} notification" 
         message: >
-          {{ state_attr(trigger.entity_id,'matches').keys()|list|unique|list|join(', ')|title }} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }} camera.
+          Detected a {{ state_attr(trigger.entity_id,'matches').keys()|list|unique|list|join(' and ')|title }} in the {{ trigger.entity_id.split('.')[1].split('_')[1] }} camera.
         data:
           type: announce
           method: speak

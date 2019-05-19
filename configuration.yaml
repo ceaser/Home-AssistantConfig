@@ -211,7 +211,7 @@ amcrest:
     username: !secret camera_username
     password: !secret camera_password
     #port: 80
-    stream_source: rtsp
+    stream_source: snapshot
     resolution: low
     binary_sensors:
       - motion_detected
@@ -338,7 +338,7 @@ folder_watcher:
 
 image_processing:
   - platform: tensorflow
-    scan_interval: 10000
+    scan_interval: 86400
     source:
       - entity_id: camera.driveway
     file_out:
@@ -355,13 +355,13 @@ image_processing:
         - category: car
           area:
 #            top: 0.11
-            top: 0.07
+            top: 0.06
             left: 0.10
             right: 0.72
         - category: truck
           area:
 #            top: 0.11
-            top: 0.07
+            top: 0.06
             left: 0.10
             right: 0.72
 #        - cat
