@@ -52,6 +52,7 @@ frontend:
 
 # Sensors
 sensor:
+#  - platform: rainmachine
   # Weather prediction numbers reported for https://www.yr.no
   # 1;Clear sky
   # 2;Fair
@@ -142,6 +143,7 @@ sensor:
       upstairs_vacuum_battery:
         value_template: '{{ states.vacuum.upstairs.attributes.battery_level }} %'
         icon_template: '{{ states.vacuum.upstairs.attributes.battery_icon }}'
+
 weather:
   - platform: darksky
     api_key: !secret darksky_api_key
@@ -149,6 +151,7 @@ weather:
 binary_sensor:
   - platform: workday
     country: US
+#  - platform: rainmachine
 
 # Text to speech
 tts:
@@ -175,6 +178,45 @@ ios:
             authenticationRequired: no
             destructive: yes
             behavior: 'default'
+
+
+switch:
+  - platform: neato
+#  - platform: rainmachine
+
+rainmachine:
+  controllers:
+    - ip_address: 192.168.75.3
+      password: !secret rainmachine_password
+      binary_sensors:
+        monitored_conditions:
+          - extra_water_on_hot_days
+#          - flow_sensor
+          - freeze
+          - freeze_protection
+          - hourly
+          - month
+          - raindelay
+          - rainsensor
+          - weekday
+      sensors:
+        monitored_conditions:
+#          - flow_sensor_clicks_cubic_meter
+#          - flow_sensor_consumed_liters
+#          - flow_sensor_start_index
+#          - flow_sensor_watering_clicks
+          - freeze_protect_temp
+      switches:
+        zone_run_time: 600
+
+rest_command:
+  nzbget:
+    url: http://nzbget/jsonrpc
+    method: POST
+    username: !secret nzbget_username
+    password: !secret nzbget_password
+    payload: >+
+      {"jsonrpc":"2.0", "method":"{{ method }}"}
 
 input_boolean:
   notify_0x4950686f6e65:
@@ -206,7 +248,7 @@ camera:
 
 # Amcrest camera
 amcrest:
-  - host: 192.168.3.2
+  - host: 192.168.75.2
     name: Driveway
     username: !secret camera_username
     password: !secret camera_password

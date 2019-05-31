@@ -61,7 +61,7 @@
                             "type": "vertical-stack"
                         }
                     ],
-                    "icon": "mdi:alarm",
+                    "icon": "mdi:alarm-light",
                     "panel": false,
                     "path": "alarm",
                     "title": "Alarm"
@@ -303,7 +303,7 @@
                                     "type": "icon"
                                 }
                             ],
-                            "image": "/local/upstairs_cleaning_map_latest.jpg",
+                            "image": "/local/upstairs_cleaning_map_latest.jpg?a=1",
                             "type": "picture-elements"
                         },
                         {
@@ -487,13 +487,46 @@
                                     "type": "icon"
                                 }
                             ],
-                            "image": "/local/basement_cleaning_map_latest.jpg",
+                            "image": "/local/basement_cleaning_map_latest.jpg?a=1",
                             "type": "picture-elements"
                         }
                     ],
                     "icon": "mdi:robot-vacuum",
                     "path": "vacuum",
                     "title": "Vacuum"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entities": [
+                                {
+                                    "entity": "switch.zone_1"
+                                },
+                                {
+                                    "entity": "switch.zone_2"
+                                },
+                                {
+                                    "entity": "switch.zone_3"
+                                },
+                                {
+                                    "entity": "switch.zone_4"
+                                },
+                                {
+                                    "entity": "switch.zone_5"
+                                },
+                                {
+                                    "entity": "switch.zone_6"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Zones",
+                            "type": "entities"
+                        }
+                    ],
+                    "icon": "mdi:water-pump",
+                    "path": "lawn",
+                    "title": "Lawn"
                 },
                 {
                     "badges": [],

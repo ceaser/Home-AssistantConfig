@@ -58,3 +58,15 @@ driveway_camera_toggle:
   - service: camera.turn_on
     data:
       entity_id: camera.driveway
+
+vacuum_camera_refresh:
+  alias: "Vacuum Camera Refresh"
+  sequence:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.basement_cleaning_map
+      filename: "/home/homeassistant/.homeassistant/www/basement_cleaning_map_latest.jpg"
+  - service: camera.snapshot
+    data:
+      entity_id: camera.upstairs_cleaning_map
+      filename: "/home/homeassistant/.homeassistant/www/camera.upstairs_cleaning_map"
