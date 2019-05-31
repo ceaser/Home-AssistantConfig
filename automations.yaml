@@ -371,10 +371,6 @@
       data:
         entity_id: climate.hallway
         operation_mode: auto
-    - service: climate.set_away_mode
-      data:
-        entity_id: climate.hallway
-        away_mode: false
 
 ################################################################################
 # notify_vitara sends an alert where I last parted the second car when I get
