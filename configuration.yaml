@@ -211,12 +211,20 @@ rainmachine:
 
 rest_command:
   nzbget:
-    url: http://nzbget/jsonrpc
+    url: !secret nzbget_url
     method: POST
     username: !secret nzbget_username
     password: !secret nzbget_password
     payload: >+
       {"jsonrpc":"2.0", "method":"{{ method }}"}
+  aria2:
+    url: !secret aria2_url
+    method: POST
+    headers:
+      accept: 'application/json, text/json'
+      content-type: 'application/json, text/json'
+    payload: >+
+      {"jsonrpc":"2.0", "id":1, "method":"{{ method }}", "params":["token:{{ token }}"]}
 
 input_boolean:
   notify_0x4950686f6e65:
@@ -231,9 +239,6 @@ input_boolean:
   notify_alexa:
     name: "Amazon Echo"
     icon: mdi:message
-
-switch:
-  - platform: neato
 
 # Laview Halo One
 camera:

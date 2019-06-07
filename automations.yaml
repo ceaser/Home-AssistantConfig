@@ -462,15 +462,25 @@
       entity_id: person.sarah
       event: leave
       zone: zone.home
+    - platform: time
+      at: '00:00:00'
   condition:
-    - condition: template
-      value_template: '{{
-        states.person.cearah.state != "home" and
-        states.person.sarah.state != "home"}}'
+    condition: or
+    conditions:
+      - condition: template
+        value_template: '{{
+          states.person.cearah.state != "home" and
+          states.person.sarah.state != "home"}}'
+      - condition: time
+        before: '08:00:00'
   action:
     - service: rest_command.nzbget
       data:
         method: resumedownload
+    - service: rest_command.aria2
+      data:
+        method: aria2.unpauseAll
+        token: !secret aria2_token
 
 ################################################################################
 # network_home_mode pauses all network services that consume large amount of
@@ -489,13 +499,19 @@
       event: enter
       zone: zone.home
   condition:
-    - condition: template
-      value_template: '{{
-        states.person.cearah.state == "home" or
-        states.person.sarah.state == "home"}}'
-    - condition: time
-      after: '08:30:00'
+    condition: or
+    conditions:
+      - condition: template
+        value_template: '{{
+          states.person.cearah.state == "home" or
+          states.person.sarah.state == "home"}}'
+      - condition: time
+        after: '08:00:00'
   action:
     - service: rest_command.nzbget
       data:
         method: pausedownload
+    - service: rest_command.aria2
+      data:
+        method: aria2.pauseAll
+        token: !secret aria2_token
