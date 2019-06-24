@@ -21,9 +21,11 @@ homeassistant:
   - type: legacy_api_password
     api_password: !secret http_password
 
-recorder:
-  purge_keep_days: 30
-  db_url: sqlite:////home/homeassistant/.homeassistant/logs
+#recorder:
+#  purge_keep_days: 10
+#  purge_interval: 1
+#  db_url: sqlite:////home/homeassistant/.homeassistant/logs
+
 logbook:
 
 # Configure a default setup of Home Assistant (frontend, api, etc)
