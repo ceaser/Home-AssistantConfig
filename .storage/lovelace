@@ -8,12 +8,11 @@
                     "cards": [
                         {
                             "entity": "camera.driveway_tf",
-                            "hold_action": "none",
-                            "name": "Drive Way",
-                            "tap_action": {
+                            "hold_action": {
                                 "action": "navigate",
                                 "navigation_path": "/lovelace/video"
                             },
+                            "name": "Drive Way",
                             "type": "picture-entity"
                         },
                         {
@@ -123,6 +122,39 @@
                     "badges": [],
                     "cards": [
                         {
+                            "entities": [
+                                {
+                                    "entity": "switch.zone_1"
+                                },
+                                {
+                                    "entity": "switch.zone_2"
+                                },
+                                {
+                                    "entity": "switch.zone_3"
+                                },
+                                {
+                                    "entity": "switch.zone_4"
+                                },
+                                {
+                                    "entity": "switch.zone_5"
+                                },
+                                {
+                                    "entity": "switch.zone_6"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Zones",
+                            "type": "entities"
+                        }
+                    ],
+                    "icon": "mdi:water-pump",
+                    "path": "lawn",
+                    "title": "Lawn"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
                             "elements": [
                                 {
                                     "entity": "vacuum.upstairs",
@@ -140,6 +172,21 @@
                                         "width": "100%"
                                     },
                                     "type": "state-label"
+                                },
+                                {
+                                    "icon": "mdi:reload",
+                                    "service": "script.vacuum_camera_refresh",
+                                    "style": {
+                                        "bottom": 0,
+                                        "color": "white",
+                                        "line-height": "32px",
+                                        "margin": "0 262px 0 0",
+                                        "padding": "8px",
+                                        "right": 0,
+                                        "transform": "initial"
+                                    },
+                                    "tap_action": "call-service",
+                                    "type": "icon"
                                 },
                                 {
                                     "icon": "mdi:play-pause",
@@ -303,7 +350,7 @@
                                     "type": "icon"
                                 }
                             ],
-                            "image": "/local/upstairs_cleaning_map_latest.jpg?a=1",
+                            "image": "/local/upstairs_cleaning_map_latest.jpg",
                             "type": "picture-elements"
                         },
                         {
@@ -324,6 +371,21 @@
                                         "width": "100%"
                                     },
                                     "type": "state-label"
+                                },
+                                {
+                                    "icon": "mdi:reload",
+                                    "service": "script.vacuum_camera_refresh",
+                                    "style": {
+                                        "bottom": 0,
+                                        "color": "white",
+                                        "line-height": "32px",
+                                        "margin": "0 262px 0 0",
+                                        "padding": "8px",
+                                        "right": 0,
+                                        "transform": "initial"
+                                    },
+                                    "tap_action": "call-service",
+                                    "type": "icon"
                                 },
                                 {
                                     "icon": "mdi:play-pause",
@@ -487,7 +549,7 @@
                                     "type": "icon"
                                 }
                             ],
-                            "image": "/local/basement_cleaning_map_latest.jpg?a=1",
+                            "image": "/local/basement_cleaning_map_latest.jpg",
                             "type": "picture-elements"
                         }
                     ],
@@ -499,38 +561,42 @@
                     "badges": [],
                     "cards": [
                         {
-                            "entities": [
+                            "cards": [
                                 {
-                                    "entity": "switch.zone_1"
+                                    "entities": [
+                                        {
+                                            "entity": "input_select.sonos_familyroom_source",
+                                            "name": "Source"
+                                        }
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "Family Room Sonos",
+                                    "type": "entities"
                                 },
                                 {
-                                    "entity": "switch.zone_2"
-                                },
-                                {
-                                    "entity": "switch.zone_3"
-                                },
-                                {
-                                    "entity": "switch.zone_4"
-                                },
-                                {
-                                    "entity": "switch.zone_5"
-                                },
-                                {
-                                    "entity": "switch.zone_6"
+                                    "card": {
+                                        "entities": [
+                                            {
+                                                "entity": "input_boolean.sonos_familyroom_night_sound"
+                                            },
+                                            {
+                                                "entity": "input_boolean.sonos_familyroom_speech_enhance"
+                                            }
+                                        ],
+                                        "show_header_toggle": false,
+                                        "type": "entities"
+                                    },
+                                    "conditions": [
+                                        {
+                                            "entity": "input_select.sonos_familyroom_source",
+                                            "state": "TV"
+                                        }
+                                    ],
+                                    "type": "conditional"
                                 }
                             ],
-                            "show_header_toggle": false,
-                            "title": "Zones",
-                            "type": "entities"
-                        }
-                    ],
-                    "icon": "mdi:water-pump",
-                    "path": "lawn",
-                    "title": "Lawn"
-                },
-                {
-                    "badges": [],
-                    "cards": [
+                            "type": "vertical-stack"
+                        },
                         {
                             "entity": "media_player.upstairs",
                             "type": "media-control"
@@ -540,11 +606,7 @@
                             "type": "media-control"
                         },
                         {
-                            "entity": "media_player.sonos_family_room",
-                            "type": "media-control"
-                        },
-                        {
-                            "entity": "media_player.xbr_85x850g",
+                            "entity": "media_player.sonos_familyroom",
                             "type": "media-control"
                         },
                         {
