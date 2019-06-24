@@ -70,3 +70,19 @@ vacuum_camera_refresh:
     data:
       entity_id: camera.upstairs_cleaning_map
       filename: "/home/homeassistant/.homeassistant/www/camera.upstairs_cleaning_map"
+
+sonos_familyroom_turn_off_nightsound:
+  alias: "Sonos Family Room Turn off Night Sound"
+  sequence:
+  - service: media_player.sonos_set_option
+    data:
+      entity_id: "media_player.sonos_family_room"
+      night_sound: false
+
+sonos_familyroom_turn_on_nightsound:
+  alias: "Sonos Family Room Turn on Night Sound"
+  sequence:
+  - service: media_player.sonos_set_option
+    data:
+      entity_id: "media_player.sonos_family_room"
+      night_sound: true

@@ -226,6 +226,13 @@ rest_command:
     payload: >+
       {"jsonrpc":"2.0", "id":1, "method":"{{ method }}", "params":["token:{{ token }}"]}
 
+input_select:
+  sonos_familyroom_source:
+    name: Source
+    options:
+      - None
+      - TV
+
 input_boolean:
   notify_0x4950686f6e65:
     name: "Ceaser"
@@ -239,6 +246,12 @@ input_boolean:
   notify_alexa:
     name: "Amazon Echo"
     icon: mdi:message
+  sonos_familyroom_night_sound:
+    name: "Family Room Night Sound"
+    icon: mdi:speaker
+  sonos_familyroom_speech_enhance:
+    name: "Family Room Night Speech Enhancement"
+    icon: mdi:voice
 
 # Laview Halo One
 camera:
