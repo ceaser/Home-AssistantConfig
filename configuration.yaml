@@ -203,7 +203,7 @@ switch:
     payload_on: "ON"
     payload_off: "OFF"
     optimistic: true
-    qos: 0
+    qos: 1
     retain: true
     value_template: '{{ value.x }}'
 
@@ -214,7 +214,14 @@ switch:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+
+# Don't use retain for Sonoff-Tasmota. See https://www.youtube.com/watch?v=31IyfM1gygo for more information
+# On the Tasmota console type the following commands:
+# SwitchRetain Off 
+# ButtonRetain On
+# ButtonRetain Off
+# PowerOnState 3
+# PowerRetain On
 
 mqtt:
   broker: localhost

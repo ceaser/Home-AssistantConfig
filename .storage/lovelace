@@ -970,7 +970,8 @@
                             "show_icon": true,
                             "show_name": true,
                             "tap_action": {
-                                "action": "call-service"
+                                "action": "call-service",
+                                "service": "script.turn_off_anet_a8"
                             },
                             "type": "entity-button"
                         },
