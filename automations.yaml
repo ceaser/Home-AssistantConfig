@@ -726,7 +726,7 @@
   trigger:
     - platform: state
       entity_id: sensor.anet_a8_current_state
-      from: 'Unknown'
+      from: 'unknown'
       to: 'Operational'
   action:
     - service: notify.ios_0x4950686f6e65
