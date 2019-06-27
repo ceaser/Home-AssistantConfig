@@ -66,29 +66,16 @@
                     "title": "Alarm"
                 },
                 {
-                    "badges": [],
-                    "cards": [
-                        {
-                            "entity": "camera.driveway",
-                            "type": "picture-entity"
-                        },
-                        {
-                            "entity": "camera.doorbell",
-                            "type": "picture-entity"
-                        }
-                    ],
-                    "icon": "mdi:video",
-                    "path": "video",
-                    "title": "Video"
-                },
-                {
                     "badges": [
                         "binary_sensor.hallway_thermostat_online",
                         "binary_sensor.hallway_thermostat_has_leaf",
                         "binary_sensor.hallway_thermostat_fan",
                         "binary_sensor.home_away",
                         "sensor.hallway_thermostat_hvac_state",
-                        "sensor.dark_sky_precip_probability"
+                        "sensor.dark_sky_precip_probability",
+                        "sensor.office_temperature",
+                        "sensor.office_humidity",
+                        "sensor.hallway_thermostat_humidity"
                     ],
                     "cards": [
                         {
@@ -103,7 +90,7 @@
                             "entities": [
                                 {
                                     "entity": "sensor.hallway_thermostat_temperature",
-                                    "name": "Inside"
+                                    "name": "Hallway"
                                 },
                                 {
                                     "entity": "sensor.dark_sky_temperature",
@@ -117,6 +104,22 @@
                     "icon": "mdi:thermometer",
                     "path": "climate",
                     "title": "Climate"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entity": "camera.driveway",
+                            "type": "picture-entity"
+                        },
+                        {
+                            "entity": "camera.doorbell",
+                            "type": "picture-entity"
+                        }
+                    ],
+                    "icon": "mdi:video",
+                    "path": "video",
+                    "title": "Video"
                 },
                 {
                     "badges": [],
@@ -622,6 +625,23 @@
                     "badges": [],
                     "cards": [
                         {
+                            "entities": [
+                                {
+                                    "entity": "switch.office"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Switch",
+                            "type": "entities"
+                        }
+                    ],
+                    "icon": "mdi:lightbulb",
+                    "title": "Lights"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
                             "cards": [
                                 {
                                     "entity": "sensor.0x4950686f6e65_battery_level",
@@ -888,6 +908,97 @@
                         }
                     ],
                     "title": "Sanda"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entities": [
+                                {
+                                    "entity": "binary_sensor.anet_a8_printing"
+                                },
+                                {
+                                    "entity": "binary_sensor.anet_a8_printing_error"
+                                },
+                                {
+                                    "entity": "sensor.anet_a8_current_state"
+                                },
+                                {
+                                    "entity": "sensor.anet_a8_job_percentage"
+                                },
+                                {
+                                    "entity": "sensor.anet_a8_time_elapsed"
+                                },
+                                {
+                                    "entity": "sensor.anet_a8_time_remaining"
+                                }
+                            ],
+                            "type": "entities"
+                        },
+                        {
+                            "entity": "camera.anet_a8",
+                            "type": "picture-entity"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "switch.anet_a8_power_strip"
+                                },
+                                {
+                                    "entity": "automation.notify_when_printer_is_operational"
+                                },
+                                {
+                                    "entity": "automation.notify_when_printer_is_ready"
+                                },
+                                {
+                                    "entity": "automation.notify_when_printer_is_finished"
+                                },
+                                {
+                                    "entity": "automation.turn_off_power_when_finished_printing"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Switches",
+                            "type": "entities"
+                        },
+                        {
+                            "entity": "switch.anet_a8_power_strip",
+                            "hold_action": {
+                                "action": "more-info"
+                            },
+                            "name": "Shutdown",
+                            "show_icon": true,
+                            "show_name": true,
+                            "tap_action": {
+                                "action": "call-service"
+                            },
+                            "type": "entity-button"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.anet_a8_actual_bed_temp",
+                                    "name": "Bed"
+                                }
+                            ],
+                            "hours_to_show": 1,
+                            "refresh": 2,
+                            "type": "history-graph"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.anet_a8_actual_tool0_temp",
+                                    "name": "Extruder"
+                                }
+                            ],
+                            "hours_to_show": 1,
+                            "refresh": 2,
+                            "type": "history-graph"
+                        }
+                    ],
+                    "icon": "",
+                    "title": "3D Printer"
                 }
             ]
         }

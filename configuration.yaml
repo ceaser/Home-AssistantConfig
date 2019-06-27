@@ -146,6 +146,18 @@ sensor:
         value_template: '{{ states.vacuum.upstairs.attributes.battery_level }} %'
         icon_template: '{{ states.vacuum.upstairs.attributes.battery_icon }}'
 
+  - platform: mqtt
+    state_topic: "office/temperature"
+    name: "Office Temperature"
+    qos: 0
+    unit_of_measurement: "°C"
+
+  - platform: mqtt
+    state_topic: "office/humidity"
+    name: "Office Humidity"
+    qos: 0
+    unit_of_measurement: "%"
+
 weather:
   - platform: darksky
     api_key: !secret darksky_api_key
@@ -184,7 +196,31 @@ ios:
 
 switch:
   - platform: neato
-#  - platform: rainmachine
+
+  - platform: mqtt
+    name: "Office"
+    command_topic: "office/switch1"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: true
+    qos: 0
+    retain: true
+    value_template: '{{ value.x }}'
+
+  - platform: mqtt
+    name: "Anet A8 Power Strip"
+    command_topic: "cmnd/a8/power"
+    state_topic: "stat/a8/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+
+mqtt:
+  broker: localhost
+  port: 1883
+  username: !secret mosquitto_username
+  password: !secret mosquitto_password
 
 rainmachine:
   controllers:
@@ -259,12 +295,16 @@ input_boolean:
 camera:
   - platform: neato
   - platform: ffmpeg
-    name: Doorbell 
-    input: !secret doorbell_url 
+    name: Doorbell
+    input: !secret doorbell_url
     extra_arguments: -vf "scale=iw/4:ih/4" -q:v 2
   - platform: local_file
-    name: Driveway TF 
+    name: Driveway TF
     file_path: /home/homeassistant/.homeassistant/www/driveway_latest.jpg
+  - platform: mjpeg
+    name: Anet A8
+    still_image_url: http://192.168.1.145:8080/?action=snapshot
+    mjpeg_url: http://192.168.1.145:8080/?action=stream
 
 # Amcrest camera
 amcrest:
@@ -285,7 +325,7 @@ amcrest:
 
 # Provides a way to proxy live streams through Home Assistant
 # https://www.home-assistant.io/components/stream/
-stream: 
+stream:
 
 # Allows other components to process video and audio streams
 # https://www.home-assistant.io/components/ffmpeg/
@@ -296,14 +336,14 @@ ffmpeg:
 apple_tv:
   - host: 192.168.75.11
     login_id: !secret apple_login_id
-    name: Downstairs 
+    name: Downstairs
     start_off: false
     credentials: !secret downstairs_password
   - host: 192.168.75.10
     login_id: !secret apple_login_id
     name: Upstairs
     start_off: false
-    credentials: !secret upstairs_password 
+    credentials: !secret upstairs_password
 alexa_media:
   accounts:
     - email: !secret amazon_username1
@@ -322,11 +362,11 @@ zone:
     icon: mdi:account-multiple
 
   - name: !secret work_name
-    latitude: !secret work_latitude 
-    longitude: !secret work_longitude 
+    latitude: !secret work_latitude
+    longitude: !secret work_longitude
     icon: mdi:worker
 
-  - name: !secret school_name 
+  - name: !secret school_name
     latitude: !secret school_latitude 
     longitude: !secret school_longitude 
     radius: 100
@@ -455,6 +495,20 @@ neato:
   username: !secret neato_username 
   password: !secret neato_password
 
+octoprint:
+  name: Anet A8
+  host: 192.168.1.145
+  api_key: !secret octoprint_api_key
+  port: 5000
+  bed: true
+  ssl: false
+  number_of_tools: 1
+
+shell_command:
+  deluge_pause: !secret deluge_pause 
+  deluge_resume: !secret deluge_resume
+  stop_octoprint: !secret stop_octoprint
+ 
 # Echo integration. See https://www.home-assistant.io/components/alexa/
 # for more information.
 alexa:

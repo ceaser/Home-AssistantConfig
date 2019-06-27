@@ -86,3 +86,23 @@ sonos_familyroom_turn_on_nightsound:
     data:
       entity_id: "media_player.sonos_family_room"
       night_sound: true
+
+turn_off_anet_a8:
+ alias: 'Turn off Anet A8'
+ sequence:
+ - service: shell_command.stop_octoprint
+ - service: logbook.log
+   data_template:
+     name: "Printer: "
+     message: >-
+       Shutdown Octoprint
+ - delay: '00:02:00'
+ - service: switch.turn_off
+   data:
+     entity_id: switch.anet_a8_power_strip
+ - service: logbook.log
+   data_template:
+     name: "Printer: "
+     message: >-
+       Turn off Anet A8 Power Strip
+

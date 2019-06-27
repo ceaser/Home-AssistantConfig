@@ -81,7 +81,7 @@
   - service: camera.record
 
 ################################################################################
-# notify_camera_videos sends a notification when a new video is created 
+# notify_camera_videos sends a notification when a new video is created
 ################################################################################
 - id: notify_camera_videos
   alias: 'Notify camera videos'
@@ -108,7 +108,7 @@
 ################################################################################
 # notify_*_camera_pictures sends a picture of the object detected in the
 # image_processing_scan. If has conditions for a specific input_boolean and
-# notify device 
+# notify device
 ################################################################################
 - id: notify_ceaser_camera_pictures
   alias: 'Notify Ceaser camera pictures'
@@ -152,7 +152,7 @@
 ################################################################################
 # notify_*_camera_pictures sends a picture of the object detected in the
 # image_processing_scan. If has conditions for a specific input_boolean and
-# notify device 
+# notify device
 ################################################################################
 - id: notify_sarah_camera_pictures
   alias: 'Notify Sarah camera pictures'
@@ -196,7 +196,7 @@
 ################################################################################
 # notify_*_camera_pictures sends a picture of the object detected in the
 # image_processing_scan. If has conditions for a specific input_boolean and
-# notify device 
+# notify device
 ################################################################################
 - id: notify_cearah_camera_pictures
   alias: 'Notify Cearah camera pictures'
@@ -294,7 +294,7 @@
           - media_player.kitchenecho
           - media_player.ceaser_s_sonos_beam
         title: >
-          "camera.{{ trigger.entity_id.split('.')[1].split('_')[1] }} notification" 
+          "camera.{{ trigger.entity_id.split('.')[1].split('_')[1] }} notification"
         message: >
           Detected a {{ state_attr(trigger.entity_id,'matches').keys()|list|unique|list|join(' and ')|title }} in the {{ trigger.entity_id.split('.')[1].split('_')[1] }} camera.
         data:
@@ -307,7 +307,7 @@
 
 ################################################################################
 # climate_away_mode sets the thermostats to eco and away mode when humans are
-# away  
+# away
 ################################################################################
 - id: climate_away_mode
   alias: 'Climate Away Mode'
@@ -328,7 +328,7 @@
   condition:
     - condition: template
       value_template: '{{
-        states.climate.hallway.attributes.away_mode == "off" and 
+        states.climate.hallway.attributes.away_mode == "off" and
         states.person.cearah.state != "home" and
         states.person.ceaser.state != "home" and
         states.person.sarah.state != "home"}}'
@@ -344,7 +344,7 @@
 
 ################################################################################
 # climate_home_mode sets the thermostats to auto mode when humans are
-# home  
+# home
 ################################################################################
 - id: climate_home_mode
   alias: 'Climate Home Mode'
@@ -437,7 +437,7 @@
 
 
 ################################################################################
-# 
+#
 ################################################################################
 - id: alexa_night_volume_family_room
   alias: 'Alexa Volume [Night]: Family Room'
@@ -455,7 +455,7 @@
       volume_level: '0.40'
 
 ################################################################################
-# 
+#
 ################################################################################
 - id: alexa_night_volume_family_room
   alias: 'Alexa Volume [Night]: Family Room'
@@ -477,7 +477,7 @@
       volume_level: '0.10'
 
 ################################################################################
-# capture_cleaning_map updates the vacuums cleaning map 
+# capture_cleaning_map updates the vacuums cleaning map
 ################################################################################
 - id: capture_cleaning_map
   alias: 'Update Cleaning Map'
@@ -531,6 +531,7 @@
       data:
         method: aria2.unpauseAll
         token: !secret aria2_token
+    - service: shell_command.deluge_resume
 
 ################################################################################
 # network_home_mode pauses all network services that consume large amount of
@@ -565,6 +566,7 @@
       data:
         method: aria2.pauseAll
         token: !secret aria2_token
+    - service: shell_command.deluge_pause
 
 ################################################################################
 # Sonos
@@ -618,3 +620,118 @@
           {{ states('input_boolean.sonos_familyroom_night_sound') == "on" }}
         speech_enhance: >
           {{ states('input_boolean.sonos_familyroom_speech_enhance') == "on" }}
+################################################################################
+# Printing
+################################################################################
+- id: notify_when_printer_is_ready
+  alias: 'Notify When Printer is Ready'
+  initial_state: on
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.anet_a8_actual_tool0_temp
+      above: 374 # 190 C
+      for:
+        minutes: 5
+    - platform: numeric_state
+      entity_id: sensor.anet_a8_actual_bed_temp
+      above: 122 # 50 C
+      for:
+        minutes: 5
+  condition:
+    - condition: template
+      value_template: >
+        {%- if states.automation.notify_when_printer_is_ready.attributes.last_triggered -%}
+          {{ (as_timestamp(now()) - as_timestamp(states.automation.notify_when_printer_is_ready.attributes.last_triggered)) > 60 }}
+        {%- else -%}
+          true
+        {%- endif -%}
+    - condition: state
+      entity_id: binary_sensor.anet_a8_printing
+      state: 'off'
+    - condition: numeric_state
+      entity_id: sensor.anet_a8_actual_bed_temp
+      above: 122
+    - condition: numeric_state
+      entity_id: sensor.anet_a8_actual_tool0_temp
+      above: 374
+  action:
+    - service: notify.ios_0x4950686f6e65
+      data_template:
+        message: "Printer is ready"
+        data:
+          push:
+            category: 'printer'
+
+- id: notify_when_printer_is_finished
+  alias: 'Notify When Printer is Finished'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.anet_a8_printing
+      from: 'on'
+      to: 'off'
+  action:
+    - service: notify.ios_0x4950686f6e65
+      data_template:
+        message: "Printing is completed"
+        data:
+          push:
+            category: 'printer'
+          attachment:
+            hide-thumbnail: false
+            url: camera.anet_a8.attributes.entity_picture
+          subtitle: Swipe left to view
+
+- id: turn_off_power_when_finished_printing
+  alias: 'Turn off power when finished printing'
+  initial_state: off
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.anet_a8_printing
+      from: 'on'
+      to: 'off'
+      for:
+        minutes: 1
+  condition:
+    - condition: template
+      value_template: >
+        {%- if states.automation.turn_off_power_when_finished_printing.attributes.last_triggered -%}
+          {{ (as_timestamp(now()) - as_timestamp(states.automation.turn_off_power_when_finished_printing.attributes.last_triggered)) > 120 }}
+        {%- else -%}
+          true
+        {%- endif -%}
+    - condition: state
+      entity_id: binary_sensor.anet_a8_printing
+      state: 'off'
+  action:
+    - service: shell_command.stop_octoprint
+    - service: logbook.log
+      data_template:
+        name: "Printer: "
+        message: >-
+          Shutdown Octoprint
+    - delay: '00:02:00'
+    - service: switch.turn_off
+      data:
+        entity_id: switch.anet_a8_power_strip
+    - service: logbook.log
+      data_template:
+        name: "Printer: "
+        message: >-
+          Turn off Anet A8 Power Strip
+
+- id: notify_when_printer_is_operational
+  alias: 'Notify When Printer is Operational'
+  initial_state: on
+  trigger:
+    - platform: state
+      entity_id: sensor.anet_a8_current_state
+      from: 'Unknown'
+      to: 'Operational'
+  action:
+    - service: notify.ios_0x4950686f6e65
+      data_template:
+        message: "Printer Online"
+        data:
+          push:
+            category: 'printer'
