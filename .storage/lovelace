@@ -97,7 +97,21 @@
                                     "name": "Outside"
                                 }
                             ],
-                            "title": "Temperature",
+                            "title": "Inside vs Outside",
+                            "type": "history-graph"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.hallway_thermostat_temperature",
+                                    "name": "Up stairs"
+                                },
+                                {
+                                    "entity": "sensor.office_temperature",
+                                    "name": "Down stairs"
+                                }
+                            ],
+                            "title": "Upstairs vs Downstairs",
                             "type": "history-graph"
                         }
                     ],

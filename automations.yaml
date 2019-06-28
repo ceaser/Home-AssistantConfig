@@ -326,6 +326,9 @@
       event: leave
       zone: zone.home
   condition:
+    - condition: state
+      entity_id: binary_sensor.hallway_thermostat_online
+      state: 'on'
     - condition: template
       value_template: '{{
         states.climate.hallway.attributes.away_mode == "off" and
@@ -363,6 +366,9 @@
       event: enter
       zone: zone.home
   condition:
+    - condition: state
+      entity_id: binary_sensor.hallway_thermostat_online
+      state: 'on'
     - condition: template
       value_template: '{{
         states.climate.hallway.attributes.away_mode == "on" and
@@ -380,6 +386,83 @@
       data:
         entity_id: climate.hallway
         operation_mode: auto
+
+- id: turn_on_fan
+  alias: 'Turn on fan'
+  initial_state: 'on'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.office_temperature
+      below: 75
+      above: 80
+    - platform: numeric_state
+      entity_id: sensor.office_temperature
+      below: 79
+      above: 80
+  condition:
+    - condition: template
+      value_template: >
+        {%- if states.automation.turn_on_fan.attributes.last_triggered -%}
+          {{ (as_timestamp(now()) - as_timestamp(states.automation.turn_on_fan.attributes.last_triggered)) > 1800 }}
+        {%- else -%}
+          true
+        {%- endif -%}
+    - condition: state
+      entity_id: sensor.hallway_thermostat_hvac_state
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.hallway_thermostat_fan
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.hallway_thermostat_online
+      state: 'on'
+    - condition: template
+      value_template: <
+        {{ (states.climate.hallway.attributes.target_temp_high | int) - (states.sensor.office_temperature.state |round | int ) > 3 }}
+  action:
+    - service: climate.set_fan_mode
+      data:
+        entity_id: climate.hallway
+        fan_mode: 'on'
+
+- id: turn_off_fan
+  alias: 'Turn off fan'
+  initial_state: 'on'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.office_temperature
+      below: 80
+      above: 75
+    - platform: numeric_state
+      entity_id: sensor.office_temperature
+      below: 80
+      above: 79
+  condition:
+    - condition: template
+      value_template: >
+        {%- if states.automation.turn_off_fan.attributes.last_triggered -%}
+          {{ (as_timestamp(now()) - as_timestamp(states.automation.turn_off_fan.attributes.last_triggered)) > 1800 }}
+        {%- else -%}
+          true
+        {%- endif -%}
+    - condition: state
+      entity_id: sensor.hallway_thermostat_hvac_state
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.hallway_thermostat_fan
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.hallway_thermostat_online
+      state: 'on'
+    - condition: template
+      value_template: <
+        {{ (states.climate.hallway.attributes.target_temp_high | int) - (states.sensor.office_temperature.state |round | int ) <= 3 }}
+  action:
+    - service: climate.set_fan_mode
+      data:
+        entity_id: climate.hallway
+        fan_mode: 'off'
+
 
 ################################################################################
 # notify_vitara sends an alert where I last parted the second car when I get
