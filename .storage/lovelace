@@ -74,8 +74,10 @@
                         "sensor.hallway_thermostat_hvac_state",
                         "sensor.dark_sky_precip_probability",
                         "sensor.office_temperature",
+                        "sensor.sandra_s_room_temperature",
+                        "sensor.hallway_thermostat_humidity",
                         "sensor.office_humidity",
-                        "sensor.hallway_thermostat_humidity"
+                        "sensor.sandra_s_room_humidity"
                     ],
                     "cards": [
                         {
@@ -172,402 +174,58 @@
                     "badges": [],
                     "cards": [
                         {
-                            "elements": [
+                            "entity": "camera.upstairs_cleaning_map",
+                            "type": "picture-entity"
+                        },
+                        {
+                            "entities": [
                                 {
-                                    "entity": "vacuum.upstairs",
-                                    "prefix": "Up Stairs: ",
-                                    "style": {
-                                        "background-color": "rgba(0, 0, 0, 0.3)",
-                                        "bottom": 0,
-                                        "color": "white",
-                                        "font-size": "16px",
-                                        "left": 0,
-                                        "line-height": "32px",
-                                        "padding": "0 8px",
-                                        "pointer-events": "none",
-                                        "transform": "initial",
-                                        "width": "100%"
-                                    },
-                                    "type": "state-label"
-                                },
-                                {
-                                    "icon": "mdi:reload",
-                                    "service": "script.vacuum_camera_refresh",
-                                    "style": {
-                                        "bottom": 0,
-                                        "color": "white",
-                                        "line-height": "32px",
-                                        "margin": "0 262px 0 0",
-                                        "padding": "8px",
-                                        "right": 0,
-                                        "transform": "initial"
-                                    },
-                                    "tap_action": "call-service",
-                                    "type": "icon"
-                                },
-                                {
-                                    "icon": "mdi:play-pause",
-                                    "service": "script.upstairs_vacuum_toggle",
-                                    "style": {
-                                        "bottom": 0,
-                                        "color": "white",
-                                        "line-height": "32px",
-                                        "margin": "0 222px 0 0",
-                                        "padding": "8px",
-                                        "right": 0,
-                                        "transform": "initial"
-                                    },
-                                    "tap_action": "call-service",
-                                    "type": "icon"
-                                },
-                                {
-                                    "entity": "vacuum.upstairs",
-                                    "icon": "mdi:home-map-marker",
-                                    "service": "vacuum.return_to_base",
-                                    "style": {
-                                        "bottom": 0,
-                                        "color": "white",
-                                        "line-height": "32px",
-                                        "margin": "0 182px 0 0",
-                                        "padding": "8px",
-                                        "right": 0,
-                                        "transform": "initial"
-                                    },
-                                    "tap_action": "call-service",
-                                    "type": "icon"
-                                },
-                                {
-                                    "entity": "vacuum.upstairs",
-                                    "icon": "mdi:map-marker",
-                                    "service": "vacuum.locate",
-                                    "style": {
-                                        "bottom": 0,
-                                        "color": "white",
-                                        "line-height": "32px",
-                                        "margin": "0 142px 0 0",
-                                        "padding": "8px",
-                                        "right": 0,
-                                        "transform": "initial"
-                                    },
-                                    "tap_action": "call-service",
-                                    "type": "icon"
-                                },
-                                {
-                                    "entity": "switch.upstairs_schedule",
-                                    "style": {
-                                        "--paper-item-icon-color": "rgb(255,255,255)",
-                                        "bottom": 0,
-                                        "color": "white",
-                                        "line-height": "32px",
-                                        "margin": "0 97px -4px 0",
-                                        "padding": "8px",
-                                        "right": 0,
-                                        "transform": "initial"
-                                    },
-                                    "tap_action": "toggle",
-                                    "type": "state-icon"
-                                },
-                                {
-                                    "entity": "camera.upstairs_cleaning_map",
-                                    "icon": "mdi:map",
-                                    "style": {
-                                        "bottom": 0,
-                                        "color": "white",
-                                        "line-height": "32px",
-                                        "margin": "0 67px 0 0",
-                                        "padding": "8px",
-                                        "right": 0,
-                                        "transform": "initial"
-                                    },
-                                    "type": "icon"
+                                    "entity": "script.upstairs_vacuum_toggle",
+                                    "name": "Play/Pause"
                                 },
                                 {
                                     "entity": "sensor.upstairs_vacuum_battery",
-                                    "style": {
-                                        "color": "rgba(255,255,255,1)",
-                                        "font-size": "12px",
-                                        "line-height": "32px",
-                                        "margin": "1px 35px",
-                                        "pointer-events": "none",
-                                        "right": 0,
-                                        "text-shadow": "rgba(0, 0, 0, 0.8) 0px 0px 2px",
-                                        "top": 0,
-                                        "transform": "initial"
-                                    },
-                                    "type": "state-label"
-                                },
-                                {
-                                    "entity": "sensor.upstairs_vacuum_battery",
-                                    "style": {
-                                        "--paper-item-icon-color": "rgb(255,255,255)",
-                                        "color": "rgba(255,255,255,1)",
-                                        "line-height": "32px",
-                                        "margin": "3px 5px 0 0",
-                                        "pointer-events": "none",
-                                        "right": 0,
-                                        "top": 0,
-                                        "transform": "scale(0.8)"
-                                    },
-                                    "type": "state-icon"
+                                    "name": "Battery"
                                 },
                                 {
                                     "entity": "sensor.upstairs_vacuum_last_run",
-                                    "style": {
-                                        "color": "rgba(255,255,255,1)",
-                                        "font-size": "12px",
-                                        "line-height": "32px",
-                                        "margin": "30px 35px",
-                                        "pointer-events": "none",
-                                        "right": 0,
-                                        "text-shadow": "rgba(0, 0, 0, 0.8) 0px 0px 2px",
-                                        "top": 0,
-                                        "transform": "initial"
-                                    },
-                                    "type": "state-label"
-                                },
-                                {
-                                    "icon": "mdi:calendar-check",
-                                    "style": {
-                                        "color": "rgba(255,255,255,1)",
-                                        "line-height": "32px",
-                                        "margin": "36px 13px",
-                                        "pointer-events": "none",
-                                        "right": 0,
-                                        "top": 0,
-                                        "transform": "scale(0.8)"
-                                    },
-                                    "type": "icon"
+                                    "name": "Last Run"
                                 },
                                 {
                                     "entity": "sensor.upstairs_vacuum_last_sqft",
-                                    "style": {
-                                        "color": "rgba(255,255,255,1)",
-                                        "font-size": "12px",
-                                        "line-height": "32px",
-                                        "margin": "59px 35px",
-                                        "pointer-events": "none",
-                                        "right": 0,
-                                        "text-shadow": "rgba(0, 0, 0, 0.8) 0px 0px 2px",
-                                        "top": 0,
-                                        "transform": "initial"
-                                    },
-                                    "type": "state-label"
-                                },
-                                {
-                                    "icon": "mdi:floor-plan",
-                                    "style": {
-                                        "color": "rgba(255,255,255,1)",
-                                        "line-height": "32px",
-                                        "margin": "65px 13px",
-                                        "pointer-events": "none",
-                                        "right": 0,
-                                        "top": 0,
-                                        "transform": "scale(0.8)"
-                                    },
-                                    "type": "icon"
+                                    "name": "Area Cleaned"
                                 }
                             ],
-                            "image": "/local/upstairs_cleaning_map_latest.jpg",
-                            "type": "picture-elements"
+                            "show_header_toggle": false,
+                            "title": "Upstairs Vacuum",
+                            "type": "entities"
                         },
                         {
-                            "elements": [
+                            "entity": "camera.basement_cleaning_map",
+                            "type": "picture-entity"
+                        },
+                        {
+                            "entities": [
                                 {
-                                    "entity": "vacuum.basement",
-                                    "prefix": "Basement: ",
-                                    "style": {
-                                        "background-color": "rgba(0, 0, 0, 0.3)",
-                                        "bottom": 0,
-                                        "color": "white",
-                                        "font-size": "16px",
-                                        "left": 0,
-                                        "line-height": "32px",
-                                        "padding": "0 8px",
-                                        "pointer-events": "none",
-                                        "transform": "initial",
-                                        "width": "100%"
-                                    },
-                                    "type": "state-label"
-                                },
-                                {
-                                    "icon": "mdi:reload",
-                                    "service": "script.vacuum_camera_refresh",
-                                    "style": {
-                                        "bottom": 0,
-                                        "color": "white",
-                                        "line-height": "32px",
-                                        "margin": "0 262px 0 0",
-                                        "padding": "8px",
-                                        "right": 0,
-                                        "transform": "initial"
-                                    },
-                                    "tap_action": "call-service",
-                                    "type": "icon"
-                                },
-                                {
-                                    "icon": "mdi:play-pause",
-                                    "service": "script.basement_vacuum_toggle",
-                                    "style": {
-                                        "bottom": 0,
-                                        "color": "white",
-                                        "line-height": "32px",
-                                        "margin": "0 222px 0 0",
-                                        "padding": "8px",
-                                        "right": 0,
-                                        "transform": "initial"
-                                    },
-                                    "tap_action": "call-service",
-                                    "type": "icon"
-                                },
-                                {
-                                    "entity": "vacuum.basement",
-                                    "icon": "mdi:home-map-marker",
-                                    "service": "vacuum.return_to_base",
-                                    "style": {
-                                        "bottom": 0,
-                                        "color": "white",
-                                        "line-height": "32px",
-                                        "margin": "0 182px 0 0",
-                                        "padding": "8px",
-                                        "right": 0,
-                                        "transform": "initial"
-                                    },
-                                    "tap_action": "call-service",
-                                    "type": "icon"
-                                },
-                                {
-                                    "entity": "vacuum.basement",
-                                    "icon": "mdi:map-marker",
-                                    "service": "vacuum.locate",
-                                    "style": {
-                                        "bottom": 0,
-                                        "color": "white",
-                                        "line-height": "32px",
-                                        "margin": "0 142px 0 0",
-                                        "padding": "8px",
-                                        "right": 0,
-                                        "transform": "initial"
-                                    },
-                                    "tap_action": "call-service",
-                                    "type": "icon"
-                                },
-                                {
-                                    "entity": "switch.basement_schedule",
-                                    "style": {
-                                        "--paper-item-icon-color": "rgb(255,255,255)",
-                                        "bottom": 0,
-                                        "color": "white",
-                                        "line-height": "32px",
-                                        "margin": "0 97px -4px 0",
-                                        "padding": "8px",
-                                        "right": 0,
-                                        "transform": "initial"
-                                    },
-                                    "tap_action": "toggle",
-                                    "type": "state-icon"
-                                },
-                                {
-                                    "entity": "camera.basement_cleaning_map",
-                                    "icon": "mdi:map",
-                                    "style": {
-                                        "bottom": 0,
-                                        "color": "white",
-                                        "line-height": "32px",
-                                        "margin": "0 67px 0 0",
-                                        "padding": "8px",
-                                        "right": 0,
-                                        "transform": "initial"
-                                    },
-                                    "type": "icon"
+                                    "entity": "script.basement_vacuum_toggle",
+                                    "name": "Play/Pause"
                                 },
                                 {
                                     "entity": "sensor.basement_vacuum_battery",
-                                    "style": {
-                                        "color": "rgba(255,255,255,1)",
-                                        "font-size": "12px",
-                                        "line-height": "32px",
-                                        "margin": "1px 35px",
-                                        "pointer-events": "none",
-                                        "right": 0,
-                                        "text-shadow": "rgba(0, 0, 0, 0.8) 0px 0px 2px",
-                                        "top": 0,
-                                        "transform": "initial"
-                                    },
-                                    "type": "state-label"
-                                },
-                                {
-                                    "entity": "sensor.basement_vacuum_battery",
-                                    "style": {
-                                        "--paper-item-icon-color": "rgb(255,255,255)",
-                                        "color": "rgba(255,255,255,1)",
-                                        "line-height": "32px",
-                                        "margin": "3px 5px 0 0",
-                                        "pointer-events": "none",
-                                        "right": 0,
-                                        "top": 0,
-                                        "transform": "scale(0.8)"
-                                    },
-                                    "type": "state-icon"
+                                    "name": "Battery"
                                 },
                                 {
                                     "entity": "sensor.basement_vacuum_last_run",
-                                    "style": {
-                                        "color": "rgba(255,255,255,1)",
-                                        "font-size": "12px",
-                                        "line-height": "32px",
-                                        "margin": "30px 35px",
-                                        "pointer-events": "none",
-                                        "right": 0,
-                                        "text-shadow": "rgba(0, 0, 0, 0.8) 0px 0px 2px",
-                                        "top": 0,
-                                        "transform": "initial"
-                                    },
-                                    "type": "state-label"
-                                },
-                                {
-                                    "icon": "mdi:calendar-check",
-                                    "style": {
-                                        "color": "rgba(255,255,255,1)",
-                                        "line-height": "32px",
-                                        "margin": "36px 13px",
-                                        "pointer-events": "none",
-                                        "right": 0,
-                                        "top": 0,
-                                        "transform": "scale(0.8)"
-                                    },
-                                    "type": "icon"
+                                    "name": "Last Run"
                                 },
                                 {
                                     "entity": "sensor.basement_vacuum_last_sqft",
-                                    "style": {
-                                        "color": "rgba(255,255,255,1)",
-                                        "font-size": "12px",
-                                        "line-height": "32px",
-                                        "margin": "59px 35px",
-                                        "pointer-events": "none",
-                                        "right": 0,
-                                        "text-shadow": "rgba(0, 0, 0, 0.8) 0px 0px 2px",
-                                        "top": 0,
-                                        "transform": "initial"
-                                    },
-                                    "type": "state-label"
-                                },
-                                {
-                                    "icon": "mdi:floor-plan",
-                                    "style": {
-                                        "color": "rgba(255,255,255,1)",
-                                        "line-height": "32px",
-                                        "margin": "65px 13px",
-                                        "pointer-events": "none",
-                                        "right": 0,
-                                        "top": 0,
-                                        "transform": "scale(0.8)"
-                                    },
-                                    "type": "icon"
+                                    "name": "Area Cleaned"
                                 }
                             ],
-                            "image": "/local/basement_cleaning_map_latest.jpg",
-                            "type": "picture-elements"
+                            "show_header_toggle": false,
+                            "title": "Basement Vacuum",
+                            "type": "entities"
                         }
                     ],
                     "icon": "mdi:robot-vacuum",
@@ -641,11 +299,59 @@
                         {
                             "entities": [
                                 {
-                                    "entity": "switch.office"
+                                    "entity": "switch.garage_entry_light"
+                                },
+                                {
+                                    "entity": "switch.storage_room"
+                                }
+                            ],
+                            "title": "Lights",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "binary_sensor.office_room_motion",
+                                    "name": "Motion"
+                                },
+                                {
+                                    "entity": "sensor.office_luminosity",
+                                    "name": "Luminosity"
+                                },
+                                {
+                                    "entity": "sensor.office_temperature",
+                                    "name": "Temperature"
+                                },
+                                {
+                                    "entity": "sensor.office_humidity",
+                                    "name": "Humidity"
                                 }
                             ],
                             "show_header_toggle": false,
-                            "title": "Switch",
+                            "title": "Office",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "binary_sensor.sanda_s_room_motion",
+                                    "name": "Motion"
+                                },
+                                {
+                                    "entity": "sensor.sandra_s_room_luminosity",
+                                    "name": "Luminosity"
+                                },
+                                {
+                                    "entity": "sensor.sandra_s_room_temperature",
+                                    "name": "Temperature"
+                                },
+                                {
+                                    "entity": "sensor.sandra_s_room_humidity",
+                                    "name": "Humidity"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Sandra's Room",
                             "type": "entities"
                         }
                     ],
@@ -929,22 +635,28 @@
                         {
                             "entities": [
                                 {
-                                    "entity": "binary_sensor.anet_a8_printing"
+                                    "entity": "binary_sensor.anet_a8_printing",
+                                    "name": "Print"
                                 },
                                 {
-                                    "entity": "binary_sensor.anet_a8_printing_error"
+                                    "entity": "binary_sensor.anet_a8_printing_error",
+                                    "name": "Printing Error"
                                 },
                                 {
-                                    "entity": "sensor.anet_a8_current_state"
+                                    "entity": "sensor.anet_a8_current_state",
+                                    "name": "Current State"
                                 },
                                 {
-                                    "entity": "sensor.anet_a8_job_percentage"
+                                    "entity": "sensor.anet_a8_job_percentage",
+                                    "name": "Job Percentage"
                                 },
                                 {
-                                    "entity": "sensor.anet_a8_time_elapsed"
+                                    "entity": "sensor.anet_a8_time_elapsed",
+                                    "name": "Time Elapsed"
                                 },
                                 {
-                                    "entity": "sensor.anet_a8_time_remaining"
+                                    "entity": "sensor.anet_a8_time_remaining",
+                                    "name": "Time Remaining"
                                 }
                             ],
                             "type": "entities"
@@ -956,7 +668,12 @@
                         {
                             "entities": [
                                 {
-                                    "entity": "switch.anet_a8_power_strip"
+                                    "entity": "switch.anet_a8_power_strip",
+                                    "name": "Power Strip"
+                                },
+                                {
+                                    "entity": "switch.storage_room",
+                                    "name": "Room Light"
                                 },
                                 {
                                     "entity": "automation.notify_when_printer_is_operational"
