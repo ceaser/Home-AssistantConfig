@@ -151,21 +151,67 @@ sensor:
     name: "Office Temperature"
     qos: 0
     unit_of_measurement: "°C"
-
   - platform: mqtt
     state_topic: "office/humidity"
     name: "Office Humidity"
     qos: 0
     unit_of_measurement: "%"
+  - platform: mqtt
+    name: "Office Luminosity"
+    state_topic: 'office/lux'
+    unit_of_measurement: 'lux'
+    #availability_topic: '<CHIP_ID>/status'
+    #payload_available: 'online'
+    #payload_not_available: 'offline'
+
+  - platform: mqtt
+    name: "Sandra's Room Temperature"
+    state_topic: 'sensornode2/temperature'
+    unit_of_measurement: '°C'
+    #availability_topic: '<CHIP_ID>/status'
+    #payload_available: 'online'
+    #payload_not_available: 'offline'
+  - platform: mqtt
+    name: "Sandra's Room Humidity"
+    state_topic: 'sensornode2/humidity'
+    unit_of_measurement: '%'
+    #availability_topic: '<CHIP_ID>/status'
+    #payload_available: 'online'
+    #payload_not_available: 'offline'
+  - platform: mqtt
+    name: "Sandra's Room Luminosity"
+    state_topic: 'sensornode2/lux'
+    unit_of_measurement: 'lux'
+    #availability_topic: '<CHIP_ID>/status'
+    #payload_available: 'online'
+    #payload_not_available: 'offline'
+
 
 weather:
   - platform: darksky
     api_key: !secret darksky_api_key
 
+# https://www.home-assistant.io/components/binary_sensor.mqtt/
 binary_sensor:
   - platform: workday
     country: US
 #  - platform: rainmachine
+  - platform: mqtt
+    name: "Sanda's Room Motion"
+    state_topic: 'sensornode2/motion'
+#    state_topic: '<CHIP_ID>/sensor/motion'
+#    availability_topic: '<CHIP_ID>/status'
+#    payload_available: 'online'
+#    payload_not_available: 'offline'
+    device_class: motion
+  - platform: mqtt
+    name: "Office Room Motion"
+    state_topic: 'office/motion'
+#    state_topic: '<CHIP_ID>/sensor/motion'
+#    availability_topic: '<CHIP_ID>/status'
+#    payload_available: 'online'
+#    payload_not_available: 'offline'
+    device_class: motion
 
 # Text to speech
 tts:
@@ -211,6 +257,22 @@ switch:
     name: "Anet A8 Power Strip"
     command_topic: "cmnd/a8/power"
     state_topic: "stat/a8/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+
+  - platform: mqtt
+    name: "Garage Entry Light"
+    command_topic: "cmnd/garage-entry/light/power"
+    state_topic: "stat/garage-entry/light/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+
+  - platform: mqtt
+    name: "Storage Room"
+    command_topic: "cmnd/storage/light/power"
+    state_topic: "stat/storage/light/POWER"
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
