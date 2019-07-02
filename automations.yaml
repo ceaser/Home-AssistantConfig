@@ -389,7 +389,7 @@
 
 - id: turn_on_fan
   alias: 'Turn on fan'
-  initial_state: 'on'
+  initial_state: 'off'
   trigger:
     - platform: numeric_state
       entity_id: sensor.office_temperature
@@ -427,7 +427,7 @@
 
 - id: turn_off_fan
   alias: 'Turn off fan'
-  initial_state: 'on'
+  initial_state: 'off'
   trigger:
     - platform: numeric_state
       entity_id: sensor.office_temperature
@@ -622,7 +622,7 @@
 ################################################################################
 - id: network_home_mode
   alias: 'Network Home Mode'
-  initial_state: 'on'
+  initial_state: 'off'
   trigger:
     - platform: zone
       entity_id: person.cearah
