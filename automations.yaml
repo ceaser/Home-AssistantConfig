@@ -717,7 +717,7 @@
         minutes: 5
     - platform: numeric_state
       entity_id: sensor.anet_a8_actual_bed_temp
-      above: 122 # 50 C
+      above: 104 # 40 C
       for:
         minutes: 5
   condition:
@@ -731,9 +731,9 @@
     - condition: state
       entity_id: binary_sensor.anet_a8_printing
       state: 'off'
-    - condition: numeric_state
-      entity_id: sensor.anet_a8_actual_bed_temp
-      above: 122
+#    - condition: numeric_state
+#      entity_id: sensor.anet_a8_actual_bed_temp
+#      above: 104
     - condition: numeric_state
       entity_id: sensor.anet_a8_actual_tool0_temp
       above: 374
@@ -774,12 +774,12 @@
       from: 'on'
       to: 'off'
       for:
-        minutes: 1
+        minutes: 15
   condition:
     - condition: template
       value_template: >
         {%- if states.automation.turn_off_power_when_finished_printing.attributes.last_triggered -%}
-          {{ (as_timestamp(now()) - as_timestamp(states.automation.turn_off_power_when_finished_printing.attributes.last_triggered)) > 120 }}
+          {{ (as_timestamp(now()) - as_timestamp(states.automation.turn_off_power_when_finished_printing.attributes.last_triggered)) > 300 }}
         {%- else -%}
           true
         {%- endif -%}
@@ -793,6 +793,14 @@
         name: "Printer: "
         message: >-
           Shutdown Octoprint
+    - service: switch.turn_off
+      data:
+        entity_id: switch.storage_room 
+    - service: logbook.log
+      data_template:
+        name: "Printer: "
+        message: >-
+          Turn off Storage Room Light
     - delay: '00:02:00'
     - service: switch.turn_off
       data:
