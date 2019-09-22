@@ -1,0 +1,18 @@
+  notify_0x4950686f6e65:
+    name: "Ceaser"
+    icon: mdi:message
+  notify_iphone:
+    name: "Sarah"
+    icon: mdi:message
+  notify_cearah_iphone:
+    name: "Cearah"
+    icon: mdi:message
+  notify_alexa:
+    name: "Amazon Echo"
+    icon: mdi:message
+  sonos_familyroom_night_sound:
+    name: "Family Room Night Sound"
+    icon: mdi:speaker
+  sonos_familyroom_speech_enhance:
+    name: "Family Room Night Speech Enhancement"
+    icon: mdi:voice

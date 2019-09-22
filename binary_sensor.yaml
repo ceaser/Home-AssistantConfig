@@ -1,0 +1,20 @@
+  - platform: workday
+    country: US
+#  - platform: rainmachine
+# https://www.home-assistant.io/components/binary_sensor.mqtt/
+  - platform: mqtt
+    name: "Sanda's Room Motion"
+    state_topic: 'sensornode2/motion'
+#    state_topic: '<CHIP_ID>/sensor/motion'
+#    availability_topic: '<CHIP_ID>/status'
+#    payload_available: 'online'
+#    payload_not_available: 'offline'
+    device_class: motion
+  - platform: mqtt
+    name: "Office Room Motion"
+    state_topic: 'office/motion'
+#    state_topic: '<CHIP_ID>/sensor/motion'
+#    availability_topic: '<CHIP_ID>/status'
+#    payload_available: 'online'
+#    payload_not_available: 'offline'
+    device_class: motion

@@ -1,0 +1,54 @@
+  - platform: neato
+
+  - platform: mqtt
+    name: "Office"
+    command_topic: "office/switch1"
+    payload_on: "ON"
+    payload_off: "OFF"
+    optimistic: true
+    qos: 1
+    retain: true
+    value_template: '{{ value.x }}'
+
+  - platform: mqtt
+    name: "Anet A8 Power Strip"
+    command_topic: "cmnd/a8/power"
+    state_topic: "stat/a8/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+
+  - platform: mqtt
+    name: "Garage Entry Light"
+    command_topic: "cmnd/garage-entry/light/power"
+    state_topic: "stat/garage-entry/light/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+
+  - platform: mqtt
+    name: "Storage Room"
+    command_topic: "cmnd/storage/light/power"
+    state_topic: "stat/storage/light/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+  - platform: template
+    switches:
+      nzbget:
+        value_template: "{{ is_state('sensor.nzb_get', 'on') }}"
+        turn_on:
+          service: rest_command.nzbget
+          data:
+            method: pausedownload
+        turn_off:
+          service: rest_command.nzbget
+          data:
+            method: resumedownload
+# Don't use retain for Sonoff-Tasmota. See https://www.youtube.com/watch?v=31IyfM1gygo for more information
+# On the Tasmota console type the following commands:
+# SwitchRetain Off 
+# ButtonRetain On
+# ButtonRetain Off
+# PowerOnState 3
+# PowerRetain On

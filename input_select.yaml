@@ -1,0 +1,5 @@
+  sonos_familyroom_source:
+    name: Source
+    options:
+      - None
+      - TV

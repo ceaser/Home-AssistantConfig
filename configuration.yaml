@@ -52,166 +52,11 @@ discovery:
 frontend:
   javascript_version: latest
 
-# Sensors
-sensor:
-#  - platform: rainmachine
-  # Weather prediction numbers reported for https://www.yr.no
-  # 1;Clear sky
-  # 2;Fair
-  # 3;Partly cloudy
-  # 4;Cloudy
-  # 5;Rain showers
-  # 6;Rain showers and thunder
-  # 7;Sleet showers
-  # 8;Snow showers
-  # 9;Rain
-  # 10;Heavy rain
-  # 11;Heavy rain and thunder
-  # 12;Sleet
-  # 13;Snow
-  # 14;Snow and thunder
-  # 15;Fog
-  # 20;Sleet showers and thunder
-  # 21;Snow showers and thunder
-  # 22;Rain and thunder
-  # 23;Sleet and thunder
-  # 24;Light rain showers and thunder
-  # 25;Heavy rain showers and thunder
-  # 26;Lights sleet showers and thunder
-  # 27;Heavy sleet showers and thunder
-  # 28;Lights snow showers and thunder
-  # 29;Heavy snow showers and thunder
-  # 30;Light rain and thunder
-  # 31;Light sleet and thunder
-  # 32;Heavy sleet and thunder
-  # 33;Light snow and thunder
-  # 34;Heavy snow and thunder
-  # 40;Light rain showers
-  # 41;Heavy rain showers
-  # 42;Light sleet showers
-  # 43;Heavy sleet showers
-  # 44;Light snow showers
-  # 45;Heavy snow showers
-  # 46;Light rain
-  # 47;Light sleet
-  # 48;Heavy sleet
-  # 49;Light snow
-  # 50;Heavy snow
-  #
-  # Example mapping the values to the meaning
-  # {% set yrarray = ["None","Clear sky", "Fair", "Partly cloudy", "Cloudy", "Rain showers", "Rain showers and thunder", "Sleet showers", "Snow showers", "Rain", "Heavy rain", "Heavy rain and thunder", "Sleet", "Snow", "Snow and thunder", "Fog", "None", "None", "None", "None", "Sleet showers and thunder", "Snow showers and thunder", "Rain and thunder", "Sleet and thunder", "Light rain showers and thunder", "Heavy rain showers and thunder", "Lights sleet showers and thunder", "Heavy sleet showers and thunder", "Lights snow showers and thunder", "Heavy snow showers and thunder", "Light rain and thunder", "Light sleet and thunder", "Heavy sleet and thunder", "Light snow and thunder", "Heavy snow and thunder", "None", "None", "None", "None", "None", "Light rain showers", "Heavy rain showers", "Light sleet showers", "Heavy sleet showers", "Light snow showers", "Heavy snow showers", "Light rain", "Light sleet", "Heavy sleet", "Light snow", "Heavy snow"] %}
-#The weather forecast for today is {{ yrarray[states.sensor.yr_symbol.state|int] }} with a temperature of {{ states.sensor.yr_temperature.state }} degrees.
-#
-#  - platform: yr
-#    name: Weather
-#    forecast: 24
-#    monitored_conditions:
-#      - temperature
-#      - symbol
-#      - precipitation
-#  - platform: random
-  - platform: darksky
-    api_key: !secret darksky_api_key
-    forecast:
-      - 0
-    hourly_forecast:
-      - 0
-      - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
-      - 7
-      - 8
-    monitored_conditions:
-      - summary
-      - icon
-      - temperature
-      - precip_probability
-  - platform: template
-    sensors:
-      basement_vacuum_last_run:
-        value_template: '{{ as_timestamp(states.vacuum.basement.attributes.clean_start) | timestamp_custom("%m.%d.%Y") }}'
-      basement_vacuum_last_sqft:
-        value_template: '{{ (states.vacuum.basement.attributes.clean_area * 10.764) | round(0) }} ft²'
-      basement_vacuum_battery:
-        value_template: '{{ states.vacuum.basement.attributes.battery_level }} %'
-        icon_template: '{{ states.vacuum.basement.attributes.battery_icon }}'
-      upstairs_vacuum_last_run:
-        value_template: '{{ as_timestamp(states.vacuum.upstairs.attributes.clean_start) | timestamp_custom("%m.%d.%Y") }}'
-      upstairs_vacuum_last_sqft:
-        value_template: '{{ (states.vacuum.upstairs.attributes.clean_area * 10.764) | round(0) }} ft²'
-      upstairs_vacuum_battery:
-        value_template: '{{ states.vacuum.upstairs.attributes.battery_level }} %'
-        icon_template: '{{ states.vacuum.upstairs.attributes.battery_icon }}'
-
-  - platform: mqtt
-    state_topic: "office/temperature"
-    name: "Office Temperature"
-    qos: 0
-    unit_of_measurement: "°C"
-  - platform: mqtt
-    state_topic: "office/humidity"
-    name: "Office Humidity"
-    qos: 0
-    unit_of_measurement: "%"
-  - platform: mqtt
-    name: "Office Luminosity"
-    state_topic: 'office/lux'
-    unit_of_measurement: 'lux'
-    #availability_topic: '<CHIP_ID>/status'
-    #payload_available: 'online'
-    #payload_not_available: 'offline'
-
-  - platform: mqtt
-    name: "Sandra's Room Temperature"
-    state_topic: 'sensornode2/temperature'
-    unit_of_measurement: '°C'
-    #availability_topic: '<CHIP_ID>/status'
-    #payload_available: 'online'
-    #payload_not_available: 'offline'
-  - platform: mqtt
-    name: "Sandra's Room Humidity"
-    state_topic: 'sensornode2/humidity'
-    unit_of_measurement: '%'
-    #availability_topic: '<CHIP_ID>/status'
-    #payload_available: 'online'
-    #payload_not_available: 'offline'
-  - platform: mqtt
-    name: "Sandra's Room Luminosity"
-    state_topic: 'sensornode2/lux'
-    unit_of_measurement: 'lux'
-    #availability_topic: '<CHIP_ID>/status'
-    #payload_available: 'online'
-    #payload_not_available: 'offline'
-
 
 weather:
   - platform: darksky
     api_key: !secret darksky_api_key
 
-# https://www.home-assistant.io/components/binary_sensor.mqtt/
-binary_sensor:
-  - platform: workday
-    country: US
-#  - platform: rainmachine
-  - platform: mqtt
-    name: "Sanda's Room Motion"
-    state_topic: 'sensornode2/motion'
-#    state_topic: '<CHIP_ID>/sensor/motion'
-#    availability_topic: '<CHIP_ID>/status'
-#    payload_available: 'online'
-#    payload_not_available: 'offline'
-    device_class: motion
-  - platform: mqtt
-    name: "Office Room Motion"
-    state_topic: 'office/motion'
-#    state_topic: '<CHIP_ID>/sensor/motion'
-#    availability_topic: '<CHIP_ID>/status'
-#    payload_available: 'online'
-#    payload_not_available: 'offline'
-    device_class: motion
 
 # Text to speech
 tts:
@@ -220,70 +65,6 @@ tts:
     cache: true
     cache_dir: /home/homeassistant/.homeassistant/tts
     time_memory: 300
-
-group: !include groups.yaml
-automation: !include automations.yaml
-script: !include scripts.yaml
-
-# iOS platform
-ios:
-  push:
-    categories:
-      - name: Alarm
-        identifier: 'alarm'
-        actions:
-          - identifier: 'DISABLE_PUSH'
-            title: 'Turn Off'
-            activationMode: 'background'
-            authenticationRequired: no
-            destructive: yes
-            behavior: 'default'
-
-
-switch:
-  - platform: neato
-
-  - platform: mqtt
-    name: "Office"
-    command_topic: "office/switch1"
-    payload_on: "ON"
-    payload_off: "OFF"
-    optimistic: true
-    qos: 1
-    retain: true
-    value_template: '{{ value.x }}'
-
-  - platform: mqtt
-    name: "Anet A8 Power Strip"
-    command_topic: "cmnd/a8/power"
-    state_topic: "stat/a8/POWER"
-    qos: 1
-    payload_on: "ON"
-    payload_off: "OFF"
-
-  - platform: mqtt
-    name: "Garage Entry Light"
-    command_topic: "cmnd/garage-entry/light/power"
-    state_topic: "stat/garage-entry/light/POWER"
-    qos: 1
-    payload_on: "ON"
-    payload_off: "OFF"
-
-  - platform: mqtt
-    name: "Storage Room"
-    command_topic: "cmnd/storage/light/power"
-    state_topic: "stat/storage/light/POWER"
-    qos: 1
-    payload_on: "ON"
-    payload_off: "OFF"
-
-# Don't use retain for Sonoff-Tasmota. See https://www.youtube.com/watch?v=31IyfM1gygo for more information
-# On the Tasmota console type the following commands:
-# SwitchRetain Off 
-# ButtonRetain On
-# ButtonRetain Off
-# PowerOnState 3
-# PowerRetain On
 
 mqtt:
   broker: localhost
@@ -333,32 +114,7 @@ rest_command:
     payload: >+
       {"jsonrpc":"2.0", "id":1, "method":"{{ method }}", "params":["token:{{ token }}"]}
 
-input_select:
-  sonos_familyroom_source:
-    name: Source
-    options:
-      - None
-      - TV
 
-input_boolean:
-  notify_0x4950686f6e65:
-    name: "Ceaser"
-    icon: mdi:message
-  notify_iphone:
-    name: "Sarah"
-    icon: mdi:message
-  notify_cearah_iphone:
-    name: "Cearah"
-    icon: mdi:message
-  notify_alexa:
-    name: "Amazon Echo"
-    icon: mdi:message
-  sonos_familyroom_night_sound:
-    name: "Family Room Night Sound"
-    icon: mdi:speaker
-  sonos_familyroom_speech_enhance:
-    name: "Family Room Night Speech Enhancement"
-    icon: mdi:voice
 
 # Laview Halo One
 camera:
@@ -582,10 +338,19 @@ shell_command:
 # for more information.
 alexa:
 
-intent_script: !include intent_script.yaml
-
 # TODO: Incorporate custom updater
 # https://github.com/custom-components/custom_updater
 #custom_updater:
 #  component_urls:
 #    - https://raw.githubusercontent.com/keatontaylor/alexa_media_player/master/custom_components.json
+
+intent_script: !include intent_script.yaml
+ios: !include ios.yaml
+sensor: !include sensor.yaml
+binary_sensor: !include binary_sensor.yaml
+switch: !include switch.yaml
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+input_select: !include input_select.yaml
+input_boolean: !include input_boolean.yaml
