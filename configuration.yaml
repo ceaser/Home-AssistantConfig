@@ -143,8 +143,8 @@ camera:
     file_path: /home/homeassistant/.homeassistant/www/driveway_latest.jpg
   - platform: mjpeg
     name: Anet A8
-    still_image_url: http://192.168.1.145:8080/?action=snapshot
-    mjpeg_url: http://192.168.1.145:8080/?action=stream
+    still_image_url: http://192.168.1.32:8080/?action=snapshot
+    mjpeg_url: http://192.168.1.32:8080/?action=stream
 
 # Amcrest camera
 amcrest:
