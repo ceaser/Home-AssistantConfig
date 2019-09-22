@@ -58,7 +58,7 @@ http:
   login_attempts_threshold: 10
 
 # Discover some devices automatically
-discovery:
+#discovery:
 
 # Version of the JavaScript to serve.
 # es5 - transpiled so old browsers understand it
