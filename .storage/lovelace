@@ -106,14 +106,36 @@
                             "entities": [
                                 {
                                     "entity": "sensor.hallway_thermostat_temperature",
-                                    "name": "Up stairs"
+                                    "name": "Hallway"
                                 },
                                 {
                                     "entity": "sensor.office_temperature",
-                                    "name": "Down stairs"
+                                    "name": "Office"
+                                },
+                                {
+                                    "entity": "sensor.sandra_s_room_temperature",
+                                    "name": "Sandra's Room"
                                 }
                             ],
-                            "title": "Upstairs vs Downstairs",
+                            "title": "Temperature",
+                            "type": "history-graph"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.hallway_thermostat_humidity",
+                                    "name": "Hallway"
+                                },
+                                {
+                                    "entity": "sensor.office_humidity",
+                                    "name": "Office"
+                                },
+                                {
+                                    "entity": "sensor.sandra_s_room_humidity",
+                                    "name": "Sandra's Room"
+                                }
+                            ],
+                            "title": "Humidity",
                             "type": "history-graph"
                         }
                     ],
@@ -136,6 +158,121 @@
                     "icon": "mdi:video",
                     "path": "video",
                     "title": "Video"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entities": [
+                                {
+                                    "entity": "switch.garage_entry_light"
+                                },
+                                {
+                                    "entity": "switch.storage_room"
+                                }
+                            ],
+                            "title": "Lights",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "binary_sensor.office_room_motion",
+                                    "name": "Motion"
+                                },
+                                {
+                                    "entity": "sensor.office_luminosity",
+                                    "name": "Luminosity"
+                                },
+                                {
+                                    "entity": "sensor.office_temperature",
+                                    "name": "Temperature"
+                                },
+                                {
+                                    "entity": "sensor.office_humidity",
+                                    "name": "Humidity"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Office",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "binary_sensor.sanda_s_room_motion",
+                                    "name": "Motion"
+                                },
+                                {
+                                    "entity": "sensor.sandra_s_room_luminosity",
+                                    "name": "Luminosity"
+                                },
+                                {
+                                    "entity": "sensor.sandra_s_room_temperature",
+                                    "name": "Temperature"
+                                },
+                                {
+                                    "entity": "sensor.sandra_s_room_humidity",
+                                    "name": "Humidity"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Sandra's Room",
+                            "type": "entities"
+                        }
+                    ],
+                    "icon": "mdi:lightbulb",
+                    "title": "Lights"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.nzbget"
+                                },
+                                {
+                                    "entity": "sensor.aria"
+                                }
+                            ],
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "switch.nzbget"
+                                }
+                            ],
+                            "type": "entities"
+                        },
+                        {
+                            "entity": "sensor.nzbget",
+                            "hold_action": {
+                                "action": "more-info"
+                            },
+                            "show_icon": true,
+                            "show_name": true,
+                            "tap_action": {
+                                "action": "call-service",
+                                "service": "rest_command.nzbget",
+                                "service_data": {
+                                    "method": "resumedownload"
+                                }
+                            },
+                            "type": "entity-button"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.nzbget"
+                                }
+                            ],
+                            "type": "glance"
+                        }
+                    ],
+                    "icon": "mdi:wan",
+                    "title": "Wan"
                 },
                 {
                     "badges": [],
@@ -292,71 +429,6 @@
                     "icon": "mdi:remote",
                     "path": "remote",
                     "title": "Remote"
-                },
-                {
-                    "badges": [],
-                    "cards": [
-                        {
-                            "entities": [
-                                {
-                                    "entity": "switch.garage_entry_light"
-                                },
-                                {
-                                    "entity": "switch.storage_room"
-                                }
-                            ],
-                            "title": "Lights",
-                            "type": "entities"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "binary_sensor.office_room_motion",
-                                    "name": "Motion"
-                                },
-                                {
-                                    "entity": "sensor.office_luminosity",
-                                    "name": "Luminosity"
-                                },
-                                {
-                                    "entity": "sensor.office_temperature",
-                                    "name": "Temperature"
-                                },
-                                {
-                                    "entity": "sensor.office_humidity",
-                                    "name": "Humidity"
-                                }
-                            ],
-                            "show_header_toggle": false,
-                            "title": "Office",
-                            "type": "entities"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "binary_sensor.sanda_s_room_motion",
-                                    "name": "Motion"
-                                },
-                                {
-                                    "entity": "sensor.sandra_s_room_luminosity",
-                                    "name": "Luminosity"
-                                },
-                                {
-                                    "entity": "sensor.sandra_s_room_temperature",
-                                    "name": "Temperature"
-                                },
-                                {
-                                    "entity": "sensor.sandra_s_room_humidity",
-                                    "name": "Humidity"
-                                }
-                            ],
-                            "show_header_toggle": false,
-                            "title": "Sandra's Room",
-                            "type": "entities"
-                        }
-                    ],
-                    "icon": "mdi:lightbulb",
-                    "title": "Lights"
                 },
                 {
                     "badges": [],
@@ -691,20 +763,6 @@
                             "show_header_toggle": false,
                             "title": "Switches",
                             "type": "entities"
-                        },
-                        {
-                            "entity": "switch.anet_a8_power_strip",
-                            "hold_action": {
-                                "action": "more-info"
-                            },
-                            "name": "Shutdown",
-                            "show_icon": true,
-                            "show_name": true,
-                            "tap_action": {
-                                "action": "call-service",
-                                "service": "script.turn_off_anet_a8"
-                            },
-                            "type": "entity-button"
                         },
                         {
                             "entities": [
