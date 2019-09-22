@@ -21,10 +21,25 @@ homeassistant:
   - type: legacy_api_password
     api_password: !secret http_password
 
-#recorder:
-#  purge_keep_days: 10
-#  purge_interval: 1
-#  db_url: sqlite:////home/homeassistant/.homeassistant/logs
+recorder:
+  db_url: sqlite:////home/homeassistant/.homeassistant/home-assistant_v2.db
+  purge_interval: 1
+  purge_keep_days: 1
+  exclude:
+    domains:
+      - sun
+      - weather
+    entities:
+      - binary_sensor.anet_a8_printing
+      - binary_sensor.anet_a8_printing_error
+      - binary_sensor.office_room_motion
+      - binary_sensor.sanda_s_room_motion
+      - sensor.office_humidity
+      - sensor.office_luminosity
+      - sensor.office_temperature
+      - sensor.sandra_s_room_luminosity
+      - sensor.sandra_s_room_temperature
+      - switch.office
 
 logbook:
 
