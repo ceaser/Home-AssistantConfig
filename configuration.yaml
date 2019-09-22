@@ -184,6 +184,7 @@ apple_tv:
     name: Upstairs
     start_off: false
     credentials: !secret upstairs_password
+
 alexa_media:
   accounts:
     - email: !secret amazon_username1
