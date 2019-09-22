@@ -87,22 +87,51 @@ sonos_familyroom_turn_on_nightsound:
       entity_id: "media_player.sonos_family_room"
       night_sound: true
 
-turn_off_anet_a8:
- alias: 'Turn off Anet A8'
- sequence:
- - service: shell_command.stop_octoprint
- - service: logbook.log
-   data_template:
-     name: "Printer: "
-     message: >-
-       Shutdown Octoprint
- - delay: '00:02:00'
- - service: switch.turn_off
-   data:
-     entity_id: switch.anet_a8_power_strip
- - service: logbook.log
-   data_template:
-     name: "Printer: "
-     message: >-
-       Turn off Anet A8 Power Strip
+#turn_off_anet_a8:
+# alias: 'Turn off Anet A8'
+# sequence:
+# - service: shell_command.stop_octoprint
+# - service: logbook.log
+#   data_template:
+#     name: "Printer: "
+#     message: >-
+#       Shutdown Octoprint
+# - delay: '00:02:00'
+# - service: switch.turn_off
+#   data:
+#     entity_id: switch.anet_a8_power_strip
+# - service: logbook.log
+#   data_template:
+#     name: "Printer: "
+#     message: >-
+#       Turn off Anet A8 Power Strip
 
+resume_downloads:
+  alias: "Resume Downloads"
+  sequence:
+    - service: rest_command.nzbget
+      data:
+        method: resumedownload
+    - service: homeassistant.update_entity
+      data:
+        entity_id: sensor.nzbget
+    - service: rest_command.aria2
+      data:
+        method: aria2.unpauseAll
+        token: !secret aria2_token
+    - service: shell_command.deluge_resume
+
+pause_downloads:
+  alias: "Pause Downloads"
+  sequence:
+    - service: rest_command.nzbget
+      data:
+        method: pausedownload
+    - service: homeassistant.update_entity
+      data:
+        entity_id: sensor.nzbget
+    - service: rest_command.aria2
+      data:
+        method: aria2.pauseAll
+        token: !secret aria2_token
+    - service: shell_command.deluge_pause
