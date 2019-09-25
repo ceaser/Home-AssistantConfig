@@ -159,9 +159,6 @@ amcrest:
       - motion_detected
     sensors:
       - sdcard
-    switches:
-      - motion_detection
-      - motion_recording
 
 # Provides a way to proxy live streams through Home Assistant
 # https://www.home-assistant.io/components/stream/
