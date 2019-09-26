@@ -789,6 +789,40 @@
                     ],
                     "icon": "",
                     "title": "3D Printer"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entities": [
+                                {
+                                    "entity": "device_tracker.automower_g_191108221_190740383"
+                                }
+                            ],
+                            "type": "glance"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "input_boolean.east_gate"
+                                }
+                            ],
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "device_tracker.automower_g_191108221_190740383"
+                                },
+                                {
+                                    "entity": "zone.east_gate"
+                                }
+                            ],
+                            "type": "map"
+                        }
+                    ],
+                    "path": "mower",
+                    "title": "Mower"
                 }
             ]
         }

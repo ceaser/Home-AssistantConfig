@@ -284,7 +284,7 @@
           true
         {%- endif -%}
   action:
-    - service: media_player.sonos_snapshot
+    - service: sonos.snapshot
       data:
         entity_id: media_player.sonos_family_room
         with_group: true
@@ -365,6 +365,18 @@
       entity_id: person.sarah
       event: enter
       zone: zone.home
+    - platform: zone
+      entity_id: person.ceaser
+      event: enter
+      zone: zone.east_gate
+    - platform: zone
+      entity_id: person.cearah
+      event: enter
+      zone: zone.east_gate
+    - platform: zone
+      entity_id: person.sarah
+      event: enter
+      zone: zone.east_gate
   condition:
     - condition: state
       entity_id: binary_sensor.hallway_thermostat_online
@@ -826,3 +838,64 @@
         data:
           push:
             category: 'printer'
+################################################################################
+# Automower 
+################################################################################
+- id: 'pause_automower_at_east_gate'
+  alias: Pause Automower At East Gate
+  trigger:
+    - entity_id: device_tracker.automower_g_191108221_190740383
+      event: enter
+      platform: zone
+      zone: zone.east_gate
+  condition:
+    - condition: state
+      entity_id: input_boolean.east_gate
+      state: 'on'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: vacuum.automower
+        state: Cutting
+      - condition: state
+        entity_id: vacuum.automower
+        state: Cutting (manual timer override)
+      - condition: state
+        entity_id: vacuum.automower
+        state: Leaving base
+  action:
+    - service: logbook.log
+      data_template:
+        name: "Automower: "
+        message: >-
+          Pausing Automower {{ now().strftime('%Y%m%d_%H%M%S') }}.
+    - service: vacuum.start_pause
+      data:
+        entity_id: vacuum.automower
+    - service: notify.ios_0x4950686f6e65
+      data_template:
+        message: "Automower Paused at the East Gate"
+        data:
+          push:
+            category: 'automower'
+
+- id: 'resume_automower_after_pause'
+  alias: Resume Automower After Pause
+  trigger:
+    - entity_id: input_boolean.east_gate
+      from: 'on'
+      platform: state
+      to: 'off'
+  condition:
+    - condition: state
+      entity_id: vacuum.automower
+      state: Paused
+  action:
+    - service: logbook.log
+      data_template:
+        name: "Automower: "
+        message: >-
+          Resuming Automower {{ now().strftime('%Y%m%d_%H%M%S') }}.
+    - data:
+        entity_id: vacuum.automower
+      service: vacuum.start_pause

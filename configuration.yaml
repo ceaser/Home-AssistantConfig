@@ -160,6 +160,10 @@ amcrest:
     sensors:
       - sdcard
 
+automower:
+  username: !secret husqvarna_username
+  password: !secret husqvarna_password
+
 # Provides a way to proxy live streams through Home Assistant
 # https://www.home-assistant.io/components/stream/
 stream:
@@ -198,6 +202,11 @@ zone:
     longitude: !secret home_longitude
     radius: 200
     icon: mdi:account-multiple
+
+  - name: East Gate
+    latitude: !secret east_gate_latitude
+    longitude: !secret east_gate_longitude
+    radius: 6
 
   - name: !secret work_name
     latitude: !secret work_latitude

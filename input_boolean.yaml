@@ -16,3 +16,7 @@
   sonos_familyroom_speech_enhance:
     name: "Family Room Night Speech Enhancement"
     icon: mdi:voice
+  east_gate:
+    name: East Gate Closed
+    initial: on
+    icon: mdi:door
