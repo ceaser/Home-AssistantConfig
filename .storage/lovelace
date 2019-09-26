@@ -75,6 +75,22 @@
                     "title": "Alarm"
                 },
                 {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entity": "camera.driveway",
+                            "type": "picture-entity"
+                        },
+                        {
+                            "entity": "camera.doorbell",
+                            "type": "picture-entity"
+                        }
+                    ],
+                    "icon": "mdi:video",
+                    "path": "video",
+                    "title": "Video"
+                },
+                {
                     "badges": [
                         "binary_sensor.hallway_thermostat_online",
                         "binary_sensor.hallway_thermostat_has_leaf",
@@ -156,22 +172,6 @@
                     "badges": [],
                     "cards": [
                         {
-                            "entity": "camera.driveway",
-                            "type": "picture-entity"
-                        },
-                        {
-                            "entity": "camera.doorbell",
-                            "type": "picture-entity"
-                        }
-                    ],
-                    "icon": "mdi:video",
-                    "path": "video",
-                    "title": "Video"
-                },
-                {
-                    "badges": [],
-                    "cards": [
-                        {
                             "entities": [
                                 {
                                     "entity": "switch.garage_entry_light"
@@ -232,56 +232,6 @@
                     ],
                     "icon": "mdi:lightbulb",
                     "title": "Lights"
-                },
-                {
-                    "badges": [],
-                    "cards": [
-                        {
-                            "entities": [
-                                {
-                                    "entity": "sensor.nzbget"
-                                },
-                                {
-                                    "entity": "sensor.aria"
-                                }
-                            ],
-                            "type": "entities"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "switch.nzbget"
-                                }
-                            ],
-                            "type": "entities"
-                        },
-                        {
-                            "entity": "sensor.nzbget",
-                            "hold_action": {
-                                "action": "more-info"
-                            },
-                            "show_icon": true,
-                            "show_name": true,
-                            "tap_action": {
-                                "action": "call-service",
-                                "service": "rest_command.nzbget",
-                                "service_data": {
-                                    "method": "resumedownload"
-                                }
-                            },
-                            "type": "entity-button"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "sensor.nzbget"
-                                }
-                            ],
-                            "type": "glance"
-                        }
-                    ],
-                    "icon": "mdi:wan",
-                    "title": "Wan"
                 },
                 {
                     "badges": [],
@@ -798,6 +748,56 @@
                     ],
                     "icon": "",
                     "title": "3D Printer"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.nzbget"
+                                },
+                                {
+                                    "entity": "sensor.aria"
+                                }
+                            ],
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "switch.nzbget"
+                                }
+                            ],
+                            "type": "entities"
+                        },
+                        {
+                            "entity": "sensor.nzbget",
+                            "hold_action": {
+                                "action": "more-info"
+                            },
+                            "show_icon": true,
+                            "show_name": true,
+                            "tap_action": {
+                                "action": "call-service",
+                                "service": "rest_command.nzbget",
+                                "service_data": {
+                                    "method": "resumedownload"
+                                }
+                            },
+                            "type": "entity-button"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.nzbget"
+                                }
+                            ],
+                            "type": "glance"
+                        }
+                    ],
+                    "icon": "mdi:wan",
+                    "title": "Wan"
                 },
                 {
                     "badges": [],
