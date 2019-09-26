@@ -336,14 +336,10 @@
         states.person.ceaser.state != "home" and
         states.person.sarah.state != "home"}}'
   action:
-    - service: climate.set_away_mode
+    - service: climate.set_preset_mode
       data:
         entity_id: climate.hallway
-        away_mode: true
-    - service: climate.set_operation_mode
-      data:
-        entity_id: climate.hallway
-        operation_mode: eco
+        preset_mode: 'Away and Eco'
 
 ################################################################################
 # climate_home_mode sets the thermostats to auto mode when humans are
@@ -390,14 +386,10 @@
           states.person.sarah.state == "home"
         ) }}'
   action:
-    - service: climate.set_away_mode
+    - service: climate.set_preset_mode
       data:
         entity_id: climate.hallway
-        away_mode: false
-    - service: climate.set_operation_mode
-      data:
-        entity_id: climate.hallway
-        operation_mode: auto
+        preset_mode: none
 
 - id: turn_on_fan
   alias: 'Turn on fan'
