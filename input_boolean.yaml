@@ -20,3 +20,7 @@
     name: East Gate Closed
     initial: on
     icon: mdi:door
+  dog_outside:
+    name: Dog Outside
+    initial: 'off'
+    icon: mdi:dog

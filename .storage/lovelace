@@ -16,6 +16,15 @@
                             "type": "picture-entity"
                         },
                         {
+                            "entities": [
+                                {
+                                    "entity": "input_boolean.dog_outside"
+                                }
+                            ],
+                            "title": "Routines",
+                            "type": "entities"
+                        },
+                        {
                             "cards": [
                                 {
                                     "entities": [
