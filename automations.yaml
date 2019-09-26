@@ -300,9 +300,9 @@
         data:
           type: announce
           method: speak
-    - service: media_player.sonos_restore
+    - service: sonos.restore
       data:
-        entity_id: media_player.sonos_family_room
+        entity_id: media_player.sonos_familyroom
         with_group: true
 
 ################################################################################
