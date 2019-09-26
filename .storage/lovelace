@@ -805,7 +805,7 @@
                         {
                             "entities": [
                                 {
-                                    "entity": "device_tracker.automower_g_191108221_190740383"
+                                    "entity": "vacuum.automower"
                                 }
                             ],
                             "type": "glance"
