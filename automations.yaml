@@ -530,47 +530,6 @@
       entity_id: media_player.kitchenecho
       volume_level: '0.20'
 
-
-################################################################################
-#
-################################################################################
-- id: alexa_night_volume_family_room
-  alias: 'Alexa Volume [Night]: Family Room'
-  trigger:
-  - platform: time
-    at: '00:06:30'
-  condition:
-    condition: state
-    entity_id: media_player.sonos_family_room
-    state: 'Paused'
-  action:
-  - service: media_player.volume_set
-    data:
-      entity_id: media_player.ceaser_s_sonos_beam
-      volume_level: '0.40'
-
-################################################################################
-#
-################################################################################
-- id: alexa_night_volume_family_room
-  alias: 'Alexa Volume [Night]: Family Room'
-  trigger:
-  - platform: time
-    at: '22:00:00'
-  - platform: time
-    at: '00:00:00'
-  - platform: time
-    at: '02:00:00'
-  condition:
-    condition: state
-    entity_id: media_player.sonos_family_room
-    state: 'Paused'
-  action:
-  - service: media_player.volume_set
-    data:
-      entity_id: media_player.ceaser_s_sonos_beam
-      volume_level: '0.10'
-
 ################################################################################
 # capture_cleaning_map updates the vacuums cleaning map
 ################################################################################
@@ -666,6 +625,21 @@
 ################################################################################
 # Sonos
 ################################################################################
+- id: sonos_default_volume
+  alias: 'Sonos Default Volume'
+  trigger:
+    - platform: state
+      entity_id: media_player.sonos_familyroom
+      from: playing
+      to: paused
+      for:
+        minutes: 15
+  action:
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.sonos_familyroom
+        volume_level: 0.2
+
 - id: sonos_get
   alias: 'Sonos Get'
   initial_state: 'on'
@@ -708,13 +682,14 @@
         ( is_state_attr("media_player.sonos_familyroom", "speech_enhance", true) != is_state("input_boolean.sonos_familyroom_speech_enhance", "on")) }}'
   action:
     - delay: 00:00:01
-    - service: media_player.sonos_set_option
+    - service: sonos.set_option
       data_template:
         entity_id: "media_player.sonos_familyroom"
         night_sound: >
           {{ states('input_boolean.sonos_familyroom_night_sound') == "on" }}
         speech_enhance: >
           {{ states('input_boolean.sonos_familyroom_speech_enhance') == "on" }}
+
 ################################################################################
 # Printing
 ################################################################################
