@@ -21,6 +21,7 @@
                                     "entity": "input_boolean.dog_outside"
                                 }
                             ],
+                            "show_header_toggle": false,
                             "title": "Routines",
                             "type": "entities"
                         },
@@ -382,6 +383,10 @@
                         },
                         {
                             "entity": "media_player.kitchenecho",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.ceaser_s_echo_dot",
                             "type": "media-control"
                         }
                     ],
