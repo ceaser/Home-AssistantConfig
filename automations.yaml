@@ -849,7 +849,7 @@
         entity_id: vacuum.automower
     - service: notify.ios_0x4950686f6e65
       data_template:
-        message: "Automower Paused at the East Gate"
+        message: "Automower Paused"
         data:
           push:
             category: 'automower'
