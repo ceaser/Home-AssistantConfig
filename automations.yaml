@@ -809,6 +809,84 @@
 ################################################################################
 # Automower 
 ################################################################################
+- id: 'park_automower'
+  alias: Park Automower
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.dark_sky_precip_probability
+      above: 99
+  action:
+    - service: logbook.log
+      data_template:
+        name: "Automower: "
+        message: >-
+          Parking Automower {{ now().strftime('%Y%m%d_%H%M%S') }}.
+    - service: vacuum.return_to_base
+      data:
+        entity_id: vacuum.automower
+    - service: notify.ios_0x4950686f6e65
+      data_template:
+        message: "Automower Parked"
+        data:
+          push:
+            category: 'automower'
+
+- id: 'start_automower'
+  alias: Start Automower
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.dark_sky_precip_probability
+      below: 99
+  condition:
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: vacuum.automower
+        state: Cutting
+      - condition: state
+        entity_id: vacuum.automower
+        state: Cutting (manual timer override)
+      - condition: state
+        entity_id: vacuum.automower
+        state: Leaving base
+  action:
+    - service: logbook.log
+      data_template:
+        name: "Automower: "
+        message: >-
+          Starting Automower {{ now().strftime('%Y%m%d_%H%M%S') }}.
+    - service: vacuum.return_to_base
+      data:
+        entity_id: vacuum.automower
+    - service: notify.ios_0x4950686f6e65
+      data_template:
+        message: "Automower Started"
+        data:
+          push:
+            category: 'automower'
+
+- id: 'park_automower'
+  alias: Park Automower
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.dark_sky_precip_probability
+      above: 95
+  action:
+    - service: logbook.log
+      data_template:
+        name: "Automower: "
+        message: >-
+          Parking Automower {{ now().strftime('%Y%m%d_%H%M%S') }}.
+    - service: vacuum.return_to_base
+      data:
+        entity_id: vacuum.automower
+    - service: notify.ios_0x4950686f6e65
+      data_template:
+        message: "Automower Parked"
+        data:
+          push:
+            category: 'automower'
+
 - id: 'pause_automower'
   alias: Pause Automower
   trigger:
@@ -821,12 +899,6 @@
       platform: state
       to: 'on'
   condition:
-    - condition: state
-      entity_id: input_boolean.east_gate
-      state: 'on'
-    - condition: state
-      entity_id: input_boolean.dog_outside
-      state: 'on'
     - condition: or
       conditions:
       - condition: state
