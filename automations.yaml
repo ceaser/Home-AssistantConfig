@@ -291,8 +291,8 @@
     - service: notify.alexa_media
       data_template:
         target:
-          - media_player.kitchenecho
-          - media_player.ceaser_s_sonos_beam
+          - media_player.kitchen
+          - media_player.sandra_s_room
         title: >
           "camera.{{ trigger.entity_id.split('.')[1].split('_')[1] }} notification"
         message: >
@@ -505,7 +505,7 @@
   action:
   - service: media_player.volume_set
     data:
-      entity_id: media_player.kitchenecho
+      entity_id: media_player.kitchen
       volume_level: '0.60'
 
 ################################################################################
@@ -519,7 +519,7 @@
   action:
   - service: media_player.volume_set
     data:
-      entity_id: media_player.kitchenecho
+      entity_id: media_player.kitchen
       volume_level: '0.20'
 
 ################################################################################

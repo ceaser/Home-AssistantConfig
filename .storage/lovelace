@@ -382,11 +382,11 @@
                             "type": "media-control"
                         },
                         {
-                            "entity": "media_player.kitchenecho",
+                            "entity": "media_player.kitchen",
                             "type": "media-control"
                         },
                         {
-                            "entity": "media_player.ceaser_s_echo_dot",
+                            "entity": "media_player.sandra_s_room",
                             "type": "media-control"
                         }
                     ],
