@@ -311,7 +311,7 @@
 ################################################################################
 - id: climate_away_mode
   alias: 'Climate Away Mode'
-  initial_state: 'on'
+  initial_state: 'off'
   trigger:
     - platform: zone
       entity_id: person.ceaser
@@ -347,7 +347,7 @@
 ################################################################################
 - id: climate_home_mode
   alias: 'Climate Home Mode'
-  initial_state: 'on'
+  initial_state: 'off'
   trigger:
     - platform: zone
       entity_id: person.ceaser
@@ -548,7 +548,7 @@
 ################################################################################
 - id: network_away_mode
   alias: 'Network Away Mode'
-  initial_state: 'on'
+  initial_state: 'off'
   trigger:
     - platform: zone
       entity_id: person.cearah
