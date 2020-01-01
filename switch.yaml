@@ -1,6 +1,40 @@
   - platform: neato
 
   - platform: mqtt
+    name: "Family Room Lights"
+    state_topic: "shellies/shelly1-B9F4AA/relay/0"
+    command_topic: "shellies/shelly1-B9F4AA/relay/0/command"
+    qos: 1
+    payload_on: "on"
+    payload_off: "off"
+    retain: false
+  - platform: mqtt
+    name: "LightsFamilyRoom1"
+    state_topic: "shellies/shellyswitch25-10AC17/relay/0"
+    command_topic: "shellies/shellyswitch25-10AC17/relay/0/command"
+    qos: 1
+    payload_on: "on"
+    payload_off: "off"
+    retain: false
+  - platform: mqtt
+    name: "LightsFamilyRoom2"
+    state_topic: "shellies/shelly1-B9FCA2/relay/0"
+    command_topic: "shellies/shelly1-B9FCA2/relay/0/command"
+    qos: 1
+    payload_on: "on"
+    payload_off: "off"
+    retain: false
+
+  - platform: mqtt
+    name: "Basement Entry Light"
+    state_topic: "shellies/shellyswitch25-10AC17/relay/1"
+    command_topic: "shellies/shellyswitch25-10AC17/relay/1/command"
+    qos: 0
+    payload_on: "on"
+    payload_off: "off"
+    retain: false
+
+  - platform: mqtt
     name: "Office"
     command_topic: "office/switch1"
     payload_on: "ON"

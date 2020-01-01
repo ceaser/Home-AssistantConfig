@@ -998,3 +998,37 @@
   - data:
       entity_id: switch.garage_entry_light
     service: switch.turn_off
+
+################################################################################
+# Family Room
+################################################################################
+- id: 'toggle_multi_switch_family_room_lights'
+  alias: Multi Switch Family Room Lights
+  trigger:
+  - entity_id: switch.lightsfamilyroom1
+    platform: state
+  - entity_id: switch.lightsfamilyroom2
+    platform: state
+  condition: []
+  action:
+  - data:
+      entity_id: switch.family_room_lights
+    service: switch.toggle
+
+################################################################################
+# Reset
+################################################################################
+- id: 'turn_off_dog_outside'
+  alias: turn_off_dog_outside
+  trigger:
+  - entity_id: input_boolean.dog_outside
+    for:
+      minutes: 15
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      entity_id: input_boolean.dog_outside
+    service: input_boolean.turn_off
