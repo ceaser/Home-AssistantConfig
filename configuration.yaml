@@ -178,19 +178,6 @@ stream:
 ffmpeg:
   ffmpeg_bin: /usr/bin/ffmpeg
 
-# Apple TV remove and media_player
-apple_tv:
-  - host: 192.168.75.11
-    login_id: !secret apple_login_id
-    name: Downstairs
-    start_off: false
-    credentials: !secret downstairs_password
-  - host: 192.168.75.10
-    login_id: !secret apple_login_id
-    name: Upstairs
-    start_off: false
-    credentials: !secret upstairs_password
-
 alexa_media:
   accounts:
     - email: !secret amazon_username1
