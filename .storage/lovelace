@@ -175,7 +175,13 @@
                         {
                             "entities": [
                                 {
+                                    "entity": "switch.family_room_lights"
+                                },
+                                {
                                     "entity": "switch.garage_entry_light"
+                                },
+                                {
+                                    "entity": "switch.basement_entry_light"
                                 },
                                 {
                                     "entity": "switch.storage_room"
@@ -368,14 +374,6 @@
                                 }
                             ],
                             "type": "vertical-stack"
-                        },
-                        {
-                            "entity": "media_player.upstairs",
-                            "type": "media-control"
-                        },
-                        {
-                            "entity": "media_player.downstairs",
-                            "type": "media-control"
                         },
                         {
                             "entity": "media_player.sonos_familyroom",
