@@ -313,8 +313,7 @@ notify:
   - platform: group
     name: MotionDetectGroup
     services:
-      - service: ios_0x4950686f6e65
-#      - service: ios_iphone
+      - service: mobile_app_0x4950686f6e65
   - platform: alexa_media
     name: alexa_media
 
