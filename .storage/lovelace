@@ -398,7 +398,7 @@
                         {
                             "cards": [
                                 {
-                                    "entity": "sensor.0x4950686f6e65_battery_level",
+                                    "entity": "sensor.ceaser_iphone_battery_level",
                                     "max": 100,
                                     "min": 0,
                                     "severity": {
@@ -412,7 +412,7 @@
                                 {
                                     "entities": [
                                         {
-                                            "entity": "sensor.0x4950686f6e65_battery_state"
+                                            "entity": "sensor.ceaser_iphone_battery_state"
                                         }
                                     ],
                                     "show_icon": false,
@@ -426,7 +426,7 @@
                         {
                             "cards": [
                                 {
-                                    "entity": "sensor.ipad_mini_battery_level",
+                                    "entity": "sensor.battery_level_8",
                                     "max": 100,
                                     "min": 0,
                                     "severity": {
@@ -440,7 +440,7 @@
                                 {
                                     "entities": [
                                         {
-                                            "entity": "sensor.ipad_mini_battery_state"
+                                            "entity": "sensor.battery_state_8"
                                         }
                                     ],
                                     "show_icon": false,
@@ -514,7 +514,7 @@
                         {
                             "cards": [
                                 {
-                                    "entity": "sensor.iphone_battery_level_2",
+                                    "entity": "sensor.battery_level_5",
                                     "max": 100,
                                     "min": 0,
                                     "severity": {
@@ -528,7 +528,7 @@
                                 {
                                     "entities": [
                                         {
-                                            "entity": "sensor.iphone_battery_state_2"
+                                            "entity": "sensor.battery_state_5"
                                         }
                                     ],
                                     "show_icon": false,
@@ -575,7 +575,7 @@
                         {
                             "cards": [
                                 {
-                                    "entity": "sensor.iphone_battery_level",
+                                    "entity": "sensor.sarah_iphone_battery_level",
                                     "max": 100,
                                     "min": 0,
                                     "severity": {
@@ -589,7 +589,7 @@
                                 {
                                     "entities": [
                                         {
-                                            "entity": "sensor.iphone_battery_state"
+                                            "entity": "sensor.battery_state_7"
                                         }
                                     ],
                                     "show_icon": false,
