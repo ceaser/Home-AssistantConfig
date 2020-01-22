@@ -2,7 +2,7 @@ homeassistant:
   # List of folders that can be used as sources for sending file.
   # Use http://.../local/ to access the files in this directory
   # Required for the camera.record service
-  whitelist_external_dirs: /home/homeassistant/.homeassistant/www
+  whitelist_external_dirs: /config/www
   # Name of the location where Home Assistant is running
   name: Home
   # Location required to calculate the time the sun rises and sets
@@ -20,7 +20,7 @@ homeassistant:
   - type: homeassistant
 
 recorder:
-  db_url: sqlite:////home/homeassistant/.homeassistant/home-assistant_v2.db
+  db_url: sqlite:////config/home-assistant_v2.db
   purge_interval: 1
   purge_keep_days: 1
   exclude:
@@ -76,11 +76,11 @@ tts:
   - platform: google_translate
     service_name: google_say
     cache: true
-    cache_dir: /home/homeassistant/.homeassistant/tts
+    cache_dir: /config/tts
     time_memory: 300
 
 mqtt:
-  broker: localhost
+  broker: mqtt.default.svc.cluster.local
   port: 1883
   username: !secret mosquitto_username
   password: !secret mosquitto_password
@@ -145,7 +145,7 @@ camera:
     extra_arguments: -vf "scale=iw/4:ih/4" -q:v 2
   - platform: local_file
     name: Driveway TF
-    file_path: /home/homeassistant/.homeassistant/www/driveway_latest.jpg
+    file_path: /config/www/driveway_latest.jpg
   - platform: mjpeg
     name: Anet A8
     still_image_url: http://192.168.1.32:8080/?action=snapshot
@@ -260,7 +260,7 @@ device_tracker:
 # Send event on file changes. Used to connect camera.record and notify services.
 # See https://www.home-assistant.io/components/folder_watcher/ for more info
 folder_watcher:
-  - folder: /home/homeassistant/.homeassistant/www
+  - folder: /config/www
     patterns:
       - '*.mp4'
 #      - '*.jpg'
@@ -271,10 +271,10 @@ image_processing:
     source:
       - entity_id: camera.driveway
     file_out:
-      - "/home/homeassistant/.homeassistant/www/{{ camera_entity.split('.')[1] }}_latest.jpg"
-      - "/home/homeassistant/.homeassistant/www/{{ camera_entity.split('.')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg"
+      - "/config/www/{{ camera_entity.split('.')[1] }}_latest.jpg"
+      - "/config/www/{{ camera_entity.split('.')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg"
     model:
-      graph: /home/homeassistant/.homeassistant/tensorflow/frozen_inference_graph.pb
+      graph: /config/tensorflow/frozen_inference_graph.pb
       categories:
         - category: person
           area:
@@ -300,10 +300,10 @@ image_processing:
 #    source:
 #      - entity_id: camera.doorbell
 #    file_out:
-#      - "/home/homeassistant/.homeassistant/www/{{ camera_entity.split('.')[1] }}_latest.jpg"
-#      - "/home/homeassistant/.homeassistant/www/{{ camera_entity.split('.')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg"
+#      - "/config/www/{{ camera_entity.split('.')[1] }}_latest.jpg"
+#      - "/config/www/{{ camera_entity.split('.')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg"
 #    model:
-#      graph: /home/homeassistant/.homeassistant/tensorflow/frozen_inference_graph.pb
+#      graph: /config/tensorflow/frozen_inference_graph.pb
 #      categories:
 #        - person
 #        - cat

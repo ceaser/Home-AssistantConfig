@@ -71,7 +71,7 @@
     data_template:
       duration: 30
       entity_id: camera.{{ trigger.entity_id.split('.')[1].split('_')[1] }}
-      filename: /home/homeassistant/.homeassistant/www/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.mp4
+      filename: /config/www/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.mp4
       lookback: 30
   - service: logbook.log
     data_template:
@@ -540,7 +540,7 @@
   - service: camera.snapshot
     data_template:
       entity_id: "camera.{{ trigger.entity_id.split('.')[1].split('_')[0] }}_cleaning_map"
-      filename: "/home/homeassistant/.homeassistant/www/{{ trigger.entity_id.split('.')[1].split('_')[0] }}_cleaning_map_latest.jpg"
+      filename: "/config/www/{{ trigger.entity_id.split('.')[1].split('_')[0] }}_cleaning_map_latest.jpg"
 
 ################################################################################
 # network_away_mode resume all network services that consume large amount of

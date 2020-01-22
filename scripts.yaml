@@ -65,11 +65,11 @@ vacuum_camera_refresh:
   - service: camera.snapshot
     data:
       entity_id: camera.basement_cleaning_map
-      filename: "/home/homeassistant/.homeassistant/www/basement_cleaning_map_latest.jpg"
+      filename: "/config/www/basement_cleaning_map_latest.jpg"
   - service: camera.snapshot
     data:
       entity_id: camera.upstairs_cleaning_map
-      filename: "/home/homeassistant/.homeassistant/www/camera.upstairs_cleaning_map"
+      filename: "/config/www/camera.upstairs_cleaning_map"
 
 sonos_familyroom_turn_off_nightsound:
   alias: "Sonos Family Room Turn off Night Sound"
