@@ -80,8 +80,7 @@ tts:
     time_memory: 300
 
 mqtt:
-  #broker: mqtt.default.svc.cluster.local
-  broker: 192.168.1.99
+  broker: mqtt.default.svc.cluster.local
   port: 1883
   username: !secret mosquitto_username
   password: !secret mosquitto_password
