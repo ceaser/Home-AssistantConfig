@@ -207,29 +207,29 @@ zone:
     icon: mdi:worker
 
   - name: !secret school_name
-    latitude: !secret school_latitude 
-    longitude: !secret school_longitude 
+    latitude: !secret school_latitude
+    longitude: !secret school_longitude
     radius: 100
     icon: mdi:school
 
   # Train Stations
-  - name: !secret train_one_name 
-    latitude: !secret train_one_latitude 
+  - name: !secret train_one_name
+    latitude: !secret train_one_latitude
     longitude: !secret train_one_longitude
     radius: 250
-    icon: mdi:train 
+    icon: mdi:train
 
-  - name: !secret train_two_name 
-    latitude: !secret train_two_latitude 
+  - name: !secret train_two_name
+    latitude: !secret train_two_latitude
     longitude: !secret train_two_longitude
     radius: 100
-    icon: mdi:train 
+    icon: mdi:train
 
-  - name: !secret train_three_name 
-    latitude: !secret train_three_latitude 
+  - name: !secret train_three_name
+    latitude: !secret train_three_latitude
     longitude: !secret train_three_longitude
     radius: 250
-    icon: mdi:train 
+    icon: mdi:train
 
 proximity:
   ceaser:
@@ -319,7 +319,7 @@ notify:
     name: alexa_media
 
 neato:
-  username: !secret neato_username 
+  username: !secret neato_username
   password: !secret neato_password
 
 octoprint:
@@ -332,10 +332,10 @@ octoprint:
   number_of_tools: 1
 
 shell_command:
-  deluge_pause: !secret deluge_pause 
+  deluge_pause: !secret deluge_pause
   deluge_resume: !secret deluge_resume
   stop_octoprint: !secret stop_octoprint
- 
+
 # Echo integration. See https://www.home-assistant.io/components/alexa/
 # for more information.
 alexa:
