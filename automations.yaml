@@ -131,7 +131,7 @@
           true
         {%- endif -%}
   action:
-    - service: notify.ios_0x4950686f6e65
+    - service: notify.mobile_app_0x4950686f6e65
       data_template:
         message: >
           {{ state_attr(trigger.entity_id,'matches').keys()|list|unique|list|join(', ')|title }} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }} camera.
@@ -175,7 +175,7 @@
           true
         {%- endif -%}
   action:
-    - service: notify.ios_iphone
+    - service: notify.mobile_app_sarahs_iphone
       data_template:
         message: >
           {{ state_attr(trigger.entity_id,'matches').keys()|list|unique|list|join(', ')|title }} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }} camera.
@@ -219,7 +219,7 @@
           true
         {%- endif -%}
   action:
-    - service: notify.ios_cearah_iphone
+    - service: notify.mobile_app_iphone
       data_template:
         message: >
           {{ state_attr(trigger.entity_id,'matches').keys()|list|unique|list|join(', ')|title }} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }} camera.
@@ -489,7 +489,7 @@
       - before: '19:00:00'
         condition: time
   action:
-    - service: notify.ios_0x4950686f6e65
+    - service: notify.mobile_app_0x4950686f6e65
       data:
         message: The Vitara is parked at the {{ states("device_tracker.tile_969f352152684c55")
           }}
@@ -717,7 +717,7 @@
       entity_id: sensor.anet_a8_actual_tool0_temp
       above: 374
   action:
-    - service: notify.ios_0x4950686f6e65
+    - service: notify.mobile_app_0x4950686f6e65
       data_template:
         message: "Printer is ready"
         data:
@@ -733,7 +733,7 @@
       from: 'on'
       to: 'off'
   action:
-    - service: notify.ios_0x4950686f6e65
+    - service: notify.mobile_app_0x4950686f6e65
       data_template:
         message: "Printing is completed"
         data:
@@ -799,7 +799,7 @@
       from: 'unknown'
       to: 'Operational'
   action:
-    - service: notify.ios_0x4950686f6e65
+    - service: notify.mobile_app_0x4950686f6e65
       data_template:
         message: "Printer Online"
         data:
@@ -824,7 +824,7 @@
     - service: vacuum.return_to_base
       data:
         entity_id: vacuum.automower
-    - service: notify.ios_0x4950686f6e65
+    - service: notify.mobile_app_0x4950686f6e65
       data_template:
         message: "Automower Parked"
         data:
@@ -858,7 +858,7 @@
     - service: vacuum.return_to_base
       data:
         entity_id: vacuum.automower
-    - service: notify.ios_0x4950686f6e65
+    - service: notify.mobile_app_0x4950686f6e65
       data_template:
         message: "Automower Started"
         data:
@@ -880,7 +880,7 @@
     - service: vacuum.return_to_base
       data:
         entity_id: vacuum.automower
-    - service: notify.ios_0x4950686f6e65
+    - service: notify.mobile_app_0x4950686f6e65
       data_template:
         message: "Automower Parked"
         data:
@@ -919,7 +919,7 @@
     - service: vacuum.start_pause
       data:
         entity_id: vacuum.automower
-    - service: notify.ios_0x4950686f6e65
+    - service: notify.mobile_app_0x4950686f6e65
       data_template:
         message: "Automower Paused"
         data:
