@@ -2,7 +2,7 @@ homeassistant:
   # List of folders that can be used as sources for sending file.
   # Use http://.../local/ to access the files in this directory
   # Required for the camera.record service
-  whitelist_external_dirs: /home/homeassistant/.homeassistant/www
+  whitelist_external_dirs: /config/www
   # Name of the location where Home Assistant is running
   name: Home
   # Location required to calculate the time the sun rises and sets
@@ -20,7 +20,7 @@ homeassistant:
   - type: homeassistant
 
 recorder:
-  db_url: sqlite:////home/homeassistant/.homeassistant/home-assistant_v2.db
+  db_url: sqlite:////config/home-assistant_v2.db
   purge_interval: 1
   purge_keep_days: 1
   exclude:
@@ -51,7 +51,10 @@ default_config:
 http:
   base_url: !secret base_url
   use_x_forwarded_for: true
-  trusted_proxies: 192.168.8.2
+  trusted_proxies:
+    - 192.168.1.0/24
+    - 10.244.0.0/16
+    - 172.17.0.1
   ip_ban_enabled: true
   login_attempts_threshold: 10
 
@@ -76,25 +79,25 @@ tts:
   - platform: google_translate
     service_name: google_say
     cache: true
-    cache_dir: /home/homeassistant/.homeassistant/tts
+    cache_dir: /config/tts
     time_memory: 300
 
 mqtt:
-  broker: localhost
+  broker: !secret mosquitto_broker
   port: 1883
   username: !secret mosquitto_username
   password: !secret mosquitto_password
 
 plex:
-  host: 192.168.1.40
+  host: !secret plex_host
   port: 32400
-  #  token: !secret plex_token
+  token: !secret plex_token
   ssl: true
   verify_ssl: false
 
 rainmachine:
   controllers:
-    - ip_address: 192.168.75.3
+    - ip_address: !secret rainmachine_ip_address
       password: !secret rainmachine_password
       binary_sensors:
         monitored_conditions:
@@ -135,7 +138,6 @@ rest_command:
       {"jsonrpc":"2.0", "id":1, "method":"{{ method }}", "params":["token:{{ token }}"]}
 
 
-
 # Laview Halo One
 camera:
   - platform: neato
@@ -145,15 +147,15 @@ camera:
     extra_arguments: -vf "scale=iw/4:ih/4" -q:v 2
   - platform: local_file
     name: Driveway TF
-    file_path: /home/homeassistant/.homeassistant/www/driveway_latest.jpg
+    file_path: /config/www/driveway_latest.jpg
   - platform: mjpeg
     name: Anet A8
-    still_image_url: http://192.168.1.32:8080/?action=snapshot
-    mjpeg_url: http://192.168.1.32:8080/?action=stream
+    still_image_url: !secret a8_still_image_url
+    mjpeg_url: !secret a8_mjpeg_url
 
 # Amcrest camera
 amcrest:
-  - host: 192.168.75.2
+  - host: !secret camera_host
     name: Driveway
     username: !secret camera_username
     password: !secret camera_password
@@ -206,29 +208,29 @@ zone:
     icon: mdi:worker
 
   - name: !secret school_name
-    latitude: !secret school_latitude 
-    longitude: !secret school_longitude 
+    latitude: !secret school_latitude
+    longitude: !secret school_longitude
     radius: 100
     icon: mdi:school
 
   # Train Stations
-  - name: !secret train_one_name 
-    latitude: !secret train_one_latitude 
+  - name: !secret train_one_name
+    latitude: !secret train_one_latitude
     longitude: !secret train_one_longitude
     radius: 250
-    icon: mdi:train 
+    icon: mdi:train
 
-  - name: !secret train_two_name 
-    latitude: !secret train_two_latitude 
+  - name: !secret train_two_name
+    latitude: !secret train_two_latitude
     longitude: !secret train_two_longitude
     radius: 100
-    icon: mdi:train 
+    icon: mdi:train
 
-  - name: !secret train_three_name 
-    latitude: !secret train_three_latitude 
+  - name: !secret train_three_name
+    latitude: !secret train_three_latitude
     longitude: !secret train_three_longitude
     radius: 250
-    icon: mdi:train 
+    icon: mdi:train
 
 proximity:
   ceaser:
@@ -260,7 +262,7 @@ device_tracker:
 # Send event on file changes. Used to connect camera.record and notify services.
 # See https://www.home-assistant.io/components/folder_watcher/ for more info
 folder_watcher:
-  - folder: /home/homeassistant/.homeassistant/www
+  - folder: /config/www
     patterns:
       - '*.mp4'
 #      - '*.jpg'
@@ -271,10 +273,10 @@ image_processing:
     source:
       - entity_id: camera.driveway
     file_out:
-      - "/home/homeassistant/.homeassistant/www/{{ camera_entity.split('.')[1] }}_latest.jpg"
-      - "/home/homeassistant/.homeassistant/www/{{ camera_entity.split('.')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg"
+      - "/config/www/{{ camera_entity.split('.')[1] }}_latest.jpg"
+      - "/config/www/{{ camera_entity.split('.')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg"
     model:
-      graph: /home/homeassistant/.homeassistant/tensorflow/frozen_inference_graph.pb
+      graph: /config/tensorflow/frozen_inference_graph.pb
       categories:
         - category: person
           area:
@@ -300,10 +302,10 @@ image_processing:
 #    source:
 #      - entity_id: camera.doorbell
 #    file_out:
-#      - "/home/homeassistant/.homeassistant/www/{{ camera_entity.split('.')[1] }}_latest.jpg"
-#      - "/home/homeassistant/.homeassistant/www/{{ camera_entity.split('.')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg"
+#      - "/config/www/{{ camera_entity.split('.')[1] }}_latest.jpg"
+#      - "/config/www/{{ camera_entity.split('.')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg"
 #    model:
-#      graph: /home/homeassistant/.homeassistant/tensorflow/frozen_inference_graph.pb
+#      graph: /config/tensorflow/frozen_inference_graph.pb
 #      categories:
 #        - person
 #        - cat
@@ -318,12 +320,12 @@ notify:
     name: alexa_media
 
 neato:
-  username: !secret neato_username 
+  username: !secret neato_username
   password: !secret neato_password
 
 octoprint:
   name: Anet A8
-  host: 192.168.1.32
+  host: !secret octoprint_host
   api_key: !secret octoprint_api_key
   port: 5000
   bed: true
@@ -331,10 +333,16 @@ octoprint:
   number_of_tools: 1
 
 shell_command:
-  deluge_pause: !secret deluge_pause 
+  deluge_pause: !secret deluge_pause
   deluge_resume: !secret deluge_resume
   stop_octoprint: !secret stop_octoprint
- 
+
+sonos:
+  media_player:
+    hosts:
+      - !secret sonos_host
+    advertise_addr: !secret sonos_advertise_addr
+
 # Echo integration. See https://www.home-assistant.io/components/alexa/
 # for more information.
 alexa:
