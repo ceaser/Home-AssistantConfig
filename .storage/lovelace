@@ -669,6 +669,56 @@
                         {
                             "entities": [
                                 {
+                                    "entity": "sensor.nzbget"
+                                },
+                                {
+                                    "entity": "sensor.aria"
+                                }
+                            ],
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "switch.nzbget"
+                                }
+                            ],
+                            "type": "entities"
+                        },
+                        {
+                            "entity": "sensor.nzbget",
+                            "hold_action": {
+                                "action": "more-info"
+                            },
+                            "show_icon": true,
+                            "show_name": true,
+                            "tap_action": {
+                                "action": "call-service",
+                                "service": "rest_command.nzbget",
+                                "service_data": {
+                                    "method": "resumedownload"
+                                }
+                            },
+                            "type": "entity-button"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.nzbget"
+                                }
+                            ],
+                            "type": "glance"
+                        }
+                    ],
+                    "icon": "mdi:wan",
+                    "title": "Wan"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entities": [
+                                {
                                     "entity": "binary_sensor.anet_a8_printing",
                                     "name": "Print"
                                 },
@@ -751,56 +801,6 @@
                     ],
                     "icon": "",
                     "title": "3D Printer"
-                },
-                {
-                    "badges": [],
-                    "cards": [
-                        {
-                            "entities": [
-                                {
-                                    "entity": "sensor.nzbget"
-                                },
-                                {
-                                    "entity": "sensor.aria"
-                                }
-                            ],
-                            "type": "entities"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "switch.nzbget"
-                                }
-                            ],
-                            "type": "entities"
-                        },
-                        {
-                            "entity": "sensor.nzbget",
-                            "hold_action": {
-                                "action": "more-info"
-                            },
-                            "show_icon": true,
-                            "show_name": true,
-                            "tap_action": {
-                                "action": "call-service",
-                                "service": "rest_command.nzbget",
-                                "service_data": {
-                                    "method": "resumedownload"
-                                }
-                            },
-                            "type": "entity-button"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "sensor.nzbget"
-                                }
-                            ],
-                            "type": "glance"
-                        }
-                    ],
-                    "icon": "mdi:wan",
-                    "title": "Wan"
                 },
                 {
                     "badges": [],
