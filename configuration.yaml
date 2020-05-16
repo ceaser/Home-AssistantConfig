@@ -197,11 +197,6 @@ zone:
     radius: 200
     icon: mdi:account-multiple
 
-  - name: East Gate
-    latitude: !secret east_gate_latitude
-    longitude: !secret east_gate_longitude
-    radius: 6
-
   - name: !secret work_name
     latitude: !secret work_latitude
     longitude: !secret work_longitude

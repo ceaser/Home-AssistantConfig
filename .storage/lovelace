@@ -329,6 +329,14 @@
                             "show_header_toggle": false,
                             "title": "Basement Vacuum",
                             "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "vacuum.automower"
+                                }
+                            ],
+                            "type": "glance"
                         }
                     ],
                     "icon": "mdi:robot-vacuum",
@@ -575,6 +583,39 @@
                         {
                             "cards": [
                                 {
+                                    "aspect_ratio": "1.78",
+                                    "default_zoom": 15,
+                                    "entities": [
+                                        {
+                                            "entity": "person.sandra"
+                                        }
+                                    ],
+                                    "title": "Sandra",
+                                    "type": "map"
+                                },
+                                {
+                                    "entities": [
+                                        {
+                                            "entity": "person.sandra"
+                                        }
+                                    ],
+                                    "show_icon": false,
+                                    "show_name": false,
+                                    "show_state": true,
+                                    "type": "glance"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        }
+                    ],
+                    "title": "Sanda"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "cards": [
+                                {
                                     "entity": "sensor.sarah_iphone_battery_level",
                                     "max": 100,
                                     "min": 0,
@@ -629,39 +670,6 @@
                         }
                     ],
                     "title": "Sarah"
-                },
-                {
-                    "badges": [],
-                    "cards": [
-                        {
-                            "cards": [
-                                {
-                                    "aspect_ratio": "1.78",
-                                    "default_zoom": 15,
-                                    "entities": [
-                                        {
-                                            "entity": "person.sandra"
-                                        }
-                                    ],
-                                    "title": "Sandra",
-                                    "type": "map"
-                                },
-                                {
-                                    "entities": [
-                                        {
-                                            "entity": "person.sandra"
-                                        }
-                                    ],
-                                    "show_icon": false,
-                                    "show_name": false,
-                                    "show_state": true,
-                                    "type": "glance"
-                                }
-                            ],
-                            "type": "vertical-stack"
-                        }
-                    ],
-                    "title": "Sanda"
                 },
                 {
                     "badges": [],
@@ -801,40 +809,6 @@
                     ],
                     "icon": "",
                     "title": "3D Printer"
-                },
-                {
-                    "badges": [],
-                    "cards": [
-                        {
-                            "entities": [
-                                {
-                                    "entity": "vacuum.automower"
-                                }
-                            ],
-                            "type": "glance"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "input_boolean.east_gate"
-                                }
-                            ],
-                            "type": "entities"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "device_tracker.automower_g_191108221_190740383"
-                                },
-                                {
-                                    "entity": "zone.east_gate"
-                                }
-                            ],
-                            "type": "map"
-                        }
-                    ],
-                    "path": "mower",
-                    "title": "Mower"
                 }
             ]
         }

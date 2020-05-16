@@ -814,7 +814,7 @@
   trigger:
     - platform: numeric_state
       entity_id: sensor.dark_sky_precip_probability
-      above: 99
+      above: 90
   action:
     - service: logbook.log
       data_template:
@@ -836,7 +836,7 @@
   trigger:
     - platform: numeric_state
       entity_id: sensor.dark_sky_precip_probability
-      below: 99
+      below: 50
   condition:
     - condition: or
       conditions:
@@ -865,35 +865,10 @@
           push:
             category: 'automower'
 
-- id: 'park_automower'
-  alias: Park Automower
-  trigger:
-    - platform: numeric_state
-      entity_id: sensor.dark_sky_precip_probability
-      above: 95
-  action:
-    - service: logbook.log
-      data_template:
-        name: "Automower: "
-        message: >-
-          Parking Automower {{ now().strftime('%Y%m%d_%H%M%S') }}.
-    - service: vacuum.return_to_base
-      data:
-        entity_id: vacuum.automower
-    - service: notify.mobile_app_0x4950686f6e65
-      data_template:
-        message: "Automower Parked"
-        data:
-          push:
-            category: 'automower'
 
 - id: 'pause_automower'
   alias: Pause Automower
   trigger:
-    - entity_id: device_tracker.automower_g_191108221_190740383
-      event: enter
-      platform: zone
-      zone: zone.east_gate
     - entity_id: input_boolean.dog_outside
       from: 'off'
       platform: state
@@ -929,10 +904,6 @@
 - id: 'resume_automower_after_pause'
   alias: Resume Automower After Pause
   trigger:
-    - entity_id: input_boolean.east_gate
-      from: 'on'
-      platform: state
-      to: 'off'
     - entity_id: input_boolean.dog_outside
       from: 'on'
       platform: state
