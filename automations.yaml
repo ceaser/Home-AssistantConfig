@@ -1003,3 +1003,21 @@
   - data:
       entity_id: input_boolean.dog_outside
     service: input_boolean.turn_off
+
+################################################################################
+# Bathroom Fans
+################################################################################
+- id: 'turn_off_bathroom_fan_after_15_minutes'
+  alias: turn_off_bathroom_fan_after_15_minutes
+  trigger:
+  - entity_id: switch.down_stairs_bathroom_light
+    for:
+      minutes: 15
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data:
+      entity_id: switch.down_stairs_bathroom_fan
+    service: switch.turn_off

@@ -185,6 +185,9 @@
                                 },
                                 {
                                     "entity": "switch.storage_room"
+                                },
+                                {
+                                    "entity": "switch.down_stairs_bathroom_light"
                                 }
                             ],
                             "title": "Lights",
@@ -234,6 +237,18 @@
                             ],
                             "show_header_toggle": false,
                             "title": "Sandra's Room",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "switch.down_stairs_bathroom_fan"
+                                },
+                                {
+                                    "entity": "switch.down_stairs_bathroom_light"
+                                }
+                            ],
+                            "title": "Downstairs Bathroom",
                             "type": "entities"
                         }
                     ],

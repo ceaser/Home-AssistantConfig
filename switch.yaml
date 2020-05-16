@@ -26,6 +26,24 @@
     retain: false
 
   - platform: mqtt
+    name: "Down Stairs Bathroom Fan"
+    state_topic: "shellies/shellyswitch25-6924A0/relay/0"
+    command_topic: "shellies/shellyswitch25-6924A0/relay/0/command"
+    qos: 1
+    payload_on: "on"
+    payload_off: "off"
+    retain: false
+
+  - platform: mqtt
+    name: "Down Stairs Bathroom Light"
+    state_topic: "shellies/shellyswitch25-6924A0/relay/1"
+    command_topic: "shellies/shellyswitch25-6924A0/relay/1/command"
+    qos: 1
+    payload_on: "on"
+    payload_off: "off"
+    retain: false
+
+  - platform: mqtt
     name: "Basement Entry Light"
     state_topic: "shellies/shellyswitch25-10AC17/relay/1"
     command_topic: "shellies/shellyswitch25-10AC17/relay/1/command"
@@ -81,7 +99,7 @@
             method: resumedownload
 # Don't use retain for Sonoff-Tasmota. See https://www.youtube.com/watch?v=31IyfM1gygo for more information
 # On the Tasmota console type the following commands:
-# SwitchRetain Off 
+# SwitchRetain Off
 # ButtonRetain On
 # ButtonRetain Off
 # PowerOnState 3
