@@ -7,20 +7,33 @@ Alexa Config Flow.
 For more details about this platform, please refer to the documentation at
 https://community.home-assistant.io/t/echo-devices-alexa-as-media-player-testers-needed/58639
 """
-import logging
 from collections import OrderedDict
+import logging
 from typing import Text
 
-import voluptuous as vol
+from alexapy import AlexapyConnectionError
 from homeassistant import config_entries
-from homeassistant.const import (CONF_EMAIL, CONF_NAME, CONF_PASSWORD,
-                                 CONF_SCAN_INTERVAL, CONF_URL,
-                                 EVENT_HOMEASSISTANT_STOP)
+from homeassistant.const import (
+    CONF_EMAIL,
+    CONF_NAME,
+    CONF_PASSWORD,
+    CONF_SCAN_INTERVAL,
+    CONF_URL,
+    EVENT_HOMEASSISTANT_STOP,
+)
 from homeassistant.core import callback
 from homeassistant.helpers import config_validation as cv
+import voluptuous as vol
 
-from .const import (CONF_DEBUG, CONF_EXCLUDE_DEVICES, CONF_INCLUDE_DEVICES,
-                    DATA_ALEXAMEDIA, DOMAIN)
+from .const import (
+    CONF_DEBUG,
+    CONF_EXCLUDE_DEVICES,
+    CONF_INCLUDE_DEVICES,
+    CONF_QUEUE_DELAY,
+    DEFAULT_QUEUE_DELAY,
+    DATA_ALEXAMEDIA,
+    DOMAIN,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -78,8 +91,22 @@ class AlexaMediaFlowHandler(config_entries.ConfigFlow):
             [(vol.Required(CONF_PASSWORD), str), (vol.Required("captcha"), str)]
         )
         self.twofactor_schema = OrderedDict([(vol.Required("securitycode"), str)])
-        self.claimspicker_schema = OrderedDict([(vol.Required("claimsoption"), str)])
-        self.authselect_schema = OrderedDict([(vol.Required("authselectoption"), int)])
+        self.claimspicker_schema = OrderedDict(
+            [
+                (
+                    vol.Required("claimsoption", default=0),
+                    vol.All(cv.positive_int, vol.Clamp(min=0)),
+                )
+            ]
+        )
+        self.authselect_schema = OrderedDict(
+            [
+                (
+                    vol.Required("authselectoption", default=0),
+                    vol.All(cv.positive_int, vol.Clamp(min=0)),
+                )
+            ]
+        )
         self.verificationcode_schema = OrderedDict(
             [(vol.Required("verificationcode"), str)]
         )
@@ -90,48 +117,12 @@ class AlexaMediaFlowHandler(config_entries.ConfigFlow):
         """Show the form to the user."""
         _LOGGER.debug("show_form %s %s %s %s", step, placeholders, errors, data_schema)
         data_schema = data_schema or vol.Schema(self.data_schema)
-        if step == "user":
-            return self.async_show_form(
-                step_id=step,
-                data_schema=data_schema,
-                errors=errors if errors else {},
-                description_placeholders=placeholders if placeholders else {},
-            )
-        elif step == "captcha":
-            return self.async_show_form(
-                step_id=step,
-                data_schema=data_schema,
-                errors={},
-                description_placeholders=placeholders if placeholders else {},
-            )
-        elif step == "twofactor":
-            return self.async_show_form(
-                step_id=step,
-                data_schema=data_schema,
-                errors={},
-                description_placeholders=placeholders if placeholders else {},
-            )
-        elif step == "claimspicker":
-            return self.async_show_form(
-                step_id=step,
-                data_schema=data_schema,
-                errors=errors if errors else {},
-                description_placeholders=placeholders if placeholders else {},
-            )
-        elif step == "authselect":
-            return self.async_show_form(
-                step_id=step,
-                data_schema=data_schema,
-                errors=errors if errors else {},
-                description_placeholders=placeholders if placeholders else {},
-            )
-        elif step == "verificationcode":
-            return self.async_show_form(
-                step_id=step,
-                data_schema=data_schema,
-                errors=errors if errors else {},
-                description_placeholders=placeholders if placeholders else {},
-            )
+        return self.async_show_form(
+            step_id=step,
+            data_schema=data_schema,
+            errors=errors if errors else {},
+            description_placeholders=placeholders if placeholders else {},
+        )
 
     async def async_step_import(self, import_config):
         """Import a config entry from configuration.yaml."""
@@ -163,8 +154,8 @@ class AlexaMediaFlowHandler(config_entries.ConfigFlow):
         if isinstance(user_input[CONF_INCLUDE_DEVICES], str):
             self.config[CONF_INCLUDE_DEVICES] = (
                 user_input[CONF_INCLUDE_DEVICES].split(",")
-                if CONF_INCLUDE_DEVICES in user_input and
-                user_input[CONF_INCLUDE_DEVICES] != ""
+                if CONF_INCLUDE_DEVICES in user_input
+                and user_input[CONF_INCLUDE_DEVICES] != ""
                 else []
             )
         else:
@@ -172,16 +163,15 @@ class AlexaMediaFlowHandler(config_entries.ConfigFlow):
         if isinstance(user_input[CONF_EXCLUDE_DEVICES], str):
             self.config[CONF_EXCLUDE_DEVICES] = (
                 user_input[CONF_EXCLUDE_DEVICES].split(",")
-                if CONF_EXCLUDE_DEVICES in user_input and
-                user_input[CONF_EXCLUDE_DEVICES] != ""
+                if CONF_EXCLUDE_DEVICES in user_input
+                and user_input[CONF_EXCLUDE_DEVICES] != ""
                 else []
             )
         else:
             self.config[CONF_EXCLUDE_DEVICES] = user_input[CONF_EXCLUDE_DEVICES]
-
-        if not self.login:
-            _LOGGER.debug("Creating new login")
-            try:
+        try:
+            if not self.login:
+                _LOGGER.debug("Creating new login")
                 self.login = AlexaLogin(
                     self.config[CONF_URL],
                     self.config[CONF_EMAIL],
@@ -191,13 +181,15 @@ class AlexaMediaFlowHandler(config_entries.ConfigFlow):
                 )
                 await self.login.login_with_cookie()
                 return await self._test_login()
-            except BaseException:
-                raise
-                return await self._show_form(errors={"base": "invalid_credentials"})
-        else:
-            _LOGGER.debug("Using existing login")
-            await self.login.login(data=user_input)
-            return await self._test_login()
+            else:
+                _LOGGER.debug("Using existing login")
+                await self.login.login(data=user_input)
+                return await self._test_login()
+        except AlexapyConnectionError:
+            return await self._show_form(errors={"base": "connection_error"})
+        except BaseException as ex:
+            _LOGGER.warning("Unknown error: %s", ex)
+            return await self._show_form(errors={"base": "unknown_error"})
 
     async def async_step_captcha(self, user_input=None):
         """Handle the input processing of the config flow."""
@@ -221,12 +213,17 @@ class AlexaMediaFlowHandler(config_entries.ConfigFlow):
 
     async def async_step_process(self, user_input=None):
         """Handle the input processing of the config flow."""
-        if not user_input:
-            return await self._show_form()
-        await self.login.login(data=user_input)
-        if CONF_PASSWORD in user_input:
-            password = user_input[CONF_PASSWORD]
-            self.config[CONF_PASSWORD] = password
+        if user_input:
+            if CONF_PASSWORD in user_input:
+                password = user_input[CONF_PASSWORD]
+                self.config[CONF_PASSWORD] = password
+            try:
+                await self.login.login(data=user_input)
+            except AlexapyConnectionError:
+                return await self._show_form(errors={"base": "connection_error"})
+            except BaseException as ex:
+                _LOGGER.warning("Unknown error: %s", ex)
+                return await self._show_form(errors={"base": "unknown_error"})
         return await self._test_login()
 
     async def _test_login(self):
@@ -284,10 +281,11 @@ class AlexaMediaFlowHandler(config_entries.ConfigFlow):
             "claimspicker_required" in login.status
             and login.status["claimspicker_required"]
         ):
-            message = "> {0}".format(
+            error_message = "> {0}".format(
                 login.status["error_message"] if "error_message" in login.status else ""
             )
             _LOGGER.debug("Creating config_flow to select verification method")
+            claimspicker_message = login.status["claimspicker_message"]
             return await self._show_form(
                 "claimspicker",
                 data_schema=vol.Schema(self.claimspicker_schema),
@@ -295,7 +293,9 @@ class AlexaMediaFlowHandler(config_entries.ConfigFlow):
                 placeholders={
                     "email": login.email,
                     "url": login.url,
-                    "message": message,
+                    "message": "> {0}\n> {1}".format(
+                        claimspicker_message, error_message
+                    ),
                 },
             )
         elif (
@@ -356,3 +356,34 @@ class AlexaMediaFlowHandler(config_entries.ConfigFlow):
             },
         )
         return await self._show_form(data_schema=vol.Schema(new_schema))
+
+    @staticmethod
+    @callback
+    def async_get_options_flow(config_entry):
+        """Get the options flow for this handler."""
+        return OptionsFlowHandler(config_entry)
+
+
+class OptionsFlowHandler(config_entries.OptionsFlow):
+    """Handle a option flow for Alexa Media."""
+
+    def __init__(self, config_entry: config_entries.ConfigEntry):
+        """Initialize options flow."""
+        self.config_entry = config_entry
+
+    async def async_step_init(self, user_input=None):
+        """Handle options flow."""
+        if user_input is not None:
+            return self.async_create_entry(title="", data=user_input)
+
+        data_schema = vol.Schema(
+            {
+                vol.Optional(
+                    CONF_QUEUE_DELAY,
+                    default=self.config_entry.options.get(
+                        CONF_QUEUE_DELAY, DEFAULT_QUEUE_DELAY
+                    ),
+                ): vol.All(vol.Coerce(float), vol.Clamp(min=0))
+            }
+        )
+        return self.async_show_form(step_id="init", data_schema=data_schema)
