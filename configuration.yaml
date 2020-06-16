@@ -20,23 +20,24 @@ homeassistant:
   - type: homeassistant
 
 recorder:
-  db_url: sqlite:////config/home-assistant_v2.db
-  purge_keep_days: 1
-  exclude:
-    domains:
-      - sun
-      - weather
-    entities:
-      - binary_sensor.anet_a8_printing
-      - binary_sensor.anet_a8_printing_error
-      - binary_sensor.office_room_motion
-      - binary_sensor.sanda_s_room_motion
-      - sensor.office_humidity
-      - sensor.office_luminosity
-      - sensor.office_temperature
-      - sensor.sandra_s_room_luminosity
-      - sensor.sandra_s_room_temperature
-      - switch.office
+  #db_url: sqlite:////config/home-assistant_v2.db
+  db_url: !secret mariadb_db_url
+  #purge_keep_days: 1
+  #exclude:
+    #domains:
+      #- sun
+      #- weather
+    #entities:
+      #- binary_sensor.anet_a8_printing
+      #- binary_sensor.anet_a8_printing_error
+      #- binary_sensor.office_room_motion
+      #- binary_sensor.sanda_s_room_motion
+      #- sensor.office_humidity
+      #- sensor.office_luminosity
+      #- sensor.office_temperature
+      #- sensor.sandra_s_room_luminosity
+      #- sensor.sandra_s_room_temperature
+      #- switch.office
 
 logbook:
 
@@ -86,9 +87,12 @@ mqtt:
   username: !secret mosquitto_username
   password: !secret mosquitto_password
 
-nzbget:
-  host: 192.168.1.40
-  ssl: false
+#nzbget:
+  #host: 192.168.1.40
+  #port: 32631
+  #ssl: false
+  #username: !secret nzbget_username
+  #password: !secret nzbget_password
 
 rest_command:
   nzbget:
@@ -109,7 +113,6 @@ rest_command:
 
 # Laview Halo One
 camera:
-  - platform: neato
   - platform: ffmpeg
     name: Doorbell
     input: !secret doorbell_url
