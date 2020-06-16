@@ -421,7 +421,7 @@
                         {
                             "cards": [
                                 {
-                                    "entity": "sensor.ceaser_iphone_battery_level",
+                                    "entity": "sensor.0x4950686f6e65_battery_level",
                                     "max": 100,
                                     "min": 0,
                                     "severity": {
@@ -435,7 +435,7 @@
                                 {
                                     "entities": [
                                         {
-                                            "entity": "sensor.ceaser_iphone_battery_state"
+                                            "entity": "sensor.0x4950686f6e65_battery_state"
                                         }
                                     ],
                                     "show_icon": false,
