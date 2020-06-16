@@ -398,10 +398,14 @@
     - platform: numeric_state
       entity_id: sensor.office_temperature
       below: 75
+    - platform: numeric_state
+      entity_id: sensor.office_temperature
       above: 80
     - platform: numeric_state
       entity_id: sensor.office_temperature
       below: 79
+    - platform: numeric_state
+      entity_id: sensor.office_temperature
       above: 80
   condition:
     - condition: template

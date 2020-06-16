@@ -21,7 +21,6 @@ homeassistant:
 
 recorder:
   db_url: sqlite:////config/home-assistant_v2.db
-  purge_interval: 1
   purge_keep_days: 1
   exclude:
     domains:
@@ -49,7 +48,6 @@ default_config:
 
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 http:
-  base_url: !secret base_url
   use_x_forwarded_for: true
   trusted_proxies:
     - 192.168.1.0/24
@@ -88,37 +86,9 @@ mqtt:
   username: !secret mosquitto_username
   password: !secret mosquitto_password
 
-plex:
-  host: !secret plex_host
-  port: 32400
-  token: !secret plex_token
-  ssl: true
-  verify_ssl: false
-
-rainmachine:
-  controllers:
-    - ip_address: !secret rainmachine_ip_address
-      password: !secret rainmachine_password
-      binary_sensors:
-        monitored_conditions:
-          - extra_water_on_hot_days
-#          - flow_sensor
-          - freeze
-          - freeze_protection
-          - hourly
-          - month
-          - raindelay
-          - rainsensor
-          - weekday
-      sensors:
-        monitored_conditions:
-#          - flow_sensor_clicks_cubic_meter
-#          - flow_sensor_consumed_liters
-#          - flow_sensor_start_index
-#          - flow_sensor_watering_clicks
-          - freeze_protect_temp
-      switches:
-        zone_run_time: 600
+nzbget:
+  host: 192.168.1.40
+  ssl: false
 
 rest_command:
   nzbget:
@@ -136,7 +106,6 @@ rest_command:
       content-type: 'application/json, text/json'
     payload: >+
       {"jsonrpc":"2.0", "id":1, "method":"{{ method }}", "params":["token:{{ token }}"]}
-
 
 # Laview Halo One
 camera:
@@ -179,15 +148,6 @@ stream:
 # https://www.home-assistant.io/components/ffmpeg/
 ffmpeg:
   ffmpeg_bin: /usr/bin/ffmpeg
-
-alexa_media:
-  accounts:
-    - email: !secret amazon_username1
-      password: !secret amazon_password1
-      url: amazon.com
-#    - email: !secret amazon_username2
-#      password: !secret amazon_password2
-#      url: amazon.com
 
 zone:
   # This will override the default home zone
@@ -314,9 +274,9 @@ notify:
   - platform: alexa_media
     name: alexa_media
 
-neato:
-  username: !secret neato_username
-  password: !secret neato_password
+#neato:
+  #username: !secret neato_username
+  #password: !secret neato_password
 
 octoprint:
   name: Anet A8
