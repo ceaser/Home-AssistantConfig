@@ -1,5 +1,3 @@
-  - platform: neato
-
   - platform: mqtt
     name: "Family Room Lights"
     state_topic: "shellies/shelly1-B9F4AA/relay/0"
