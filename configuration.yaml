@@ -39,6 +39,9 @@ recorder:
       #- sensor.sandra_s_room_temperature
       #- switch.office
 
+prometheus:
+  namespace: hass
+
 logbook:
 
 # Configure a default setup of Home Assistant (frontend, api, etc)
