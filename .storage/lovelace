@@ -175,22 +175,34 @@
                         {
                             "entities": [
                                 {
-                                    "entity": "switch.family_room_lights"
+                                    "entity": "light.family_room"
                                 },
                                 {
-                                    "entity": "switch.garage_entry_light"
+                                    "entity": "light.garage_entry"
                                 },
                                 {
-                                    "entity": "switch.basement_entry_light"
+                                    "entity": "light.basement_entry"
                                 },
                                 {
-                                    "entity": "switch.storage_room"
+                                    "entity": "light.storage_room"
                                 },
                                 {
-                                    "entity": "switch.down_stairs_bathroom_light"
+                                    "entity": "light.down_stairs_bathroom"
                                 }
                             ],
                             "title": "Lights",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "input_number.bathroom_fan_minutes"
+                                },
+                                {
+                                    "entity": "fan.down_stairs_bathroom_fan"
+                                }
+                            ],
+                            "title": "Fans",
                             "type": "entities"
                         },
                         {
@@ -210,6 +222,12 @@
                                 {
                                     "entity": "sensor.office_humidity",
                                     "name": "Humidity"
+                                },
+                                {
+                                    "entity": "light.elgato_key_light"
+                                },
+                                {
+                                    "entity": "light.elgato_key_light_2"
                                 }
                             ],
                             "show_header_toggle": false,
@@ -237,18 +255,6 @@
                             ],
                             "show_header_toggle": false,
                             "title": "Sandra's Room",
-                            "type": "entities"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "switch.down_stairs_bathroom_fan"
-                                },
-                                {
-                                    "entity": "switch.down_stairs_bathroom_light"
-                                }
-                            ],
-                            "title": "Downstairs Bathroom",
                             "type": "entities"
                         }
                     ],

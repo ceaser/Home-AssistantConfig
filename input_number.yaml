@@ -1,0 +1,7 @@
+  bathroom_fan_minutes:
+    name: "Turn fan off in"
+    initial: 5
+    min: 1
+    max: 15
+    step: 1
+    unit_of_measurement: Minutes

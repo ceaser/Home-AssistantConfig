@@ -1,56 +1,4 @@
   - platform: mqtt
-    name: "Family Room Lights"
-    state_topic: "shellies/shelly1-B9F4AA/relay/0"
-    command_topic: "shellies/shelly1-B9F4AA/relay/0/command"
-    qos: 1
-    payload_on: "on"
-    payload_off: "off"
-    retain: false
-  - platform: mqtt
-    name: "LightsFamilyRoom1"
-    state_topic: "shellies/shellyswitch25-10AC17/relay/0"
-    command_topic: "shellies/shellyswitch25-10AC17/relay/0/command"
-    qos: 1
-    payload_on: "on"
-    payload_off: "off"
-    retain: false
-  - platform: mqtt
-    name: "LightsFamilyRoom2"
-    state_topic: "shellies/shelly1-B9FCA2/relay/0"
-    command_topic: "shellies/shelly1-B9FCA2/relay/0/command"
-    qos: 1
-    payload_on: "on"
-    payload_off: "off"
-    retain: false
-
-  - platform: mqtt
-    name: "Down Stairs Bathroom Fan"
-    state_topic: "shellies/shellyswitch25-6924A0/relay/0"
-    command_topic: "shellies/shellyswitch25-6924A0/relay/0/command"
-    qos: 1
-    payload_on: "on"
-    payload_off: "off"
-    retain: false
-
-  - platform: mqtt
-    name: "Down Stairs Bathroom Light"
-    state_topic: "shellies/shellyswitch25-6924A0/relay/1"
-    command_topic: "shellies/shellyswitch25-6924A0/relay/1/command"
-    qos: 1
-    payload_on: "on"
-    payload_off: "off"
-    retain: false
-
-  - platform: mqtt
-    name: "Basement Entry Light"
-    state_topic: "shellies/shellyswitch25-10AC17/relay/1"
-    command_topic: "shellies/shellyswitch25-10AC17/relay/1/command"
-    qos: 0
-    payload_on: "on"
-    payload_off: "off"
-    retain: false
-
-  - platform: mqtt
     name: "Office"
     command_topic: "office/switch1"
     payload_on: "ON"
@@ -59,27 +7,10 @@
     qos: 1
     retain: true
     value_template: '{{ value.x }}'
-
   - platform: mqtt
     name: "Anet A8 Power Strip"
     command_topic: "cmnd/a8/power"
     state_topic: "stat/a8/POWER"
-    qos: 1
-    payload_on: "ON"
-    payload_off: "OFF"
-
-  - platform: mqtt
-    name: "Garage Entry Light"
-    command_topic: "cmnd/garage-entry/light/power"
-    state_topic: "stat/garage-entry/light/POWER"
-    qos: 1
-    payload_on: "ON"
-    payload_off: "OFF"
-
-  - platform: mqtt
-    name: "Storage Room"
-    command_topic: "cmnd/storage/light/power"
-    state_topic: "stat/storage/light/POWER"
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"

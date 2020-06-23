@@ -307,6 +307,47 @@ sonos:
 # Echo integration. See https://www.home-assistant.io/components/alexa/
 # for more information.
 alexa:
+  smart_home:
+    locale: en-US
+    endpoint: https://api.amazonalexa.com/v3/events
+    client_id: !secret smart_home_client_id
+    client_secret: !secret smart_home_client_secret
+    entity_config:
+      input_boolean.dog_outside:
+        name: "Dog Outside"
+        description: "Disable lawn mower, Turn on lights and pause the sprinkler system"
+        display_categories: SWITCH
+      light.family_room:
+        name: "Family Room Light"
+        description: "Family Room Light"
+        display_categories: LIGHT
+      light.garage_entry:
+        name: "Garage Entry Light"
+        description: "Garage Entry Light"
+        display_categories: LIGHT
+      light.basement_entry:
+        name: "Basement Entry Light"
+        description: "Basement Entry Light"
+        display_categories: LIGHT
+      light.storage_room:
+        name: "Storage Room Light"
+        description: "Storage Room Light"
+        display_categories: LIGHT
+      light.down_stairs_bathroom:
+        name: "Downstairs Bathroom Light"
+        description: "Downstairs Bathroom Light"
+        display_categories: LIGHT
+    filter:
+      include_entities:
+        - input_boolean.dog_outside
+      include_domains:
+        - light
+        - fan
+        #- climate
+      exclude_entities:
+        - light.familyroom1
+        - light.familyroom2
+        - switch.anet_a8_power_strip
 
 # TODO: Incorporate custom updater
 # https://github.com/custom-components/custom_updater
@@ -319,8 +360,12 @@ ios: !include ios.yaml
 sensor: !include sensor.yaml
 binary_sensor: !include binary_sensor.yaml
 switch: !include switch.yaml
+light: !include light.yaml
+fan: !include fan.yaml
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 input_select: !include input_select.yaml
 input_boolean: !include input_boolean.yaml
+input_number: !include input_number.yaml
+scene: !include scenes.yaml
