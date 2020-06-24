@@ -304,6 +304,11 @@ sonos:
       - !secret sonos_host
     advertise_addr: !secret sonos_advertise_addr
 
+nissan_leaf:
+  username: !secret nissan_leaf_username
+  password: !secret nissan_leaf_password
+  region: !secret nissan_leaf_region
+
 # Echo integration. See https://www.home-assistant.io/components/alexa/
 # for more information.
 alexa:

@@ -1025,3 +1025,21 @@
   - data:
       entity_id: fan.down_stairs_bathroom_fan
     service: fan.turn_off
+
+################################################################################
+# Nissan Leaf
+################################################################################
+- id: update_when_driver_not_home
+  alias: 'Update when driver not home'
+  initial_state: on
+  trigger:
+    - platform: time_pattern
+      minutes: '/30'
+  condition:
+    - condition: state
+      entity_id: person.ceaser
+      state: 'not_home'
+  action:
+    - service: nissan_leaf.update
+      data:
+        vin: !secret nissan_leaf_vin
