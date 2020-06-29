@@ -958,7 +958,7 @@
     state: 'below_horizon'
   action:
   - data:
-      entity_id: light.garage_entry_light
+      entity_id: light.garage_entry
     service: light.turn_on
 
 - id: 'turn_off_garage_entry_light'
@@ -1014,7 +1014,7 @@
 - id: 'turn_off_bathroom_fan_after_15_minutes'
   alias: turn_off_bathroom_fan_after_15_minutes
   trigger:
-  - entity_id: light.down_stairs_bathroom_light
+  - entity_id: light.downstairs_bathroom
     for:
       minutes: "{{ states('input_number.bathroom_fan_minutes') | int }}"
     from: 'on'
@@ -1023,7 +1023,7 @@
   condition: []
   action:
   - data:
-      entity_id: fan.down_stairs_bathroom_fan
+      entity_id: fan.downstairs_bathroom
     service: fan.turn_off
 
 ################################################################################

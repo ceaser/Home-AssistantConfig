@@ -342,6 +342,42 @@ alexa:
         name: "Downstairs Bathroom Light"
         description: "Downstairs Bathroom Light"
         display_categories: LIGHT
+      light.downstairs_bathroom:
+        name: "Downstairs Bathroom Light"
+        description: "Downstairs Bathroom Light"
+        display_categories: LIGHT
+      light.front_garage:
+        name: "Front Garage Light"
+        description: "Front Garage Light"
+        display_categories: LIGHT
+      light.garage:
+        name: "Garage Light"
+        description: "Garage Light"
+        display_categories: LIGHT
+      light.kitchen_entry:
+        name: "Kitchen Entry Light"
+        description: "Kitchen Entry Light"
+        display_categories: LIGHT
+      light.kitchen:
+        name: "Kitchen Light"
+        description: "Kitchen Light"
+        display_categories: LIGHT
+      light.dining_room:
+        name: "Dining Room Light"
+        description: "Dining Room Light"
+        display_categories: LIGHT
+      light.living_room:
+        name: "Living Room Light"
+        description: "Living Room Light"
+        display_categories: LIGHT
+      fan.living_room:
+        name: "Living Room Fan"
+        description: "Living Room Fan"
+        display_categories: FAN
+      fan.downstairs_bathroom:
+        name: "Downstairs Bathroom Fan"
+        description: "Downstairs Bathroom Fan"
+        display_categories: FAN
     filter:
       include_entities:
         - input_boolean.dog_outside

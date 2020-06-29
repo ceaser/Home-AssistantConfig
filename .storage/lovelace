@@ -100,16 +100,34 @@
                                     "entity": "light.family_room"
                                 },
                                 {
+                                    "entity": "light.front_garage"
+                                },
+                                {
+                                    "entity": "light.garage"
+                                },
+                                {
                                     "entity": "light.garage_entry"
                                 },
                                 {
-                                    "entity": "light.basement_entry"
+                                    "entity": "light.kitchen_entry"
+                                },
+                                {
+                                    "entity": "light.kitchen"
+                                },
+                                {
+                                    "entity": "light.living_room"
+                                },
+                                {
+                                    "entity": "light.dining_room"
+                                },
+                                {
+                                    "entity": "light.downstairs_bathroom"
                                 },
                                 {
                                     "entity": "light.storage_room"
                                 },
                                 {
-                                    "entity": "light.down_stairs_bathroom"
+                                    "entity": "light.basement_entry"
                                 }
                             ],
                             "title": "Lights",
@@ -121,7 +139,10 @@
                                     "entity": "input_number.bathroom_fan_minutes"
                                 },
                                 {
-                                    "entity": "fan.down_stairs_bathroom_fan"
+                                    "entity": "fan.downstairs_bathroom"
+                                },
+                                {
+                                    "entity": "fan.living_room"
                                 }
                             ],
                             "title": "Fans",

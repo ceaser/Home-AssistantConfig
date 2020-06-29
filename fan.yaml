@@ -1,7 +1,15 @@
   - platform: mqtt
-    name: "Down Stairs Bathroom Fan"
+    name: "Downstairs Bathroom"
     state_topic: "shellies/shellyswitch25-6924A0/relay/0"
     command_topic: "shellies/shellyswitch25-6924A0/relay/0/command"
+    qos: 1
+    payload_on: "on"
+    payload_off: "off"
+    retain: false
+  - platform: mqtt
+    name: "Living Room"
+    state_topic: "shellies/shellyswitch25-6925D7/relay/1"
+    command_topic: "shellies/shellyswitch25-6925D7/relay/1/command"
     qos: 1
     payload_on: "on"
     payload_off: "off"
