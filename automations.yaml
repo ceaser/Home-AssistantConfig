@@ -1029,17 +1029,45 @@
 ################################################################################
 # Nissan Leaf
 ################################################################################
-- id: update_when_driver_not_home
-  alias: 'Update when driver not home'
+#- id: 'update_nisson_leaf_when_ceaser_not_home'
+  #alias: update_nisson_leaf_when_ceaser_not_home
+  #initial_state: off
+  #trigger:
+    #- platform: time_pattern
+      #minutes: '/30'
+  #condition:
+    #- condition: state
+      #entity_id: person.ceaser
+      #state: 'not_home'
+  #action:
+    #- service: nissan_leaf.update
+      #data:
+        #vin: !secret nissan_leaf_vin
+
+#- id: 'update_nisson_leaf_at_night'
+  #alias: 'update_nisson_leaf_at_night'
+  #initial_state: off
+  #trigger:
+    #- platform: time
+      #at: '22:00:00'
+  #condition:
+    #- condition: state
+      #entity_id: person.ceaser
+      #state: 'home'
+  #action:
+    #- service: nissan_leaf.update
+      #data:
+        #vin: !secret nissan_leaf_vin
+
+
+################################################################################
+# Start HomeKit
+################################################################################
+- id: 'start_homekit'
+  alias: 'start_homekit'
   initial_state: on
   trigger:
-    - platform: time_pattern
-      minutes: '/30'
-  condition:
-    - condition: state
-      entity_id: person.ceaser
-      state: 'not_home'
+    - platform: homeassistant
+      event: start
   action:
-    - service: nissan_leaf.update
-      data:
-        vin: !secret nissan_leaf_vin
+    - service: homekit.start

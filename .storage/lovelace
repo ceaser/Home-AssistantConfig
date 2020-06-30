@@ -871,7 +871,7 @@
                                     "name": "Power Strip"
                                 },
                                 {
-                                    "entity": "switch.storage_room",
+                                    "entity": "light.storage_room",
                                     "name": "Room Light"
                                 },
                                 {

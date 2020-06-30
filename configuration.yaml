@@ -39,6 +39,12 @@ recorder:
       #- sensor.sandra_s_room_temperature
       #- switch.office
 
+#logger:
+  #default: warning
+  #logs:
+    #homeassistant.components.homekit: debug
+    #pyhap: debug
+
 prometheus:
   namespace: hass
 
@@ -304,10 +310,16 @@ sonos:
       - !secret sonos_host
     advertise_addr: !secret sonos_advertise_addr
 
-nissan_leaf:
-  username: !secret nissan_leaf_username
-  password: !secret nissan_leaf_password
-  region: !secret nissan_leaf_region
+#nissan_leaf:
+  #username: !secret nissan_leaf_username
+  #password: !secret nissan_leaf_password
+  #region: !secret nissan_leaf_region
+  #update_interval:
+    #hours: 24
+  #update_interval_charging:
+    #minutes: 480
+  #update_interval_climate:
+    #minutes: 5
 
 # Echo integration. See https://www.home-assistant.io/components/alexa/
 # for more information.
@@ -389,6 +401,69 @@ alexa:
         - light.familyroom1
         - light.familyroom2
         - switch.anet_a8_power_strip
+
+zeroconf:
+  default_interface: true
+
+homekit:
+- name: Home Assistant Bridge
+  auto_start: false
+  safe_mode: false
+  port: 51827
+  advertise_ip: 192.168.75.51
+  filter:
+    include_entities:
+      - input_boolean.dog_outside
+      - automation.image_processing_scan
+      - camera.driveway
+      - camera.doorbell
+      - camera.driveway_tf
+    include_domains:
+      - light
+      - fan
+    exclude_entities:
+      - light.familyroom1
+      - light.familyroom2
+      - switch.anet_a8_power_strip
+  entity_config:
+    automation.image_processing_scan:
+      name: Monitor Camera
+    camera.driveway_tf:
+      name: "Last Object in the Driveway Camera"
+    camera.driveway:
+      name: "Driveway Camera"
+    camera.doorbool:
+      name: "Front Door Camera"
+    input_boolean.dog_outside:
+      name: "Dog Outside"
+    light.family_room:
+      name: "Family Room Light"
+    light.garage_entry:
+      name: "Garage Entry Light"
+    light.basement_entry:
+      name: "Basement Entry Light"
+    light.storage_room:
+      name: "Storage Room Light"
+    light.down_stairs_bathroom:
+      name: "Downstairs Bathroom Light"
+    light.downstairs_bathroom:
+      name: "Downstairs Bathroom Light"
+    light.front_garage:
+      name: "Front Garage Light"
+    light.garage:
+      name: "Garage Light"
+    light.kitchen_entry:
+      name: "Kitchen Entry Light"
+    light.kitchen:
+      name: "Kitchen Light"
+    light.dining_room:
+      name: "Dining Room Light"
+    light.living_room:
+      name: "Living Room Light"
+    fan.living_room:
+      name: "Living Room Fan"
+    fan.downstairs_bathroom:
+      name: "Downstairs Bathroom Fan"
 
 # TODO: Incorporate custom updater
 # https://github.com/custom-components/custom_updater
