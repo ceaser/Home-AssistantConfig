@@ -627,7 +627,7 @@
     - platform: state
       entity_id: media_player.sonos_familyroom
       from: playing
-      to: paused
+      to: idle
       for:
         minutes: 15
   action:
