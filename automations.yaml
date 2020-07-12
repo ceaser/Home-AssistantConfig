@@ -938,8 +938,8 @@
     to: 'on'
   condition: []
   action:
-  - data:
-      seconds: 300
+  - data_template:
+      seconds: "{{ (states('input_number.dog_outside_minutes') | int) * 60 }}"
     service: rainmachine.pause_watering
 
 ################################################################################
@@ -998,7 +998,7 @@
   trigger:
   - entity_id: input_boolean.dog_outside
     for:
-      minutes: 15
+      minutes: "{{ states('input_number.dog_outside_minutes') | int }}"
     from: 'off'
     platform: state
     to: 'on'

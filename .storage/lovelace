@@ -19,6 +19,9 @@
                             "entities": [
                                 {
                                     "entity": "input_boolean.dog_outside"
+                                },
+                                {
+                                    "entity": "input_number.dog_outside_minutes"
                                 }
                             ],
                             "show_header_toggle": false,

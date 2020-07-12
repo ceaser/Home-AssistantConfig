@@ -1,10 +1,10 @@
 - id: '1592863244209'
-  name: Meeting
+  name: Start meeting
   entities:
     light.elgato_key_light:
       brightness: 26
       color_temp: 198
-      friendly_name: Elgato Key Light
+      friendly_name: Elgato Key Light Left
       max_mireds: 344
       min_mireds: 143
       state: 'on'
@@ -12,8 +12,23 @@
     light.elgato_key_light_2:
       brightness: 18
       color_temp: 194
-      friendly_name: Elgato Key Light
+      friendly_name: Elgato Key Light Right
       max_mireds: 344
       min_mireds: 143
       state: 'on'
+      supported_features: 3
+- id: '1594438665489'
+  name: End meeting
+  entities:
+    light.elgato_key_light:
+      friendly_name: Elgato Key Light Left
+      max_mireds: 344
+      min_mireds: 143
+      state: 'off'
+      supported_features: 3
+    light.elgato_key_light_2:
+      friendly_name: Elgato Key Light Right
+      max_mireds: 344
+      min_mireds: 143
+      state: 'off'
       supported_features: 3
