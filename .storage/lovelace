@@ -258,6 +258,27 @@
                         {
                             "entity": "media_player.sandra_s_room",
                             "type": "media-control"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "input_number.alexa_morning_volume"
+                                },
+                                {
+                                    "entity": "input_datetime.alexa_morning_volume"
+                                },
+                                {
+                                    "entity": "input_number.alexa_night_volume"
+                                },
+                                {
+                                    "entity": "input_datetime.alexa_night_volume"
+                                },
+                                {
+                                    "entity": "input_number.alexa_default_volume"
+                                }
+                            ],
+                            "title": "Amazon Echo Settings",
+                            "type": "entities"
                         }
                     ],
                     "icon": "mdi:remote",

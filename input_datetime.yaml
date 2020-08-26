@@ -1,0 +1,9 @@
+  alexa_morning_volume:
+    name: "Morning Volume"
+    has_date: false
+    has_time: true
+  alexa_night_volume:
+    name: "Night Volume"
+    has_date: false
+    has_time: true
+

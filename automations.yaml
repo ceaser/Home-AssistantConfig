@@ -499,32 +499,50 @@
           }}
 
 ################################################################################
-# alexa_morning_volume_kitcheni raise the volume of the echo to 60%
+# alexa_morning_volume_kitchen changes the default volume to what is set for the
+# morning volume
 ################################################################################
-- id: alexa_morning_volume_kitchen
-  alias: 'Alexa Volume [Morning]: Kitchen'
+- id: alexa_morning_volume_default
+  alias: 'Alexa Volume [Morning]: Default'
   trigger:
-  - platform: time
-    at: '06:30:00'
+  - platform: template
+    value_template: "{{ states('sensor.time') == (state_attr('input_datetime.alexa_morning_volume', 'timestamp') | int | timestamp_custom('%H:%M', False)) }}"
   action:
-  - service: media_player.volume_set
-    data:
-      entity_id: media_player.kitchen
-      volume_level: '0.60'
+  - service: input_number.set_value
+    data_template:
+      entity_id: input_number.alexa_default_volume
+      value: "{{ states('input_number.alexa_morning_volume') | int }}"
 
-################################################################################
-# alexa_morning_volume_kitcheni reduces the volume of the echo to 20%
-################################################################################
-- id: alexa_night_volume_kitchen
-  alias: 'Alexa Volume [Night]: Kitchen'
+- id: alexa_night_volume_default
+  alias: 'Alexa Volume [Night]: Default'
   trigger:
-  - platform: time
-    at: '22:00:00'
+  - platform: template
+    value_template: "{{ states('sensor.time') == (state_attr('input_datetime.alexa_night_volume', 'timestamp') | int | timestamp_custom('%H:%M', False)) }}"
+  action:
+  - service: input_number.set_value
+    data_template:
+      entity_id: input_number.alexa_default_volume
+      value: "{{ states('input_number.alexa_night_volume') | int }}"
+
+- id: alexa_change_volume
+  alias: 'Alexa Change Volume'
+  trigger:
+  - platform: state
+    entity_id: input_number.alexa_default_volume
   action:
   - service: media_player.volume_set
-    data:
-      entity_id: media_player.kitchen
-      volume_level: '0.20'
+    data_template:
+      entity_id:
+      - media_player.kitchen
+      volume_level: "{{ states('input_number.alexa_default_volume') | float | multiply(0.01) | round(0.1) }}"
+  - condition: state
+    entity_id: media_player.sonos_familyroom
+    state: idle
+  - service: media_player.volume_set
+    data_template:
+      entity_id:
+      - media_player.sonos_familyroom
+      volume_level: "{{ states('input_number.alexa_default_volume') | float | multiply(0.01) | round(0.1) }}"
 
 ################################################################################
 # capture_cleaning_map updates the vacuums cleaning map
@@ -621,20 +639,31 @@
 ################################################################################
 # Sonos
 ################################################################################
-- id: sonos_default_volume
-  alias: 'Sonos Default Volume'
+- id: sonos_idle_volume
+  alias: 'Sonos Idle Volume'
   trigger:
     - platform: state
       entity_id: media_player.sonos_familyroom
       from: playing
       to: idle
-      for:
-        minutes: 15
   action:
     - service: media_player.volume_set
-      data:
+      data_template:
         entity_id: media_player.sonos_familyroom
-        volume_level: 0.2
+        volume_level: "{{ states('input_number.alexa_default_volume') | float | multiply(0.01) | round(0.1) }}"
+
+- id: sonos_tv_volume
+  alias: 'Sonos TV Volume'
+  trigger:
+    - platform: state
+      entity_id: media_player.sonos_familyroom
+      from: idle
+      to: playing
+  action:
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.sonos_familyroom
+        volume_level: "0.0"
 
 - id: sonos_get
   alias: 'Sonos Get'

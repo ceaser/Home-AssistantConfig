@@ -153,3 +153,6 @@
     #availability_topic: '<CHIP_ID>/status'
     #payload_available: 'online'
     #payload_not_available: 'offline'
+  - platform: time_date
+    display_options:
+      - 'time'
