@@ -856,90 +856,203 @@
                     "badges": [],
                     "cards": [
                         {
-                            "entities": [
+                            "cards": [
                                 {
-                                    "entity": "binary_sensor.anet_a8_printing",
-                                    "name": "Print"
+                                    "cards": [
+                                        {
+                                            "cards": [
+                                                {
+                                                    "entity": "sensor.octoprint_print_status",
+                                                    "icon": "None",
+                                                    "name": "Anet A8",
+                                                    "type": "entity"
+                                                },
+                                                {
+                                                    "entity": "switch.anet_a8_power_strip",
+                                                    "hold_action": {
+                                                        "action": "more-info"
+                                                    },
+                                                    "show_icon": true,
+                                                    "show_name": false,
+                                                    "tap_action": {
+                                                        "action": "toggle"
+                                                    },
+                                                    "type": "button"
+                                                }
+                                            ],
+                                            "type": "horizontal-stack"
+                                        },
+                                        {
+                                            "entities": [
+                                                {
+                                                    "entity": "automation.turn_off_power_when_finished_printing",
+                                                    "name": "Auto-shutdown when Finished"
+                                                },
+                                                {
+                                                    "entity": "switch.anet_a8_power_strip",
+                                                    "name": "Power Strip"
+                                                },
+                                                {
+                                                    "entity": "light.storage_room",
+                                                    "name": "Room Light"
+                                                },
+                                                {
+                                                    "entity": "automation.notify_when_printer_is_operational"
+                                                },
+                                                {
+                                                    "entity": "automation.notify_when_printer_is_ready"
+                                                },
+                                                {
+                                                    "entity": "automation.notify_when_printer_is_finished"
+                                                }
+                                            ],
+                                            "show_header_toggle": false,
+                                            "type": "entities"
+                                        }
+                                    ],
+                                    "mode": "vertical",
+                                    "type": "custom:stack-in-card"
                                 },
                                 {
-                                    "entity": "binary_sensor.anet_a8_printing_error",
-                                    "name": "Printing Error"
+                                    "card": {
+                                        "cards": [
+                                            {
+                                                "entity": "sensor.octoprint_print_progress",
+                                                "positions": {
+                                                    "icon": "off",
+                                                    "indicator": "inside"
+                                                },
+                                                "type": "custom:bar-card"
+                                            },
+                                            {
+                                                "entities": [
+                                                    {
+                                                        "entity": "sensor.octoprint_print_time_left"
+                                                    },
+                                                    {
+                                                        "entity": "sensor.octoprint_print_time"
+                                                    },
+                                                    {
+                                                        "entity": "sensor.octoprint_print_file"
+                                                    }
+                                                ],
+                                                "show_header_toggle": false,
+                                                "type": "entities"
+                                            },
+                                            {
+                                                "cards": [
+                                                    {
+                                                        "entity": "switch.octoprint_emergency_stop",
+                                                        "hold_action": {
+                                                            "action": "more-info"
+                                                        },
+                                                        "name": "Stop",
+                                                        "show_icon": true,
+                                                        "show_name": true,
+                                                        "type": "button"
+                                                    },
+                                                    {
+                                                        "entity": "switch.octoprint_cancel_print",
+                                                        "hold_action": {
+                                                            "action": "more-info"
+                                                        },
+                                                        "name": "Cancel",
+                                                        "show_icon": true,
+                                                        "show_name": true,
+                                                        "type": "button"
+                                                    },
+                                                    {
+                                                        "entity": "switch.octoprint_pause_print",
+                                                        "hold_action": {
+                                                            "action": "more-info"
+                                                        },
+                                                        "name": "Pause",
+                                                        "show_icon": true,
+                                                        "show_name": true,
+                                                        "type": "button"
+                                                    },
+                                                    {
+                                                        "entity": "switch.octoprint_shutdown_system",
+                                                        "hold_action": {
+                                                            "action": "more-info"
+                                                        },
+                                                        "name": "Shutdown",
+                                                        "show_icon": true,
+                                                        "show_name": true,
+                                                        "type": "button"
+                                                    }
+                                                ],
+                                                "type": "horizontal-stack"
+                                            }
+                                        ],
+                                        "mode": "vertical",
+                                        "type": "custom:stack-in-card"
+                                    },
+                                    "conditions": [
+                                        {
+                                            "entity": "binary_sensor.octoprint_printing",
+                                            "state_not": "off"
+                                        },
+                                        {
+                                            "entity": "binary_sensor.octoprint_printing",
+                                            "state_not": "unavailable"
+                                        }
+                                    ],
+                                    "type": "conditional"
                                 },
                                 {
-                                    "entity": "sensor.anet_a8_current_state",
-                                    "name": "Current State"
+                                    "card": {
+                                        "decimals": 1,
+                                        "entities": [
+                                            {
+                                                "entity": "sensor.octoprint_tool_0_temperature",
+                                                "name": "Nozzle",
+                                                "show_state": true
+                                            },
+                                            {
+                                                "entity": "sensor.octoprint_bed_temperature",
+                                                "name": "Bed",
+                                                "show_state": true
+                                            }
+                                        ],
+                                        "hours_to_show": 1,
+                                        "name": "Temperature",
+                                        "points_per_hour": 120,
+                                        "type": "custom:mini-graph-card"
+                                    },
+                                    "conditions": [
+                                        {
+                                            "entity": "binary_sensor.octoprint_printing",
+                                            "state_not": "off"
+                                        },
+                                        {
+                                            "entity": "binary_sensor.octoprint_printing",
+                                            "state_not": "unavailable"
+                                        }
+                                    ],
+                                    "type": "conditional"
                                 },
                                 {
-                                    "entity": "sensor.anet_a8_job_percentage",
-                                    "name": "Job Percentage"
-                                },
-                                {
-                                    "entity": "sensor.anet_a8_time_elapsed",
-                                    "name": "Time Elapsed"
-                                },
-                                {
-                                    "entity": "sensor.anet_a8_time_remaining",
-                                    "name": "Time Remaining"
+                                    "card": {
+                                        "aspect_ratio": "100%",
+                                        "entity": "camera.anet_a8",
+                                        "type": "picture-entity"
+                                    },
+                                    "conditions": [
+                                        {
+                                            "entity": "binary_sensor.octoprint_printing",
+                                            "state_not": "unavailable"
+                                        }
+                                    ],
+                                    "type": "conditional"
                                 }
                             ],
-                            "type": "entities"
-                        },
-                        {
-                            "entity": "camera.anet_a8",
-                            "type": "picture-entity"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "switch.anet_a8_power_strip",
-                                    "name": "Power Strip"
-                                },
-                                {
-                                    "entity": "light.storage_room",
-                                    "name": "Room Light"
-                                },
-                                {
-                                    "entity": "automation.notify_when_printer_is_operational"
-                                },
-                                {
-                                    "entity": "automation.notify_when_printer_is_ready"
-                                },
-                                {
-                                    "entity": "automation.notify_when_printer_is_finished"
-                                },
-                                {
-                                    "entity": "automation.turn_off_power_when_finished_printing"
-                                }
-                            ],
-                            "show_header_toggle": false,
-                            "title": "Switches",
-                            "type": "entities"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "sensor.anet_a8_actual_bed_temp",
-                                    "name": "Bed"
-                                }
-                            ],
-                            "hours_to_show": 1,
-                            "refresh": 2,
-                            "type": "history-graph"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "sensor.anet_a8_actual_tool0_temp",
-                                    "name": "Extruder"
-                                }
-                            ],
-                            "hours_to_show": 1,
-                            "refresh": 2,
-                            "type": "history-graph"
+                            "title": "Anet A8",
+                            "type": "vertical-stack"
                         }
                     ],
-                    "icon": "",
-                    "title": "3D Printer"
+                    "path": "test",
+                    "title": "Anet A8"
                 }
             ]
         }

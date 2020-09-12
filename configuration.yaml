@@ -91,6 +91,8 @@ tts:
     time_memory: 300
 
 mqtt:
+  discovery: true
+  discovery_prefix: homeassistant
   broker: !secret mosquitto_broker
   port: 1883
   username: !secret mosquitto_username
@@ -289,15 +291,6 @@ notify:
 #neato:
   #username: !secret neato_username
   #password: !secret neato_password
-
-octoprint:
-  name: Anet A8
-  host: !secret octoprint_host
-  api_key: !secret octoprint_api_key
-  port: 5000
-  bed: true
-  ssl: false
-  number_of_tools: 1
 
 shell_command:
   deluge_pause: !secret deluge_pause

@@ -723,12 +723,12 @@
   initial_state: on
   trigger:
     - platform: numeric_state
-      entity_id: sensor.anet_a8_actual_tool0_temp
+      entity_id: sensor.octoprint_tool_0_temperature
       above: 374 # 190 C
       for:
         minutes: 5
     - platform: numeric_state
-      entity_id: sensor.anet_a8_actual_bed_temp
+      entity_id: sensor.octoprint_bed_temperature
       above: 104 # 40 C
       for:
         minutes: 5
@@ -741,13 +741,10 @@
           true
         {%- endif -%}
     - condition: state
-      entity_id: binary_sensor.anet_a8_printing
+      entity_id: binary_sensor.octoprint_printing
       state: 'off'
-#    - condition: numeric_state
-#      entity_id: sensor.anet_a8_actual_bed_temp
-#      above: 104
     - condition: numeric_state
-      entity_id: sensor.anet_a8_actual_tool0_temp
+      entity_id: sensor.octoprint_tool_0_temperature
       above: 374
   action:
     - service: notify.mobile_app_0x4950686f6e65
@@ -762,7 +759,7 @@
   initial_state: on
   trigger:
     - platform: state
-      entity_id: binary_sensor.anet_a8_printing
+      entity_id: binary_sensor.octoprint_printing
       from: 'on'
       to: 'off'
   action:
@@ -780,13 +777,12 @@
 - id: turn_off_power_when_finished_printing
   alias: 'Turn off power when finished printing'
   initial_state: off
+  description: Shutdown the printer once is has cooled down
   trigger:
-    - platform: state
-      entity_id: binary_sensor.anet_a8_printing
-      from: 'on'
-      to: 'off'
-      for:
-        minutes: 15
+    - below: "40.0"
+      entity_id: sensor.octoprint_tool_0_temperature
+      for: 00:01:00
+      platform: numeric_state
   condition:
     - condition: template
       value_template: >
@@ -796,7 +792,7 @@
           true
         {%- endif -%}
     - condition: state
-      entity_id: binary_sensor.anet_a8_printing
+      entity_id: binary_sensor.octoprint_printing
       state: 'off'
   action:
     - service: shell_command.stop_octoprint
@@ -822,15 +818,17 @@
         name: "Printer: "
         message: >-
           Turn off Anet A8 Power Strip
+    - service: automation.turn_off
+      entity_id: automation.turn_off_power_when_finished_printing
 
 - id: notify_when_printer_is_operational
   alias: 'Notify When Printer is Operational'
   initial_state: on
   trigger:
     - platform: state
-      entity_id: sensor.anet_a8_current_state
-      from: 'unknown'
-      to: 'Operational'
+      entity_id: binary_sensor.octoprint_connected
+      from: 'off'
+      to: 'on'
   action:
     - service: notify.mobile_app_0x4950686f6e65
       data_template:
