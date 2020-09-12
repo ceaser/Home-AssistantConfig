@@ -885,16 +885,12 @@
                                         {
                                             "entities": [
                                                 {
-                                                    "entity": "automation.turn_off_power_when_finished_printing",
-                                                    "name": "Auto-shutdown when Finished"
-                                                },
-                                                {
-                                                    "entity": "switch.anet_a8_power_strip",
-                                                    "name": "Power Strip"
-                                                },
-                                                {
                                                     "entity": "light.storage_room",
                                                     "name": "Room Light"
+                                                },
+                                                {
+                                                    "entity": "automation.turn_off_power_when_finished_printing",
+                                                    "name": "Auto-shutdown when Finished"
                                                 },
                                                 {
                                                     "entity": "automation.notify_when_printer_is_operational"

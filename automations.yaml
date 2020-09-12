@@ -779,7 +779,7 @@
   initial_state: off
   description: Shutdown the printer once is has cooled down
   trigger:
-    - below: "40.0"
+    - below: "104.0" # 40 C
       entity_id: sensor.octoprint_tool_0_temperature
       for: 00:01:00
       platform: numeric_state
@@ -828,6 +828,10 @@
     - platform: state
       entity_id: binary_sensor.octoprint_connected
       from: 'off'
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.octoprint_connected
+      from: 'unavailable'
       to: 'on'
   action:
     - service: notify.mobile_app_0x4950686f6e65
