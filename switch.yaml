@@ -14,6 +14,14 @@
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
+  - platform: mqtt
+    name: "Kitchen"
+    state_topic: "shellies/shellyswitch25-BA85AD/relay/1"
+    command_topic: "shellies/shellyswitch25-BA85AD/relay/1/command"
+    qos: 1
+    payload_on: "on"
+    payload_off: "off"
+    retain: false
   - platform: template
     switches:
       nzbget:

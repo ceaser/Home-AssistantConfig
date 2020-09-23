@@ -115,7 +115,7 @@
                                     "entity": "light.kitchen_entry"
                                 },
                                 {
-                                    "entity": "light.kitchen"
+                                    "entity": "switch.kitchen"
                                 },
                                 {
                                     "entity": "light.living_room"
@@ -133,47 +133,110 @@
                                     "entity": "light.basement_entry"
                                 }
                             ],
-                            "title": "Lights",
+                            "title": "Summary",
                             "type": "entities"
                         },
                         {
-                            "entities": [
+                            "cards": [
                                 {
-                                    "entity": "input_number.bathroom_fan_minutes"
+                                    "cards": [
+                                        {
+                                            "cards": [
+                                                {
+                                                    "entity": "switch.kitchen",
+                                                    "icon": "None",
+                                                    "name": "Kitchen",
+                                                    "type": "entity"
+                                                },
+                                                {
+                                                    "entity": "switch.kitchen",
+                                                    "hold_action": {
+                                                        "action": "more-info"
+                                                    },
+                                                    "show_icon": true,
+                                                    "show_name": false,
+                                                    "tap_action": {
+                                                        "action": "toggle"
+                                                    },
+                                                    "type": "button"
+                                                }
+                                            ],
+                                            "type": "horizontal-stack"
+                                        },
+                                        {
+                                            "entities": [
+                                                {
+                                                    "entity": "scene.normal_lighting",
+                                                    "name": "Warm White 100%"
+                                                },
+                                                {
+                                                    "entity": "scene.warm_kitchen_lights_50",
+                                                    "name": "Warm White 50%"
+                                                }
+                                            ],
+                                            "show_header_toggle": false,
+                                            "type": "entities"
+                                        }
+                                    ],
+                                    "mode": "vertical",
+                                    "type": "custom:stack-in-card"
                                 },
                                 {
-                                    "entity": "fan.downstairs_bathroom"
-                                },
-                                {
-                                    "entity": "fan.living_room"
+                                    "card": {
+                                        "cards": [
+                                            {
+                                                "entity": "light.kitchen",
+                                                "type": "light"
+                                            },
+                                            {
+                                                "entities": [
+                                                    {
+                                                        "entity": "light.kitchen1"
+                                                    },
+                                                    {
+                                                        "entity": "light.kitchen2"
+                                                    },
+                                                    {
+                                                        "entity": "light.kitchen3"
+                                                    },
+                                                    {
+                                                        "entity": "light.kitchen4"
+                                                    },
+                                                    {
+                                                        "entity": "light.kitchen5"
+                                                    },
+                                                    {
+                                                        "entity": "light.kitchen6"
+                                                    }
+                                                ],
+                                                "show_header_toggle": false,
+                                                "type": "entities"
+                                            }
+                                        ],
+                                        "type": "vertical-stack"
+                                    },
+                                    "conditions": [
+                                        {
+                                            "entity": "switch.kitchen",
+                                            "state": "on"
+                                        },
+                                        {
+                                            "entity": "light.kitchen",
+                                            "state_not": "unavailable"
+                                        }
+                                    ],
+                                    "type": "conditional"
                                 }
                             ],
-                            "title": "Fans",
-                            "type": "entities"
+                            "type": "vertical-stack"
                         },
                         {
                             "entities": [
                                 {
-                                    "entity": "binary_sensor.office_room_motion",
-                                    "name": "Motion"
+                                    "entity": "scene.meeting"
                                 },
                                 {
-                                    "entity": "sensor.office_luminosity",
-                                    "name": "Luminosity"
-                                },
-                                {
-                                    "entity": "sensor.office_temperature",
-                                    "name": "Temperature"
-                                },
-                                {
-                                    "entity": "sensor.office_humidity",
-                                    "name": "Humidity"
-                                },
-                                {
-                                    "entity": "light.elgato_key_light"
-                                },
-                                {
-                                    "entity": "light.elgato_key_light_2"
+                                    "entity": "scene.office_in_the_daytime"
                                 }
                             ],
                             "show_header_toggle": false,
@@ -181,26 +244,123 @@
                             "type": "entities"
                         },
                         {
+                            "cards": [
+                                {
+                                    "cards": [
+                                        {
+                                            "cards": [
+                                                {
+                                                    "entity": "light.downstairs_bathroom",
+                                                    "icon": "None",
+                                                    "name": "Basement Bathroom",
+                                                    "type": "entity"
+                                                },
+                                                {
+                                                    "entity": "light.downstairs_bathroom",
+                                                    "hold_action": {
+                                                        "action": "more-info"
+                                                    },
+                                                    "show_icon": true,
+                                                    "show_name": false,
+                                                    "tap_action": {
+                                                        "action": "toggle"
+                                                    },
+                                                    "type": "button"
+                                                }
+                                            ],
+                                            "type": "horizontal-stack"
+                                        },
+                                        {
+                                            "entities": [
+                                                {
+                                                    "entity": "input_number.bathroom_fan_minutes"
+                                                },
+                                                {
+                                                    "entity": "fan.downstairs_bathroom",
+                                                    "name": "Fan"
+                                                }
+                                            ],
+                                            "show_header_toggle": false,
+                                            "type": "entities"
+                                        }
+                                    ],
+                                    "mode": "vertical",
+                                    "type": "custom:stack-in-card"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        },
+                        {
+                            "cards": [
+                                {
+                                    "cards": [
+                                        {
+                                            "cards": [
+                                                {
+                                                    "entity": "light.living_room",
+                                                    "icon": "None",
+                                                    "name": "Living Room",
+                                                    "type": "entity"
+                                                },
+                                                {
+                                                    "entity": "light.living_room",
+                                                    "hold_action": {
+                                                        "action": "more-info"
+                                                    },
+                                                    "show_icon": true,
+                                                    "show_name": false,
+                                                    "tap_action": {
+                                                        "action": "toggle"
+                                                    },
+                                                    "type": "button"
+                                                }
+                                            ],
+                                            "type": "horizontal-stack"
+                                        },
+                                        {
+                                            "entities": [
+                                                {
+                                                    "entity": "fan.living_room",
+                                                    "name": "Fan"
+                                                }
+                                            ],
+                                            "show_header_toggle": false,
+                                            "type": "entities"
+                                        }
+                                    ],
+                                    "mode": "vertical",
+                                    "type": "custom:stack-in-card"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        },
+                        {
                             "entities": [
                                 {
-                                    "entity": "binary_sensor.sanda_s_room_motion",
-                                    "name": "Motion"
+                                    "entity": "light.cearah",
+                                    "name": "Bulb"
                                 },
                                 {
-                                    "entity": "sensor.sandra_s_room_luminosity",
-                                    "name": "Luminosity"
+                                    "entity": "scene.natural_cearah_lights_100"
                                 },
                                 {
-                                    "entity": "sensor.sandra_s_room_temperature",
-                                    "name": "Temperature"
+                                    "entity": "scene.natural_cearah_lights_50"
                                 },
                                 {
-                                    "entity": "sensor.sandra_s_room_humidity",
-                                    "name": "Humidity"
+                                    "entity": "light.cearah1",
+                                    "name": "Bulb 1"
+                                },
+                                {
+                                    "entity": "light.cearah2",
+                                    "name": "Bulb 2"
+                                },
+                                {
+                                    "entity": "light.cearahs_room",
+                                    "name": "LED"
                                 }
                             ],
                             "show_header_toggle": false,
-                            "title": "Sandra's Room",
+                            "title": "Cearah's Room",
                             "type": "entities"
                         }
                     ],
@@ -504,22 +664,22 @@
                         {
                             "entities": [
                                 {
-                                    "entity": "switch.zone_1"
+                                    "entity": "switch.1_trees_and_bushes"
                                 },
                                 {
-                                    "entity": "switch.zone_2"
+                                    "entity": "switch.2_frontyard_east_side"
                                 },
                                 {
-                                    "entity": "switch.zone_3"
+                                    "entity": "switch.3_backyard_center_back"
                                 },
                                 {
-                                    "entity": "switch.zone_4"
+                                    "entity": "switch.4_backyard_west"
                                 },
                                 {
-                                    "entity": "switch.zone_5"
+                                    "entity": "switch.5_perimeter_and_driveway"
                                 },
                                 {
-                                    "entity": "switch.zone_6"
+                                    "entity": "switch.6_backyard_east"
                                 }
                             ],
                             "show_header_toggle": false,

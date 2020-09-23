@@ -1021,6 +1021,80 @@
       entity_id: light.family_room
     service: light.toggle
 
+
+################################################################################
+# Default to Full Warm White
+################################################################################
+- id: 'turn_on_kitchen_lights_all_bulbs_are_off'
+  initial_state: false
+  alias: Turn on Kitchen Lights when all bulbs are off
+  trigger:
+  - platform: state
+    entity_id:
+    - light.kitchen1
+    - light.kitchen2
+    - light.kitchen3
+    - light.kitchen4
+    - light.kitchen5
+    - light.kitchen6
+  condition:
+    - condition: state
+      state: 'on'
+      entity_id: switch.kitchen
+    - condition: state
+      state: 'off'
+      entity_id: light.kitchen1
+    - condition: state
+      state: 'off'
+      entity_id: light.kitchen2
+    - condition: state
+      state: 'off'
+      entity_id: light.kitchen3
+    - condition: state
+      state: 'off'
+      entity_id: light.kitchen4
+    - condition: state
+      state: 'off'
+      entity_id: light.kitchen5
+    - condition: state
+      state: 'off'
+      entity_id: light.kitchen6
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.kitchen
+      white_value: 255
+  - service: light.turn_on
+    data:
+      entity_id: light.kitchen
+      color_temp: 500
+
+- id: 'turn_on_kitchen_lights'
+  initial_state: false
+  alias: Turn on Kitchen Lights
+  trigger:
+  - platform: state
+    entity_id:
+    - light.kitchen1
+    - light.kitchen2
+    - light.kitchen3
+    - light.kitchen4
+    - light.kitchen5
+    - light.kitchen6
+    from: "unavailable"
+    to: "on"
+  condition: []
+  action:
+  - service: light.turn_on
+    data_template:
+      entity_id: "{{ trigger.entity_id }}"
+      white_value: 5
+  - service: light.turn_on
+    data_template:
+      entity_id: "{{ trigger.entity_id }}"
+      color_temp: 500
+
+
 ################################################################################
 # Reset
 ################################################################################

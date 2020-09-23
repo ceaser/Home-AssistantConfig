@@ -47,6 +47,10 @@ recorder:
 
 prometheus:
   namespace: hass
+  exclude_domains:
+    - light
+    - vacuum
+
 
 logbook:
 
@@ -363,7 +367,7 @@ alexa:
         name: "Kitchen Entry Light"
         description: "Kitchen Entry Light"
         display_categories: LIGHT
-      light.kitchen:
+      switch.kitchen:
         name: "Kitchen Light"
         description: "Kitchen Light"
         display_categories: LIGHT
@@ -386,6 +390,7 @@ alexa:
     filter:
       include_entities:
         - input_boolean.dog_outside
+        - switch.kitchen
       include_domains:
         - light
         - fan
@@ -411,6 +416,7 @@ homekit:
       - camera.driveway
       - camera.doorbell
       - camera.driveway_tf
+      - switch.kitchen
     include_domains:
       - light
       - fan
@@ -447,7 +453,7 @@ homekit:
       name: "Garage Light"
     light.kitchen_entry:
       name: "Kitchen Entry Light"
-    light.kitchen:
+    switch.kitchen:
       name: "Kitchen Light"
     light.dining_room:
       name: "Dining Room Light"

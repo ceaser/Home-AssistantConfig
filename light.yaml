@@ -78,14 +78,6 @@
     payload_off: "off"
     retain: false
   - platform: mqtt
-    name: "Kitchen"
-    state_topic: "shellies/shellyswitch25-BA85AD/relay/1"
-    command_topic: "shellies/shellyswitch25-BA85AD/relay/1/command"
-    qos: 1
-    payload_on: "on"
-    payload_off: "off"
-    retain: false
-  - platform: mqtt
     name: "Dining Room"
     state_topic: "shellies/shelly1pm-76B36B/relay/0"
     command_topic: "shellies/shelly1pm-76B36B/relay/0/command"
@@ -101,3 +93,313 @@
     payload_on: "on"
     payload_off: "off"
     retain: false
+  - platform: mqtt
+    name: 'Kitchen1'
+    optimistic: false
+    state_topic: "stat/kitchen1/RESULT"
+    value_template: "{{ value_json.POWER }}"
+    command_topic: "cmnd/kitchen1/POWER"
+    availability_topic: "tele/kitchen1/LWT"
+    brightness_command_topic: "cmnd/kitchen1/Dimmer"
+    brightness_state_topic: "tele/kitchen1/STATE"
+    brightness_value_template: "{{ value_json.Dimmer }}"
+    brightness_scale: 100
+    on_command_type: "brightness"
+    white_value_state_topic: "tele/kitchen1/STATE"
+    white_value_command_topic: "cmnd/kitchen1/White"
+    white_value_scale: 100
+    white_value_template: "{{ value_json.White }}"
+    rgb_command_topic: "cmnd/kitchen1/Color2"
+    rgb_state_topic: "tele/kitchen1/STATE"
+    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
+    color_temp_command_topic: "cmnd/kitchen1/CT"
+    color_temp_state_topic: "tele/kitchen1/STATE"
+    color_temp_value_template: "{{ value_json.CT }}"
+    effect_command_topic: "cmnd/kitchen1/Scheme"
+    effect_state_topic: "tele/kitchen1/STATE"
+    effect_value_template: "{{ value_json.Scheme }}"
+    effect_list:
+      - 0 # Single color for LED light
+      - 1 # Start wake up sequence (save as Wakeup)
+      - 2 # Cycle up through colors using Speed option
+      - 3 # Cycle down through colors using the Speed option
+      - 4 # random cycle through colors using Speed and Fade
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: false
+  - platform: mqtt
+    name: 'Kitchen2'
+    optimistic: false
+    state_topic: "stat/kitchen2/RESULT"
+    value_template: "{{ value_json.POWER }}"
+    command_topic: "cmnd/kitchen2/POWER"
+    availability_topic: "tele/kitchen2/LWT"
+    brightness_command_topic: "cmnd/kitchen2/Dimmer"
+    brightness_state_topic: "tele/kitchen2/STATE"
+    brightness_value_template: "{{ value_json.Dimmer }}"
+    brightness_scale: 100
+    on_command_type: "brightness"
+    white_value_state_topic: "tele/kitchen2/STATE"
+    white_value_command_topic: "cmnd/kitchen2/White"
+    white_value_scale: 100
+    white_value_template: "{{ value_json.White }}"
+    rgb_command_topic: "cmnd/kitchen2/Color2"
+    rgb_state_topic: "tele/kitchen2/STATE"
+    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
+    color_temp_command_topic: "cmnd/kitchen2/CT"
+    color_temp_state_topic: "tele/kitchen2/STATE"
+    color_temp_value_template: "{{ value_json.CT }}"
+    effect_command_topic: "cmnd/kitchen2/Scheme"
+    effect_state_topic: "tele/kitchen2/STATE"
+    effect_value_template: "{{ value_json.Scheme }}"
+    effect_list:
+      - 0 # Single color for LED light
+      - 1 # Start wake up sequence (save as Wakeup)
+      - 2 # Cycle up through colors using Speed option
+      - 3 # Cycle down through colors using the Speed option
+      - 4 # random cycle through colors using Speed and Fade
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: false
+  - platform: mqtt
+    name: 'Kitchen3'
+    optimistic: false
+    state_topic: "stat/kitchen3/RESULT"
+    value_template: "{{ value_json.POWER }}"
+    command_topic: "cmnd/kitchen3/POWER"
+    availability_topic: "tele/kitchen3/LWT"
+    brightness_command_topic: "cmnd/kitchen3/Dimmer"
+    brightness_state_topic: "tele/kitchen3/STATE"
+    brightness_value_template: "{{ value_json.Dimmer }}"
+    brightness_scale: 100
+    on_command_type: "brightness"
+    white_value_state_topic: "tele/kitchen3/STATE"
+    white_value_command_topic: "cmnd/kitchen3/White"
+    white_value_scale: 100
+    white_value_template: "{{ value_json.White }}"
+    rgb_command_topic: "cmnd/kitchen3/Color2"
+    rgb_state_topic: "tele/kitchen3/STATE"
+    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
+    color_temp_command_topic: "cmnd/kitchen3/CT"
+    color_temp_state_topic: "tele/kitchen3/STATE"
+    color_temp_value_template: "{{ value_json.CT }}"
+    effect_command_topic: "cmnd/kitchen3/Scheme"
+    effect_state_topic: "tele/kitchen3/STATE"
+    effect_value_template: "{{ value_json.Scheme }}"
+    effect_list:
+      - 0 # Single color for LED light
+      - 1 # Start wake up sequence (save as Wakeup)
+      - 2 # Cycle up through colors using Speed option
+      - 3 # Cycle down through colors using the Speed option
+      - 4 # random cycle through colors using Speed and Fade
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: false
+  - platform: mqtt
+    name: 'Kitchen4'
+    optimistic: false
+    state_topic: "stat/kitchen4/RESULT"
+    value_template: "{{ value_json.POWER }}"
+    command_topic: "cmnd/kitchen4/POWER"
+    availability_topic: "tele/kitchen4/LWT"
+    brightness_command_topic: "cmnd/kitchen4/Dimmer"
+    brightness_state_topic: "tele/kitchen4/STATE"
+    brightness_value_template: "{{ value_json.Dimmer }}"
+    brightness_scale: 100
+    on_command_type: "brightness"
+    white_value_state_topic: "tele/kitchen4/STATE"
+    white_value_command_topic: "cmnd/kitchen4/White"
+    white_value_scale: 100
+    white_value_template: "{{ value_json.White }}"
+    rgb_command_topic: "cmnd/kitchen4/Color2"
+    rgb_state_topic: "tele/kitchen4/STATE"
+    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
+    color_temp_command_topic: "cmnd/kitchen4/CT"
+    color_temp_state_topic: "tele/kitchen4/STATE"
+    color_temp_value_template: "{{ value_json.CT }}"
+    effect_command_topic: "cmnd/kitchen4/Scheme"
+    effect_state_topic: "tele/kitchen4/STATE"
+    effect_value_template: "{{ value_json.Scheme }}"
+    effect_list:
+      - 0 # Single color for LED light
+      - 1 # Start wake up sequence (save as Wakeup)
+      - 2 # Cycle up through colors using Speed option
+      - 3 # Cycle down through colors using the Speed option
+      - 4 # random cycle through colors using Speed and Fade
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: false
+  - platform: mqtt
+    name: 'Kitchen5'
+    optimistic: false
+    state_topic: "stat/kitchen5/RESULT"
+    value_template: "{{ value_json.POWER }}"
+    command_topic: "cmnd/kitchen5/POWER"
+    availability_topic: "tele/kitchen5/LWT"
+    brightness_command_topic: "cmnd/kitchen5/Dimmer"
+    brightness_state_topic: "tele/kitchen5/STATE"
+    brightness_value_template: "{{ value_json.Dimmer }}"
+    brightness_scale: 100
+    on_command_type: "brightness"
+    white_value_state_topic: "tele/kitchen5/STATE"
+    white_value_command_topic: "cmnd/kitchen5/White"
+    white_value_scale: 100
+    white_value_template: "{{ value_json.White }}"
+    rgb_command_topic: "cmnd/kitchen5/Color2"
+    rgb_state_topic: "tele/kitchen5/STATE"
+    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
+    color_temp_command_topic: "cmnd/kitchen5/CT"
+    color_temp_state_topic: "tele/kitchen5/STATE"
+    color_temp_value_template: "{{ value_json.CT }}"
+    effect_command_topic: "cmnd/kitchen5/Scheme"
+    effect_state_topic: "tele/kitchen5/STATE"
+    effect_value_template: "{{ value_json.Scheme }}"
+    effect_list:
+      - 0 # Single color for LED light
+      - 1 # Start wake up sequence (save as Wakeup)
+      - 2 # Cycle up through colors using Speed option
+      - 3 # Cycle down through colors using the Speed option
+      - 4 # random cycle through colors using Speed and Fade
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: false
+  - platform: mqtt
+    name: 'Kitchen6'
+    optimistic: false
+    state_topic: "stat/kitchen6/RESULT"
+    value_template: "{{ value_json.POWER }}"
+    command_topic: "cmnd/kitchen6/POWER"
+    availability_topic: "tele/kitchen6/LWT"
+    brightness_command_topic: "cmnd/kitchen6/Dimmer"
+    brightness_state_topic: "tele/kitchen6/STATE"
+    brightness_value_template: "{{ value_json.Dimmer }}"
+    brightness_scale: 100
+    on_command_type: "brightness"
+    white_value_state_topic: "tele/kitchen6/STATE"
+    white_value_command_topic: "cmnd/kitchen6/White"
+    white_value_scale: 100
+    white_value_template: "{{ value_json.White }}"
+    rgb_command_topic: "cmnd/kitchen6/Color2"
+    rgb_state_topic: "tele/kitchen6/STATE"
+    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
+    color_temp_command_topic: "cmnd/kitchen6/CT"
+    color_temp_state_topic: "tele/kitchen6/STATE"
+    color_temp_value_template: "{{ value_json.CT }}"
+    effect_command_topic: "cmnd/kitchen6/Scheme"
+    effect_state_topic: "tele/kitchen6/STATE"
+    effect_value_template: "{{ value_json.Scheme }}"
+    effect_list:
+      - 0 # Single color for LED light
+      - 1 # Start wake up sequence (save as Wakeup)
+      - 2 # Cycle up through colors using Speed option
+      - 3 # Cycle down through colors using the Speed option
+      - 4 # random cycle through colors using Speed and Fade
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: false
+  - platform: group
+    name: kitchen
+    entities:
+      - light.kitchen1
+      - light.kitchen2
+      - light.kitchen3
+      - light.kitchen4
+      - light.kitchen5
+      - light.kitchen6
+  - platform: mqtt
+    name: 'Cearah1'
+    optimistic: false
+    state_topic: "stat/cearah1/RESULT"
+    value_template: "{{ value_json.POWER }}"
+    command_topic: "cmnd/cearah1/POWER"
+    availability_topic: "tele/cearah1/LWT"
+    brightness_command_topic: "cmnd/cearah1/Dimmer"
+    brightness_state_topic: "tele/cearah1/STATE"
+    brightness_value_template: "{{ value_json.Dimmer }}"
+    brightness_scale: 100
+    on_command_type: "brightness"
+    white_value_state_topic: "tele/cearah1/STATE"
+    white_value_command_topic: "cmnd/cearah1/White"
+    white_value_scale: 100
+    white_value_template: "{{ value_json.White }}"
+    rgb_command_topic: "cmnd/cearah1/Color2"
+    rgb_state_topic: "tele/cearah1/STATE"
+    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
+    #color_temp_command_topic: "cmnd/cearah1/CT"
+    #color_temp_state_topic: "tele/cearah1/STATE"
+    #color_temp_value_template: "{{ value_json.CT }}"
+    effect_command_topic: "cmnd/cearah1/Scheme"
+    effect_state_topic: "tele/cearah1/STATE"
+    effect_value_template: "{{ value_json.Scheme }}"
+    effect_list:
+      - 0 # Single color for LED light
+      - 1 # Start wake up sequence (save as Wakeup)
+      - 2 # Cycle up through colors using Speed option
+      - 3 # Cycle down through colors using the Speed option
+      - 4 # random cycle through colors using Speed and Fade
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: false
+  - platform: mqtt
+    name: 'Cearah2'
+    optimistic: false
+    state_topic: "stat/cearah2/RESULT"
+    value_template: "{{ value_json.POWER }}"
+    command_topic: "cmnd/cearah2/POWER"
+    availability_topic: "tele/cearah2/LWT"
+    brightness_command_topic: "cmnd/cearah2/Dimmer"
+    brightness_state_topic: "tele/cearah2/STATE"
+    brightness_value_template: "{{ value_json.Dimmer }}"
+    brightness_scale: 100
+    on_command_type: "brightness"
+    white_value_state_topic: "tele/cearah2/STATE"
+    white_value_command_topic: "cmnd/cearah2/White"
+    white_value_scale: 100
+    white_value_template: "{{ value_json.White }}"
+    rgb_command_topic: "cmnd/cearah2/Color2"
+    rgb_state_topic: "tele/cearah2/STATE"
+    rgb_value_template: "{{ value_json.Color.split(',')[0:3]|join(',') }}"
+    #color_temp_command_topic: "cmnd/cearah2/CT"
+    #color_temp_state_topic: "tele/cearah2/STATE"
+    #color_temp_value_template: "{{ value_json.CT }}"
+    effect_command_topic: "cmnd/cearah2/Scheme"
+    effect_state_topic: "tele/cearah2/STATE"
+    effect_value_template: "{{ value_json.Scheme }}"
+    effect_list:
+      - 0 # Single color for LED light
+      - 1 # Start wake up sequence (save as Wakeup)
+      - 2 # Cycle up through colors using Speed option
+      - 3 # Cycle down through colors using the Speed option
+      - 4 # random cycle through colors using Speed and Fade
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: false
+  - platform: group
+    name: Cearah
+    entities:
+      - light.cearah1
+      - light.cearah2

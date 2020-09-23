@@ -32,3 +32,194 @@
       min_mireds: 143
       state: 'off'
       supported_features: 3
+- id: '1599960130136'
+  name: Warm Kitchen Lights 100%
+  entities:
+    light.kitchen:
+      brightness: 255
+      color_temp: 500
+      effect: '0'
+      effect_list:
+      - '2'
+      - '0'
+      - '4'
+      - '1'
+      - '3'
+      friendly_name: kitchen
+      hs_color:
+      - 0
+      - 0
+      max_mireds: 500
+      min_mireds: 153
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      state: 'on'
+      supported_features: 151
+      white_value: 255
+      xy_color:
+      - 0.323
+      - 0.329
+    switch.kitchen:
+      friendly_name: Kitchen
+      state: 'on'
+- id: '1599994781512'
+  name: Warm Kitchen Lights 50%
+  entities:
+    light.kitchen:
+      brightness: 128
+      color_temp: 500
+      effect: '0'
+      effect_list:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      friendly_name: Kitchen
+      hs_color:
+      - 0
+      - 0
+      max_mireds: 500
+      min_mireds: 153
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      state: 'on'
+      supported_features: 151
+      white_value: 128
+      xy_color:
+      - 0.323
+      - 0.329
+    switch.kitchen:
+      friendly_name: Kitchen
+      state: 'on'
+- id: '1600792400423'
+  name: purple kitchen
+  entities:
+    light.kitchen:
+      brightness: 102
+      color_temp: 500
+      effect: '0'
+      effect_list:
+      - '3'
+      - '2'
+      - '1'
+      - '0'
+      - '4'
+      friendly_name: kitchen
+      hs_color:
+      - 285
+      - 86.275
+      max_mireds: 500
+      min_mireds: 153
+      rgb_color:
+      - 199
+      - 34
+      - 255
+      state: 'on'
+      supported_features: 151
+      white_value: 0
+      xy_color:
+      - 0.311
+      - 0.126
+- id: '1600830132257'
+  name: Natural Cearah Lights 100%
+  entities:
+    light.cearah1:
+      brightness: 255
+      effect: '0'
+      effect_list:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      friendly_name: Cearah1
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      state: 'on'
+      supported_features: 149
+      white_value: 255
+      xy_color:
+      - 0.323
+      - 0.329
+    light.cearah2:
+      brightness: 255
+      effect: '0'
+      effect_list:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      friendly_name: Cearah2
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      state: 'on'
+      supported_features: 149
+      white_value: 255
+      xy_color:
+      - 0.323
+      - 0.329
+- id: '1600830177728'
+  name: Natural Cearah Lights 50%
+  entities:
+    light.cearah1:
+      brightness: 125
+      effect: '0'
+      effect_list:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      friendly_name: Cearah1
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      state: 'on'
+      supported_features: 149
+      white_value: 125
+      xy_color:
+      - 0.323
+      - 0.329
+    light.cearah2:
+      brightness: 117
+      effect: '0'
+      effect_list:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      friendly_name: Cearah2
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      state: 'on'
+      supported_features: 149
+      white_value: 117
+      xy_color:
+      - 0.323
+      - 0.329
