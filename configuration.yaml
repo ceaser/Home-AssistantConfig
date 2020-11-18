@@ -417,12 +417,29 @@ homekit:
       - camera.doorbell
       - camera.driveway_tf
       - switch.kitchen
+      - light.family_room
+      - light.garage_entry
+      - light.basement_entry
+      - light.storage_room
+      - light.down_stairs_bathroom
+      - light.downstairs_bathroom
+      - light.front_garage
+      - light.garage
+      - light.kitchen_entry
+      - light.dining_room
+      - light.living_room
     include_domains:
-      - light
       - fan
     exclude_entities:
       - light.familyroom1
       - light.familyroom2
+      - light.kitchen
+      - light.kitchen1
+      - light.kitchen2
+      - light.kitchen3
+      - light.kitchen4
+      - light.kitchen5
+      - light.kitchen6
       - switch.anet_a8_power_strip
   entity_config:
     automation.image_processing_scan:
