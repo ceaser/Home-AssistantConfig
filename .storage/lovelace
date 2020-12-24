@@ -237,6 +237,18 @@
                                 },
                                 {
                                     "entity": "scene.office_in_the_daytime"
+                                },
+                                {
+                                    "entity": "light.elgato_key_light"
+                                },
+                                {
+                                    "entity": "light.elgato_key_light_2"
+                                },
+                                {
+                                    "entity": "light.cearah1"
+                                },
+                                {
+                                    "entity": "light.cearah2"
                                 }
                             ],
                             "show_header_toggle": false,
@@ -337,22 +349,8 @@
                         {
                             "entities": [
                                 {
-                                    "entity": "light.cearah",
-                                    "name": "Bulb"
-                                },
-                                {
-                                    "entity": "scene.natural_cearah_lights_100"
-                                },
-                                {
-                                    "entity": "scene.natural_cearah_lights_50"
-                                },
-                                {
-                                    "entity": "light.cearah1",
-                                    "name": "Bulb 1"
-                                },
-                                {
-                                    "entity": "light.cearah2",
-                                    "name": "Bulb 2"
+                                    "entity": "scene.twilight_cearah_lights",
+                                    "name": "Twilight Lights"
                                 },
                                 {
                                     "entity": "light.cearahs_room",
@@ -435,6 +433,9 @@
                                 },
                                 {
                                     "entity": "input_number.alexa_default_volume"
+                                },
+                                {
+                                    "entity": "input_number.sonos_tv_volume"
                                 }
                             ],
                             "title": "Amazon Echo Settings",
@@ -444,62 +445,6 @@
                     "icon": "mdi:remote",
                     "path": "remote",
                     "title": "Remote"
-                },
-                {
-                    "badges": [],
-                    "cards": [
-                        {
-                            "entities": [
-                                {
-                                    "entity": "binary_sensor.leaf_charging_status"
-                                },
-                                {
-                                    "entity": "binary_sensor.leaf_plug_status"
-                                }
-                            ],
-                            "show_name": true,
-                            "type": "glance"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "sensor.leaf_range_ac"
-                                },
-                                {
-                                    "entity": "sensor.leaf_range"
-                                }
-                            ],
-                            "show_name": true,
-                            "type": "glance"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "sensor.leaf_charge"
-                                }
-                            ],
-                            "show_icon": true,
-                            "show_name": true,
-                            "show_state": true,
-                            "type": "glance"
-                        },
-                        {
-                            "entity": "switch.leaf_climate_control",
-                            "hold_action": {
-                                "action": "more-info"
-                            },
-                            "icon": "mdi:fan",
-                            "show_icon": true,
-                            "show_name": true,
-                            "tap_action": {
-                                "action": "toggle"
-                            },
-                            "type": "button"
-                        }
-                    ],
-                    "icon": "mdi:car",
-                    "path": "cars",
-                    "title": "Cars"
                 },
                 {
                     "badges": [],
@@ -557,23 +502,6 @@
                             "show_header_toggle": false,
                             "title": "Basement Vacuum",
                             "type": "entities"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "vacuum.automower"
-                                }
-                            ],
-                            "type": "glance"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "device_tracker.automower_g_191108221_190740383"
-                                }
-                            ],
-                            "hours_to_show": 0,
-                            "type": "map"
                         }
                     ],
                     "icon": "mdi:robot-vacuum",
@@ -685,6 +613,24 @@
                             "show_header_toggle": false,
                             "title": "Zones",
                             "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "vacuum.automower"
+                                }
+                            ],
+                            "type": "glance"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "input_boolean.automover_season"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Configuration",
+                            "type": "entities"
                         }
                     ],
                     "icon": "mdi:water-pump",
@@ -725,7 +671,7 @@
                         {
                             "cards": [
                                 {
-                                    "entity": "sensor.battery_level_8",
+                                    "entity": "sensor.ceasers_ipad_514_battery_level",
                                     "max": 100,
                                     "min": 0,
                                     "severity": {
@@ -739,7 +685,7 @@
                                 {
                                     "entities": [
                                         {
-                                            "entity": "sensor.battery_state_8"
+                                            "entity": "sensor.ceasers_ipad_514_battery_level"
                                         }
                                     ],
                                     "show_icon": false,
@@ -813,7 +759,7 @@
                         {
                             "cards": [
                                 {
-                                    "entity": "sensor.battery_level_5",
+                                    "entity": "sensor.iphone_battery_level",
                                     "max": 100,
                                     "min": 0,
                                     "severity": {
@@ -827,7 +773,7 @@
                                 {
                                     "entities": [
                                         {
-                                            "entity": "sensor.battery_state_5"
+                                            "entity": "sensor.iphone_battery_level"
                                         }
                                     ],
                                     "show_icon": false,
@@ -848,6 +794,7 @@
                                             "entity": "person.cearah"
                                         }
                                     ],
+                                    "hours_to_show": 0,
                                     "title": "Cearah",
                                     "type": "map"
                                 },
@@ -907,7 +854,7 @@
                         {
                             "cards": [
                                 {
-                                    "entity": "sensor.sarah_iphone_battery_level",
+                                    "entity": "sensor.sarahs_iphone_battery_level",
                                     "max": 100,
                                     "min": 0,
                                     "severity": {
@@ -921,7 +868,7 @@
                                 {
                                     "entities": [
                                         {
-                                            "entity": "sensor.battery_state_7"
+                                            "entity": "sensor.sarahs_iphone_battery_level"
                                         }
                                     ],
                                     "show_icon": false,
@@ -961,56 +908,6 @@
                         }
                     ],
                     "title": "Sarah"
-                },
-                {
-                    "badges": [],
-                    "cards": [
-                        {
-                            "entities": [
-                                {
-                                    "entity": "sensor.nzbget"
-                                },
-                                {
-                                    "entity": "sensor.aria"
-                                }
-                            ],
-                            "type": "entities"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "switch.nzbget"
-                                }
-                            ],
-                            "type": "entities"
-                        },
-                        {
-                            "entity": "sensor.nzbget",
-                            "hold_action": {
-                                "action": "more-info"
-                            },
-                            "show_icon": true,
-                            "show_name": true,
-                            "tap_action": {
-                                "action": "call-service",
-                                "service": "rest_command.nzbget",
-                                "service_data": {
-                                    "method": "resumedownload"
-                                }
-                            },
-                            "type": "entity-button"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "sensor.nzbget"
-                                }
-                            ],
-                            "type": "glance"
-                        }
-                    ],
-                    "icon": "mdi:wan",
-                    "title": "Wan"
                 },
                 {
                     "badges": [],
@@ -1060,6 +957,25 @@
                                                 },
                                                 {
                                                     "entity": "automation.notify_when_printer_is_finished"
+                                                },
+                                                {
+                                                    "entity": "switch.octoprint_shutdown"
+                                                },
+                                                {
+                                                    "entity": "input_number.octoprint_expected_tool_temperature",
+                                                    "name": "Extruder Ready"
+                                                },
+                                                {
+                                                    "entity": "input_number.octoprint_expected_bed_temperature",
+                                                    "name": "Bed Ready"
+                                                },
+                                                {
+                                                    "entity": "input_number.octoprint_cooldown_tool_temperature",
+                                                    "name": "Tool Finished At"
+                                                },
+                                                {
+                                                    "entity": "input_number.octoprint_cooldown_minutes",
+                                                    "name": "Cool Down"
                                                 }
                                             ],
                                             "show_header_toggle": false,
@@ -1128,7 +1044,7 @@
                                                         "type": "button"
                                                     },
                                                     {
-                                                        "entity": "switch.octoprint_shutdown_system",
+                                                        "entity": "switch.octoprint_shutdown",
                                                         "hold_action": {
                                                             "action": "more-info"
                                                         },
@@ -1209,6 +1125,25 @@
                     ],
                     "path": "test",
                     "title": "Anet A8"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entities": [
+                                {
+                                    "entity": "switch.aria_active"
+                                },
+                                {
+                                    "entity": "switch.nzbget_active"
+                                }
+                            ],
+                            "title": "My Title",
+                            "type": "entities"
+                        }
+                    ],
+                    "path": "network",
+                    "title": "Network"
                 }
             ]
         }

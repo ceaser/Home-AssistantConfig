@@ -22,18 +22,19 @@
     payload_on: "on"
     payload_off: "off"
     retain: false
-  - platform: template
-    switches:
-      nzbget:
-        value_template: "{{ is_state('sensor.nzb_get', 'on') }}"
-        turn_on:
-          service: rest_command.nzbget
-          data:
-            method: pausedownload
-        turn_off:
-          service: rest_command.nzbget
-          data:
-            method: resumedownload
+
+  #- platform: template
+    #switches:
+      #nzbget:
+        #value_template: "{{ is_state('sensor.nzb_get', 'on') }}"
+        #turn_on:
+          #service: rest_command.nzbget
+          #data:
+            #method: pausedownload
+        #turn_off:
+          #service: rest_command.nzbget
+          #data:
+            #method: resumedownload
 # Don't use retain for Sonoff-Tasmota. See https://www.youtube.com/watch?v=31IyfM1gygo for more information
 # On the Tasmota console type the following commands:
 # SwitchRetain Off
@@ -41,3 +42,83 @@
 # ButtonRetain Off
 # PowerOnState 3
 # PowerRetain On
+
+  - platform: template
+    switches:
+      octoprint_shutdown:
+        friendly_name: OctoPrint Shutdown System
+        value_template: "{{ is_state('binary_sensor.octoprint_connected', 'on') }}"
+        turn_off:
+          service: shell_command.stop_octoprint
+        turn_on:
+          service: switch.turn_on
+          data:
+            entity_id: switch.anet_a8_power_strip
+        icon_template: >-
+          {% if  is_state('binary_sensor.octoprint_connected', 'on') %}
+            mdi:power
+          {% else %}
+            mdi:power
+          {% endif %}
+
+  - platform: template
+    switches:
+      aria_active:
+        friendly_name: Aria Active
+        value_template: "{{ is_state('binary_sensor.aria_active', 'on') }}"
+        turn_off:
+          service: rest_command.aria2
+          data:
+            method: aria2.pauseAll
+            token: !secret aria2_token
+        turn_on:
+          service: rest_command.aria2
+          data:
+            method: aria2.unpauseAll
+            token: !secret aria2_token
+        icon_template: >-
+          {% if  is_state('binary_sensor.aria_active', 'on') %}
+            mdi:wan
+          {% else %}
+            mdi:wan
+          {% endif %}
+
+  - platform: template
+    switches:
+      nzbget_active:
+        friendly_name: NZBGet Active
+        value_template: "{{ is_state('binary_sensor.nzbget_active', 'on') }}"
+        turn_off:
+          service: rest_command.nzbget
+          data:
+            method: pausedownload
+        turn_on:
+          service: rest_command.nzbget
+          data:
+            method: resumedownload
+        icon_template: >-
+          {% if  is_state('binary_sensor.nzbget_active', 'on') %}
+            mdi:wan
+          {% else %}
+            mdi:wan
+          {% endif %}
+
+  - platform: template
+    switches:
+      deluge_active:
+        friendly_name: Deluge Active
+        value_template: "{{ is_state('binary_sensor.nzbget_active', 'on') }}"
+        turn_off:
+          service: rest_command.nzbget
+          data:
+            method: pausedownload
+        turn_on:
+          service: rest_command.nzbget
+          data:
+            method: resumedownload
+        icon_template: >-
+          {% if  is_state('binary_sensor.nzbget_active', 'on') %}
+            mdi:wan
+          {% else %}
+            mdi:wan
+          {% endif %}

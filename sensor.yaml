@@ -89,32 +89,6 @@
       upstairs_vacuum_battery:
         value_template: '{{ states.vacuum.upstairs.attributes.battery_level }} %'
         icon_template: '{{ states.vacuum.upstairs.attributes.battery_icon }}'
-  - platform: rest
-    name: 'NZBGet'
-    resource: !secret nzbget_url
-    method: POST
-    verify_ssl: false
-    username: !secret nzbget_username
-    password: !secret nzbget_password
-    value_template: '{{ "off" if value_json.result.ServerPaused == true else "on" }}'
-    #json_attributes:
-    headers:
-      accept: 'application/json, text/json'
-      content-type: 'application/json, text/json'
-    payload: >+
-      {"jsonrpc":"2.0", "method":"status"}
-  - platform: rest
-    name: 'Aria'
-    resource: !secret aria2_url
-    method: POST
-    verify_ssl: false
-    value_template: '{{ "off" if value_json.result | length == 0 else "on" }}'
-    #json_attributes:
-    headers:
-      accept: 'application/json, text/json'
-      content-type: 'application/json, text/json'
-    payload: >+
-      {"jsonrpc":"2.0", "method":"aria2.tellActive", "params":["token:{{ !secret aria2_token }}",["gid", "status", "downloadSpeed", "uploadSpeed" ]]}
   - platform: mqtt
     state_topic: "office/temperature"
     name: "Office Temperature"

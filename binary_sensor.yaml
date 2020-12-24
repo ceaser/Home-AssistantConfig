@@ -5,16 +5,42 @@
   - platform: mqtt
     name: "Sanda's Room Motion"
     state_topic: 'sensornode2/motion'
-#    state_topic: '<CHIP_ID>/sensor/motion'
-#    availability_topic: '<CHIP_ID>/status'
-#    payload_available: 'online'
-#    payload_not_available: 'offline'
     device_class: motion
   - platform: mqtt
     name: "Office Room Motion"
     state_topic: 'office/motion'
-#    state_topic: '<CHIP_ID>/sensor/motion'
-#    availability_topic: '<CHIP_ID>/status'
-#    payload_available: 'online'
-#    payload_not_available: 'offline'
     device_class: motion
+  - platform: rest
+    name: aria_active
+    resource: !secret aria2_url
+    method: POST
+    verify_ssl: false
+    value_template: >+
+      {% if value_json.result | length > 0  -%}
+        {% for item in value_json.result -%}
+         {% if item.status == "active" -%}
+           {% set result="on" -%}
+          {% endif -%}
+          {{ result if loop.last -}}
+        {% endfor -%}
+      {% else -%}
+        off
+      {%- endif -%}
+    headers:
+      accept: 'application/json, text/json'
+      content-type: 'application/json, text/json'
+    payload: >+
+      {"jsonrpc":"2.0", "id":2, "method":"aria2.tellActive", "params":["token:{{ !secret aria2_token }}",["gid", "status", "downloadSpeed", "uploadSpeed" ]]}
+  - platform: rest
+    name: 'nzbget_active'
+    resource: !secret nzbget_url
+    method: POST
+    verify_ssl: false
+    username: !secret nzbget_username
+    password: !secret nzbget_password
+    value_template: '{{ "off" if value_json.result.ServerPaused == true else "on" }}'
+    headers:
+      accept: 'application/json, text/json'
+      content-type: 'application/json, text/json'
+    payload: >+
+      {"jsonrpc":"2.0", "method":"status"}

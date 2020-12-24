@@ -39,18 +39,23 @@ recorder:
       #- sensor.sandra_s_room_temperature
       #- switch.office
 
-#logger:
-  #default: warning
-  #logs:
-    #homeassistant.components.homekit: debug
-    #pyhap: debug
+logger:
+  default: warning
+  logs:
+    homeassistant.components.homekit: debug
+    pyhap: debug
+    binary_sensor: debug
+    rest_command: debug
 
 prometheus:
   namespace: hass
-  exclude_domains:
-    - light
-    - vacuum
-
+  filter:
+    exclude_domains:
+      - light
+      - vacuum
+      - switch
+      - sensor
+      - binary_sensor
 
 logbook:
 
@@ -94,16 +99,16 @@ tts:
     cache_dir: /config/tts
     time_memory: 300
 
-mqtt:
-  discovery: true
-  discovery_prefix: homeassistant
-  broker: !secret mosquitto_broker
-  port: 1883
-  username: !secret mosquitto_username
-  password: !secret mosquitto_password
+#mqtt:
+  #discovery: true
+  ##discovery_prefix: homeassistant
+  #broker: !secret mosquitto_broker
+  #port: 1883
+  #username: !secret mosquitto_username
+  #password: !secret mosquitto_password
 
 #nzbget:
-  #host: 192.168.1.40
+  #host: nzbget.default.svc.cluster.local
   #port: 32631
   #ssl: false
   #username: !secret nzbget_username
@@ -292,9 +297,9 @@ notify:
   - platform: alexa_media
     name: alexa_media
 
-#neato:
-  #username: !secret neato_username
-  #password: !secret neato_password
+neato:
+  username: !secret neato_username
+  password: !secret neato_password
 
 shell_command:
   deluge_pause: !secret deluge_pause
@@ -403,83 +408,83 @@ alexa:
 zeroconf:
   default_interface: true
 
-homekit:
-- name: Home Assistant Bridge
-  auto_start: false
-  safe_mode: false
-  port: 51827
-  advertise_ip: 192.168.75.51
-  filter:
-    include_entities:
-      - input_boolean.dog_outside
-      - automation.image_processing_scan
-      - camera.driveway
-      - camera.doorbell
-      - camera.driveway_tf
-      - switch.kitchen
-      - light.family_room
-      - light.garage_entry
-      - light.basement_entry
-      - light.storage_room
-      - light.down_stairs_bathroom
-      - light.downstairs_bathroom
-      - light.front_garage
-      - light.garage
-      - light.kitchen_entry
-      - light.dining_room
-      - light.living_room
-    include_domains:
-      - fan
-    exclude_entities:
-      - light.familyroom1
-      - light.familyroom2
-      - light.kitchen
-      - light.kitchen1
-      - light.kitchen2
-      - light.kitchen3
-      - light.kitchen4
-      - light.kitchen5
-      - light.kitchen6
-      - switch.anet_a8_power_strip
-  entity_config:
-    automation.image_processing_scan:
-      name: Monitor Camera
-    camera.driveway_tf:
-      name: "Last Object in the Driveway Camera"
-    camera.driveway:
-      name: "Driveway Camera"
-    camera.doorbool:
-      name: "Front Door Camera"
-    input_boolean.dog_outside:
-      name: "Dog Outside"
-    light.family_room:
-      name: "Family Room Light"
-    light.garage_entry:
-      name: "Garage Entry Light"
-    light.basement_entry:
-      name: "Basement Entry Light"
-    light.storage_room:
-      name: "Storage Room Light"
-    light.down_stairs_bathroom:
-      name: "Downstairs Bathroom Light"
-    light.downstairs_bathroom:
-      name: "Downstairs Bathroom Light"
-    light.front_garage:
-      name: "Front Garage Light"
-    light.garage:
-      name: "Garage Light"
-    light.kitchen_entry:
-      name: "Kitchen Entry Light"
-    switch.kitchen:
-      name: "Kitchen Light"
-    light.dining_room:
-      name: "Dining Room Light"
-    light.living_room:
-      name: "Living Room Light"
-    fan.living_room:
-      name: "Living Room Fan"
-    fan.downstairs_bathroom:
-      name: "Downstairs Bathroom Fan"
+#homekit:
+#- name: Home Assistant Bridge
+  #auto_start: false
+  #safe_mode: false
+  #port: 51827
+  #advertise_ip: 192.168.75.51
+  #filter:
+    #include_entities:
+      #- input_boolean.dog_outside
+      #- automation.image_processing_scan
+      #- camera.driveway
+      #- camera.doorbell
+      #- camera.driveway_tf
+      #- switch.kitchen
+      #- light.family_room
+      #- light.garage_entry
+      #- light.basement_entry
+      #- light.storage_room
+      #- light.down_stairs_bathroom
+      #- light.downstairs_bathroom
+      #- light.front_garage
+      #- light.garage
+      #- light.kitchen_entry
+      #- light.dining_room
+      #- light.living_room
+    #include_domains:
+      #- fan
+    #exclude_entities:
+      #- light.familyroom1
+      #- light.familyroom2
+      #- light.kitchen
+      #- light.kitchen1
+      #- light.kitchen2
+      #- light.kitchen3
+      #- light.kitchen4
+      #- light.kitchen5
+      #- light.kitchen6
+      #- switch.anet_a8_power_strip
+  #entity_config:
+    #automation.image_processing_scan:
+      #name: Monitor Camera
+    #camera.driveway_tf:
+      #name: "Last Object in the Driveway Camera"
+    #camera.driveway:
+      #name: "Driveway Camera"
+    #camera.doorbool:
+      #name: "Front Door Camera"
+    #input_boolean.dog_outside:
+      #name: "Dog Outside"
+    #light.family_room:
+      #name: "Family Room Light"
+    #light.garage_entry:
+      #name: "Garage Entry Light"
+    #light.basement_entry:
+      #name: "Basement Entry Light"
+    #light.storage_room:
+      #name: "Storage Room Light"
+    #light.down_stairs_bathroom:
+      #name: "Downstairs Bathroom Light"
+    #light.downstairs_bathroom:
+      #name: "Downstairs Bathroom Light"
+    #light.front_garage:
+      #name: "Front Garage Light"
+    #light.garage:
+      #name: "Garage Light"
+    #light.kitchen_entry:
+      #name: "Kitchen Entry Light"
+    #switch.kitchen:
+      #name: "Kitchen Light"
+    #light.dining_room:
+      #name: "Dining Room Light"
+    #light.living_room:
+      #name: "Living Room Light"
+    #fan.living_room:
+      #name: "Living Room Fan"
+    #fan.downstairs_bathroom:
+      #name: "Downstairs Bathroom Fan"
 
 # TODO: Incorporate custom updater
 # https://github.com/custom-components/custom_updater

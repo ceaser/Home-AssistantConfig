@@ -28,3 +28,33 @@
     max: 100
     step: 10
     unit_of_measurement: Percent
+  octoprint_expected_tool_temperature:
+    name: "Expected Tool Temperature"
+    min: 180
+    max: 285
+    step: 5
+    unit_of_measurement: Celsius
+  octoprint_expected_bed_temperature:
+    name: "Expected Bed Temperature"
+    min: 20
+    max: 90
+    step: 5
+    unit_of_measurement: Celsius
+  octoprint_cooldown_tool_temperature:
+    name: "Shutdown Tool Temperature"
+    min: 20
+    max: 40
+    step: 1
+    unit_of_measurement: Celsius
+  octoprint_cooldown_minutes:
+    name: "Wait before Shutdown"
+    min: 1
+    max: 30
+    step: 1
+    unit_of_measurement: Minutes
+  sonos_tv_volume:
+    name: "TV Volume"
+    min: 1
+    max: 20
+    step: 1
+    unit_of_measurement: Percent

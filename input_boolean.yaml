@@ -20,3 +20,6 @@
     name: Dog Outside
     initial: 'off'
     icon: mdi:dog
+  automover_season:
+    name: Automower Season
+    icon: mdi:vacuum

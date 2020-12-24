@@ -106,32 +106,32 @@ sonos_familyroom_turn_on_nightsound:
 #     message: >-
 #       Turn off Anet A8 Power Strip
 
-resume_downloads:
-  alias: "Resume Downloads"
-  sequence:
-    - service: rest_command.nzbget
-      data:
-        method: resumedownload
-    - service: homeassistant.update_entity
-      data:
-        entity_id: sensor.nzbget
-    - service: rest_command.aria2
-      data:
-        method: aria2.unpauseAll
-        token: !secret aria2_token
-    - service: shell_command.deluge_resume
+#resume_downloads:
+  #alias: "Resume Downloads"
+  #sequence:
+    #- service: rest_command.nzbget
+      #data:
+        #method: resumedownload
+    #- service: homeassistant.update_entity
+      #data:
+        #entity_id: sensor.nzbget
+    #- service: rest_command.aria2
+      #data:
+        #method: aria2.unpauseAll
+        #token: !secret aria2_token
+    #- service: shell_command.deluge_resume
 
-pause_downloads:
-  alias: "Pause Downloads"
-  sequence:
-    - service: rest_command.nzbget
-      data:
-        method: pausedownload
-    - service: homeassistant.update_entity
-      data:
-        entity_id: sensor.nzbget
-    - service: rest_command.aria2
-      data:
-        method: aria2.pauseAll
-        token: !secret aria2_token
-    - service: shell_command.deluge_pause
+#pause_downloads:
+  #alias: "Pause Downloads"
+  #sequence:
+    #- service: rest_command.nzbget
+      #data:
+        #method: pausedownload
+    #- service: homeassistant.update_entity
+      #data:
+        #entity_id: sensor.nzbget
+    #- service: rest_command.aria2
+      #data:
+        #method: aria2.pauseAll
+        #token: !secret aria2_token
+    #- service: shell_command.deluge_pause

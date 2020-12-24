@@ -44,41 +44,41 @@
 # record_object_detected records video of the object detected from
 # image_processing_scan
 ################################################################################
-- id: 'record_object_detected'
-  alias: Record object detected
-  initial_state: 'off'
-  trigger:
-  - platform: state
-    entity_id:
-      - image_processing.tensorflow_driveway
-  condition:
-  - condition: template
-    value_template: '{{ trigger.to_state.state |int > 0 }}'
-  - condition: template
-    value_template: >
-      {%- if states.automation.record_object_detected.attributes.last_triggered -%}
-        {{ (as_timestamp(now()) - as_timestamp(states.automation.record_object_detected.attributes.last_triggered)) > 60 }}
-      {%- else -%}
-        true
-      {%- endif -%}
-  action:
-  - service: logbook.log
-    data_template:
-      name: "Record: "
-      message: >-
-        {% for object in state_attr(trigger.entity_id,'matches').keys() -%}{%- if loop.first %}{% elif loop.last %}, {% else %}, {% endif -%}{{ object|title }}{%- endfor %} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }}. Saving to /local/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.mp4
-  - service: camera.record
-    data_template:
-      duration: 30
-      entity_id: camera.{{ trigger.entity_id.split('.')[1].split('_')[1] }}
-      filename: /config/www/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.mp4
-      lookback: 30
-  - service: logbook.log
-    data_template:
-      name: "Record Finished: "
-      message: >-
-        Finished recording {% for object in state_attr(trigger.entity_id,'matches').keys() -%}{%- if loop.first %}{% elif loop.last %}, {% else %}, {% endif -%}{{ object|title }}{%- endfor %} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }}. Saving to /local/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.mp4
-  - service: camera.record
+#- id: 'record_object_detected'
+  #alias: Record object detected
+  #initial_state: 'off'
+  #trigger:
+  #- platform: state
+    #entity_id:
+      #- image_processing.tensorflow_driveway
+  #condition:
+  #- condition: template
+    #value_template: '{{ trigger.to_state.state |int > 0 }}'
+  #- condition: template
+    #value_template: >
+      #{%- if states.automation.record_object_detected.attributes.last_triggered -%}
+        #{{ (as_timestamp(now()) - as_timestamp(states.automation.record_object_detected.attributes.last_triggered)) > 60 }}
+      #{%- else -%}
+        #true
+      #{%- endif -%}
+  #action:
+  #- service: logbook.log
+    #data_template:
+      #name: "Record: "
+      #message: >-
+        #{% for object in state_attr(trigger.entity_id,'matches').keys() -%}{%- if loop.first %}{% elif loop.last %}, {% else %}, {% endif -%}{{ object|title }}{%- endfor %} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }}. Saving to /local/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.mp4
+  #- service: camera.record
+    #data_template:
+      #duration: 30
+      #entity_id: camera.{{ trigger.entity_id.split('.')[1].split('_')[1] }}
+      #filename: /config/www/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.mp4
+      #lookback: 30
+  #- service: logbook.log
+    #data_template:
+      #name: "Record Finished: "
+      #message: >-
+        #Finished recording {% for object in state_attr(trigger.entity_id,'matches').keys() -%}{%- if loop.first %}{% elif loop.last %}, {% else %}, {% endif -%}{{ object|title }}{%- endfor %} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }}. Saving to /local/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.mp4
+  #- service: camera.record
 
 ################################################################################
 # notify_camera_videos sends a notification when a new video is created
@@ -663,7 +663,7 @@
     - service: media_player.volume_set
       data_template:
         entity_id: media_player.sonos_familyroom
-        volume_level: "0.0"
+        volume_level: "{{ states('input_number.sonos_tv_volume') | float | multiply(0.01) | round(0.1) }}"
 
 - id: sonos_get
   alias: 'Sonos Get'
@@ -722,16 +722,26 @@
   alias: 'Notify When Printer is Ready'
   initial_state: on
   trigger:
-    - platform: numeric_state
-      entity_id: sensor.octoprint_tool_0_temperature
-      above: 374 # 190 C
+    - platform: template
+      value_template: "{{ ((states('sensor.octoprint_tool_0_temperature') | int) * 9/5) + 32 >=
+ states('input_number.octoprint_expected_tool_temperature') | int }}"
       for:
-        minutes: 5
-    - platform: numeric_state
-      entity_id: sensor.octoprint_bed_temperature
-      above: 104 # 40 C
+        minutes: "{{ states('input_number.octoprint_warmup_minutes') | int }}"
+    #- platform: numeric_state
+      #entity_id: sensor.octoprint_tool_0_temperature
+      #above: 374 # 190 C
+      #for:
+        #minutes: 5
+    - platform: template
+      value_template: "{{ ((states('sensor.octoprint_bed_temperature') | int) * 9/5) + 32 >=
+ states('input_number.octoprint_expected_bed_temperature') | int }}"
       for:
-        minutes: 5
+        minutes: "{{ states('input_number.octoprint_warmup_minutes') | int }}"
+    #- platform: numeric_state
+      #entity_id: sensor.octoprint_bed_temperature
+      #above: 104 # 40 C
+      #for:
+        #minutes: 5
   condition:
     - condition: template
       value_template: >
@@ -743,9 +753,9 @@
     - condition: state
       entity_id: binary_sensor.octoprint_printing
       state: 'off'
-    - condition: numeric_state
-      entity_id: sensor.octoprint_tool_0_temperature
-      above: 374
+    #- condition: numeric_state
+      #entity_id: sensor.octoprint_tool_0_temperature
+      #above: 374
   action:
     - service: notify.mobile_app_0x4950686f6e65
       data_template:
@@ -779,10 +789,15 @@
   initial_state: off
   description: Shutdown the printer once is has cooled down
   trigger:
-    - below: "104.0" # 40 C
-      entity_id: sensor.octoprint_tool_0_temperature
-      for: 00:01:00
-      platform: numeric_state
+    - platform: template
+      value_template: "{{ ((states('sensor.octoprint_tool_0_temperature') | int) * 9/5) + 32 <
+ states('input_number.octoprint_cooldown_tool_temperature') | int }}"
+      for:
+        minutes: "{{ states('input_number.cooldown_minutes') | int }}"
+    #- below: "104.0" # 40 C
+      #entity_id: sensor.octoprint_tool_0_temperature
+      #for: 00:01:00
+      #platform: numeric_state
   condition:
     - condition: template
       value_template: >
@@ -850,6 +865,10 @@
     - platform: numeric_state
       entity_id: sensor.dark_sky_precip_probability
       above: 90
+  condition:
+    condition: state
+    entity_id: input_boolean.automower_season
+    state: 'on'
   action:
     - service: logbook.log
       data_template:
@@ -884,6 +903,9 @@
       - condition: state
         entity_id: vacuum.automower
         state: Leaving base
+    - condition: state
+      entity_id: input_boolean.automower_season
+      state: 'on'
   action:
     - service: logbook.log
       data_template:
@@ -920,6 +942,9 @@
       - condition: state
         entity_id: vacuum.automower
         state: Leaving base
+    - condition: state
+      entity_id: input_boolean.automower_season
+      state: 'on'
   action:
     - service: logbook.log
       data_template:
@@ -947,6 +972,9 @@
     - condition: state
       entity_id: vacuum.automower
       state: Paused
+    - condition: state
+      entity_id: input_boolean.automower_season
+      state: 'on'
   action:
     - service: logbook.log
       data_template:
@@ -1026,7 +1054,7 @@
 # Default to Full Warm White
 ################################################################################
 - id: 'turn_on_kitchen_lights_all_bulbs_are_off'
-  initial_state: false
+  initial_state: 'on'
   alias: Turn on Kitchen Lights when all bulbs are off
   trigger:
   - platform: state
@@ -1069,30 +1097,30 @@
       entity_id: light.kitchen
       color_temp: 500
 
-- id: 'turn_on_kitchen_lights'
-  initial_state: false
-  alias: Turn on Kitchen Lights
-  trigger:
-  - platform: state
-    entity_id:
-    - light.kitchen1
-    - light.kitchen2
-    - light.kitchen3
-    - light.kitchen4
-    - light.kitchen5
-    - light.kitchen6
-    from: "unavailable"
-    to: "on"
-  condition: []
-  action:
-  - service: light.turn_on
-    data_template:
-      entity_id: "{{ trigger.entity_id }}"
-      white_value: 5
-  - service: light.turn_on
-    data_template:
-      entity_id: "{{ trigger.entity_id }}"
-      color_temp: 500
+#- id: 'turn_on_kitchen_lights'
+  #initial_state: false
+  #alias: Turn on Kitchen Lights
+  #trigger:
+  #- platform: state
+    #entity_id:
+    #- light.kitchen1
+    #- light.kitchen2
+    #- light.kitchen3
+    #- light.kitchen4
+    #- light.kitchen5
+    #- light.kitchen6
+    #from: "unavailable"
+    #to: "on"
+  #condition: []
+  #action:
+  #- service: light.turn_on
+    #data_template:
+      #entity_id: "{{ trigger.entity_id }}"
+      #white_value: 5
+  #- service: light.turn_on
+    #data_template:
+      #entity_id: "{{ trigger.entity_id }}"
+      #color_temp: 500
 
 
 ################################################################################
@@ -1132,45 +1160,11 @@
     service: fan.turn_off
 
 ################################################################################
-# Nissan Leaf
-################################################################################
-#- id: 'update_nisson_leaf_when_ceaser_not_home'
-  #alias: update_nisson_leaf_when_ceaser_not_home
-  #initial_state: off
-  #trigger:
-    #- platform: time_pattern
-      #minutes: '/30'
-  #condition:
-    #- condition: state
-      #entity_id: person.ceaser
-      #state: 'not_home'
-  #action:
-    #- service: nissan_leaf.update
-      #data:
-        #vin: !secret nissan_leaf_vin
-
-#- id: 'update_nisson_leaf_at_night'
-  #alias: 'update_nisson_leaf_at_night'
-  #initial_state: off
-  #trigger:
-    #- platform: time
-      #at: '22:00:00'
-  #condition:
-    #- condition: state
-      #entity_id: person.ceaser
-      #state: 'home'
-  #action:
-    #- service: nissan_leaf.update
-      #data:
-        #vin: !secret nissan_leaf_vin
-
-
-################################################################################
 # Start HomeKit
 ################################################################################
 - id: 'start_homekit'
   alias: 'start_homekit'
-  initial_state: on
+  initial_state: off
   trigger:
     - platform: homeassistant
       event: start
