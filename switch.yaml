@@ -82,7 +82,6 @@
           {% else %}
             mdi:wan
           {% endif %}
-
   - platform: template
     switches:
       nzbget_active:
@@ -102,20 +101,15 @@
           {% else %}
             mdi:wan
           {% endif %}
-
   - platform: template
     switches:
       deluge_active:
         friendly_name: Deluge Active
-        value_template: "{{ is_state('binary_sensor.nzbget_active', 'on') }}"
+        value_template: "{{ is_state('switch.deluge_active', 'on') }}"
         turn_off:
-          service: rest_command.nzbget
-          data:
-            method: pausedownload
+          service: shell_command.deluge_pause
         turn_on:
-          service: rest_command.nzbget
-          data:
-            method: resumedownload
+          service: shell_command.deluge_resume
         icon_template: >-
           {% if  is_state('binary_sensor.nzbget_active', 'on') %}
             mdi:wan

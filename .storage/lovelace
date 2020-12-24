@@ -963,19 +963,23 @@
                                                 },
                                                 {
                                                     "entity": "input_number.octoprint_expected_tool_temperature",
-                                                    "name": "Extruder Ready"
+                                                    "name": "Tool Ready Temp"
                                                 },
                                                 {
                                                     "entity": "input_number.octoprint_expected_bed_temperature",
-                                                    "name": "Bed Ready"
+                                                    "name": "Bed Ready Temp"
+                                                },
+                                                {
+                                                    "entity": "input_number.octoprint_warmup_minutes",
+                                                    "name": "Ready Duration"
                                                 },
                                                 {
                                                     "entity": "input_number.octoprint_cooldown_tool_temperature",
-                                                    "name": "Tool Finished At"
+                                                    "name": "Finished Temperature"
                                                 },
                                                 {
                                                     "entity": "input_number.octoprint_cooldown_minutes",
-                                                    "name": "Cool Down"
+                                                    "name": "Finished Duration"
                                                 }
                                             ],
                                             "show_header_toggle": false,
@@ -1136,6 +1140,9 @@
                                 },
                                 {
                                     "entity": "switch.nzbget_active"
+                                },
+                                {
+                                    "entity": "switch.deluge_active"
                                 }
                             ],
                             "title": "My Title",
