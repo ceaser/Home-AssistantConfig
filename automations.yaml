@@ -1002,7 +1002,7 @@
     service: rainmachine.pause_watering
 
 ################################################################################
-# Garage
+# Garage Lights
 ################################################################################
 - id: 'turn_on_garage_entry_light'
   alias: Turn on Garage Entry Light
@@ -1033,6 +1033,47 @@
       entity_id: light.garage_entry
     service: light.turn_off
 
+- id: 'run_outside_night_lights_at_sunset'
+  alias: 'Run Outside Night Lights at Sunset'
+  trigger:
+  - platform: sun
+    event: sunset
+    #offset: "-00:45:00"
+  action:
+   - service: scene.turn_on
+     entity_id: scene.outside_night_lights_on
+
+- id: 'turn_outside_night_lights_on_alarm'
+  alias: 'Turn Outside Night Lights on Alarm'
+  trigger:
+  - platform: state
+    entity_id:
+    - image_processing.tensorflow_driveway
+  condition:
+  - condition: state
+    entity_id: light.front_garage
+    state: 'off'
+  - condition: state  # from sunset until sunrise
+    entity_id: sun.sun
+    state: 'below_horizon'
+  - condition: template
+    value_template: '{{ trigger.to_state.state |int > 0 }}'
+  - condition: template
+    value_template: >
+      {%- if states.automation.turn_outside_night_lights_on_alarm.attributes.last_triggered -%}
+          {{ (as_timestamp(now()) - as_timestamp(states.automation.turn_outside_night_lights_on_alarm.attributes.attributes.last_triggered)) > 30 }}
+        {%- else -%}
+          true
+        {%- endif -%}
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.front_garage
+  - delay: input_datetime.motion_detection_delay
+  - service: light.turn_off
+    data:
+     entity_id: light.front_garage
+
 ################################################################################
 # Family Room
 ################################################################################
@@ -1048,7 +1089,6 @@
   - data:
       entity_id: light.family_room
     service: light.toggle
-
 
 ################################################################################
 # Default to Full Warm White

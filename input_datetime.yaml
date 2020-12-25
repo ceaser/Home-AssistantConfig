@@ -6,4 +6,7 @@
     name: "Night Volume"
     has_date: false
     has_time: true
-
+  motion_detection_delay:
+    name: "Motion Detection"
+    has_date: false
+    has_time: true
