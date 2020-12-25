@@ -137,6 +137,46 @@
                             "type": "entities"
                         },
                         {
+                            "entities": [
+                                {
+                                    "entity": "scene.twilight_cearah_lights",
+                                    "name": "Twilight Lights"
+                                },
+                                {
+                                    "entity": "light.cearahs_room",
+                                    "name": "LED"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Cearah's Room",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "scene.meeting"
+                                },
+                                {
+                                    "entity": "scene.office_in_the_daytime"
+                                },
+                                {
+                                    "entity": "light.elgato_key_light"
+                                },
+                                {
+                                    "entity": "light.elgato_key_light_2"
+                                },
+                                {
+                                    "entity": "light.cearah1"
+                                },
+                                {
+                                    "entity": "light.cearah2"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Office",
+                            "type": "entities"
+                        },
+                        {
                             "cards": [
                                 {
                                     "cards": [
@@ -229,31 +269,6 @@
                                 }
                             ],
                             "type": "vertical-stack"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "scene.meeting"
-                                },
-                                {
-                                    "entity": "scene.office_in_the_daytime"
-                                },
-                                {
-                                    "entity": "light.elgato_key_light"
-                                },
-                                {
-                                    "entity": "light.elgato_key_light_2"
-                                },
-                                {
-                                    "entity": "light.cearah1"
-                                },
-                                {
-                                    "entity": "light.cearah2"
-                                }
-                            ],
-                            "show_header_toggle": false,
-                            "title": "Office",
-                            "type": "entities"
                         },
                         {
                             "cards": [
@@ -349,16 +364,11 @@
                         {
                             "entities": [
                                 {
-                                    "entity": "scene.twilight_cearah_lights",
-                                    "name": "Twilight Lights"
-                                },
-                                {
-                                    "entity": "light.cearahs_room",
-                                    "name": "LED"
+                                    "entity": "input_datetime.motion_detection_delay"
                                 }
                             ],
                             "show_header_toggle": false,
-                            "title": "Cearah's Room",
+                            "title": "Settings",
                             "type": "entities"
                         }
                     ],
@@ -629,7 +639,7 @@
                                 }
                             ],
                             "show_header_toggle": false,
-                            "title": "Configuration",
+                            "title": "Settings",
                             "type": "entities"
                         }
                     ],
@@ -821,39 +831,6 @@
                         {
                             "cards": [
                                 {
-                                    "aspect_ratio": "1.78",
-                                    "default_zoom": 15,
-                                    "entities": [
-                                        {
-                                            "entity": "person.sandra"
-                                        }
-                                    ],
-                                    "title": "Sandra",
-                                    "type": "map"
-                                },
-                                {
-                                    "entities": [
-                                        {
-                                            "entity": "person.sandra"
-                                        }
-                                    ],
-                                    "show_icon": false,
-                                    "show_name": false,
-                                    "show_state": true,
-                                    "type": "glance"
-                                }
-                            ],
-                            "type": "vertical-stack"
-                        }
-                    ],
-                    "title": "Sanda"
-                },
-                {
-                    "badges": [],
-                    "cards": [
-                        {
-                            "cards": [
-                                {
                                     "entity": "sensor.sarahs_iphone_battery_level",
                                     "max": 100,
                                     "min": 0,
@@ -908,6 +885,39 @@
                         }
                     ],
                     "title": "Sarah"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "cards": [
+                                {
+                                    "aspect_ratio": "1.78",
+                                    "default_zoom": 15,
+                                    "entities": [
+                                        {
+                                            "entity": "person.sandra"
+                                        }
+                                    ],
+                                    "title": "Sandra",
+                                    "type": "map"
+                                },
+                                {
+                                    "entities": [
+                                        {
+                                            "entity": "person.sandra"
+                                        }
+                                    ],
+                                    "show_icon": false,
+                                    "show_name": false,
+                                    "show_state": true,
+                                    "type": "glance"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        }
+                    ],
+                    "title": "Sanda"
                 },
                 {
                     "badges": [],
