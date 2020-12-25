@@ -21,66 +21,6 @@
         entity_id: "image_processing.tensorflow_{{ trigger.entity_id.split('.')[1].split('_')[0] }}"
 
 ################################################################################
-# tf_image_processing logs objects found in the image_processing_scan
-################################################################################
-# - id: tf_image_processing_notification
-#   alias: 'TF image processing'
-#   initial_state: 'on'
-#   trigger:
-#     - platform: state
-#       entity_id:
-#         - image_processing.tensorflow_driveway
-#   condition:
-#     - condition: template
-#       value_template: '{{ trigger.to_state.state |int > 0 }}'
-#   action:
-#     - service: logbook.log
-#       data_template:
-#         name: "TF: "
-#         message: >-
-#           {% for object in state_attr(trigger.entity_id,'matches').keys() -%}{%- if loop.first %}{% elif loop.last %}, {% else %}, {% endif -%}{{ object|title }}{%- endfor %} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }}.
-
-################################################################################
-# record_object_detected records video of the object detected from
-# image_processing_scan
-################################################################################
-#- id: 'record_object_detected'
-  #alias: Record object detected
-  #initial_state: 'off'
-  #trigger:
-  #- platform: state
-    #entity_id:
-      #- image_processing.tensorflow_driveway
-  #condition:
-  #- condition: template
-    #value_template: '{{ trigger.to_state.state |int > 0 }}'
-  #- condition: template
-    #value_template: >
-      #{%- if states.automation.record_object_detected.attributes.last_triggered -%}
-        #{{ (as_timestamp(now()) - as_timestamp(states.automation.record_object_detected.attributes.last_triggered)) > 60 }}
-      #{%- else -%}
-        #true
-      #{%- endif -%}
-  #action:
-  #- service: logbook.log
-    #data_template:
-      #name: "Record: "
-      #message: >-
-        #{% for object in state_attr(trigger.entity_id,'matches').keys() -%}{%- if loop.first %}{% elif loop.last %}, {% else %}, {% endif -%}{{ object|title }}{%- endfor %} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }}. Saving to /local/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.mp4
-  #- service: camera.record
-    #data_template:
-      #duration: 30
-      #entity_id: camera.{{ trigger.entity_id.split('.')[1].split('_')[1] }}
-      #filename: /config/www/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.mp4
-      #lookback: 30
-  #- service: logbook.log
-    #data_template:
-      #name: "Record Finished: "
-      #message: >-
-        #Finished recording {% for object in state_attr(trigger.entity_id,'matches').keys() -%}{%- if loop.first %}{% elif loop.last %}, {% else %}, {% endif -%}{{ object|title }}{%- endfor %} detected in {{ trigger.entity_id.split('.')[1].split('_')[1] }}. Saving to /local/{{ trigger.entity_id.split('.')[1].split('_')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.mp4
-  #- service: camera.record
-
-################################################################################
 # notify_camera_videos sends a notification when a new video is created
 ################################################################################
 - id: notify_camera_videos
@@ -1136,32 +1076,6 @@
     data:
       entity_id: light.kitchen
       color_temp: 500
-
-#- id: 'turn_on_kitchen_lights'
-  #initial_state: false
-  #alias: Turn on Kitchen Lights
-  #trigger:
-  #- platform: state
-    #entity_id:
-    #- light.kitchen1
-    #- light.kitchen2
-    #- light.kitchen3
-    #- light.kitchen4
-    #- light.kitchen5
-    #- light.kitchen6
-    #from: "unavailable"
-    #to: "on"
-  #condition: []
-  #action:
-  #- service: light.turn_on
-    #data_template:
-      #entity_id: "{{ trigger.entity_id }}"
-      #white_value: 5
-  #- service: light.turn_on
-    #data_template:
-      #entity_id: "{{ trigger.entity_id }}"
-      #color_temp: 500
-
 
 ################################################################################
 # Reset

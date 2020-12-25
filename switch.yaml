@@ -22,27 +22,6 @@
     payload_on: "on"
     payload_off: "off"
     retain: false
-
-  #- platform: template
-    #switches:
-      #nzbget:
-        #value_template: "{{ is_state('sensor.nzb_get', 'on') }}"
-        #turn_on:
-          #service: rest_command.nzbget
-          #data:
-            #method: pausedownload
-        #turn_off:
-          #service: rest_command.nzbget
-          #data:
-            #method: resumedownload
-# Don't use retain for Sonoff-Tasmota. See https://www.youtube.com/watch?v=31IyfM1gygo for more information
-# On the Tasmota console type the following commands:
-# SwitchRetain Off
-# ButtonRetain On
-# ButtonRetain Off
-# PowerOnState 3
-# PowerRetain On
-
   - platform: template
     switches:
       octoprint_shutdown:
@@ -60,7 +39,6 @@
           {% else %}
             mdi:power
           {% endif %}
-
   - platform: template
     switches:
       aria_active:

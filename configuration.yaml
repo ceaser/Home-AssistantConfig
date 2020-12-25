@@ -99,21 +99,6 @@ tts:
     cache_dir: /config/tts
     time_memory: 300
 
-#mqtt:
-  #discovery: true
-  ##discovery_prefix: homeassistant
-  #broker: !secret mosquitto_broker
-  #port: 1883
-  #username: !secret mosquitto_username
-  #password: !secret mosquitto_password
-
-#nzbget:
-  #host: nzbget.default.svc.cluster.local
-  #port: 32631
-  #ssl: false
-  #username: !secret nzbget_username
-  #password: !secret nzbget_password
-
 rest_command:
   nzbget:
     url: !secret nzbget_url
@@ -311,17 +296,6 @@ sonos:
     hosts:
       - !secret sonos_host
     advertise_addr: !secret sonos_advertise_addr
-
-#nissan_leaf:
-  #username: !secret nissan_leaf_username
-  #password: !secret nissan_leaf_password
-  #region: !secret nissan_leaf_region
-  #update_interval:
-    #hours: 24
-  #update_interval_charging:
-    #minutes: 480
-  #update_interval_climate:
-    #minutes: 5
 
 # Echo integration. See https://www.home-assistant.io/components/alexa/
 # for more information.

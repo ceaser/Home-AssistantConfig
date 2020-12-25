@@ -1,7 +1,5 @@
   - platform: workday
     country: US
-#  - platform: rainmachine
-# https://www.home-assistant.io/components/binary_sensor.mqtt/
   - platform: mqtt
     name: "Sanda's Room Motion"
     state_topic: 'sensornode2/motion'
