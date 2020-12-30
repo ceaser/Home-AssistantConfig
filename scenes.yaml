@@ -245,3 +245,191 @@
       friendly_name: Front Garage
       state: 'on'
       supported_features: 0
+- id: '1608949898258'
+  name: christmas lights
+  entities:
+    light.kitchen1:
+      brightness: 255
+      color_temp: 153
+      effect: '0'
+      effect_list:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      friendly_name: Kitchen1
+      hs_color:
+      - 345.176
+      - 100
+      max_mireds: 500
+      min_mireds: 153
+      rgb_color:
+      - 255
+      - 0
+      - 63
+      state: 'on'
+      supported_features: 151
+      white_value: 0
+      xy_color:
+      - 0.667
+      - 0.284
+    light.kitchen2:
+      brightness: 255
+      color_temp: 153
+      effect: '0'
+      effect_list:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      friendly_name: Kitchen2
+      hs_color:
+      - 0
+      - 0
+      max_mireds: 500
+      min_mireds: 153
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      state: 'on'
+      supported_features: 151
+      white_value: 255
+      xy_color:
+      - 0.323
+      - 0.329
+    light.kitchen3:
+      brightness: 255
+      color_temp: 153
+      effect: '0'
+      effect_list:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      friendly_name: Kitchen3
+      hs_color:
+      - 0
+      - 0
+      max_mireds: 500
+      min_mireds: 153
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      state: 'on'
+      supported_features: 151
+      white_value: 255
+      xy_color:
+      - 0.323
+      - 0.329
+    light.kitchen4:
+      brightness: 255
+      color_temp: 153
+      effect: '0'
+      effect_list:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      friendly_name: Kitchen4
+      hs_color:
+      - 0
+      - 0
+      max_mireds: 500
+      min_mireds: 153
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      state: 'on'
+      supported_features: 151
+      white_value: 255
+      xy_color:
+      - 0.323
+      - 0.329
+    light.kitchen5:
+      brightness: 255
+      color_temp: 153
+      effect: '0'
+      effect_list:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      friendly_name: Kitchen5
+      hs_color:
+      - 0
+      - 0
+      max_mireds: 500
+      min_mireds: 153
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      state: 'on'
+      supported_features: 151
+      white_value: 255
+      xy_color:
+      - 0.323
+      - 0.329
+    light.kitchen6:
+      brightness: 255
+      color_temp: 153
+      effect: '0'
+      effect_list:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      friendly_name: Kitchen6
+      hs_color:
+      - 0
+      - 0
+      max_mireds: 500
+      min_mireds: 153
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      state: 'on'
+      supported_features: 151
+      white_value: 255
+      xy_color:
+      - 0.323
+      - 0.329
+- id: '1608950098335'
+  name: regular lights
+  entities:
+    light.kitchen:
+      brightness: 255
+      color_temp: 153
+      effect: '0'
+      effect_list:
+      - '2'
+      - '3'
+      - '1'
+      - '0'
+      - '4'
+      friendly_name: kitchen
+      hs_color:
+      - 0
+      - 0
+      max_mireds: 500
+      min_mireds: 153
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      state: 'on'
+      supported_features: 151
+      white_value: 255
+      xy_color:
+      - 0.323
+      - 0.329

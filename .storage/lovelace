@@ -22,6 +22,12 @@
                                 },
                                 {
                                     "entity": "input_number.dog_outside_minutes"
+                                },
+                                {
+                                    "entity": "scene.meeting"
+                                },
+                                {
+                                    "entity": "scene.office_in_the_daytime"
                                 }
                             ],
                             "show_header_toggle": false,
@@ -956,6 +962,13 @@
                                                     "name": "Room Light"
                                                 },
                                                 {
+                                                    "entity": "light.cearah1",
+                                                    "name": "Lamp Light"
+                                                },
+                                                {
+                                                    "entity": "switch.octoprint_shutdown"
+                                                },
+                                                {
                                                     "entity": "automation.turn_off_power_when_finished_printing",
                                                     "name": "Auto-shutdown when Finished"
                                                 },
@@ -967,9 +980,6 @@
                                                 },
                                                 {
                                                     "entity": "automation.notify_when_printer_is_finished"
-                                                },
-                                                {
-                                                    "entity": "switch.octoprint_shutdown"
                                                 },
                                                 {
                                                     "entity": "input_number.octoprint_expected_tool_temperature",
