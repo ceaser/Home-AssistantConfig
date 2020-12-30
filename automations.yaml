@@ -663,8 +663,7 @@
   initial_state: on
   trigger:
     - platform: template
-      value_template: "{{ ((states('sensor.octoprint_tool_0_temperature') | int) * 9/5) + 32 >=
- states('input_number.octoprint_expected_tool_temperature') | int }}"
+      value_template: "{{ (states('sensor.octoprint_tool_0_temperature') | int - 32) * 5/9 >= states('input_number.octoprint_expected_tool_temperature') }}"
       for:
         minutes: "{{ states('input_number.octoprint_warmup_minutes') | int }}"
     #- platform: numeric_state
@@ -673,8 +672,7 @@
       #for:
         #minutes: 5
     - platform: template
-      value_template: "{{ ((states('sensor.octoprint_bed_temperature') | int) * 9/5) + 32 >=
- states('input_number.octoprint_expected_bed_temperature') | int }}"
+      value_template: "{{ (states('sensor.octoprint_bed_temperature') | int - 32) * 5/9 >= states('input_number.octoprint_expected_bed_temperature') }}"
       for:
         minutes: "{{ states('input_number.octoprint_warmup_minutes') | int }}"
     #- platform: numeric_state
@@ -693,6 +691,10 @@
     - condition: state
       entity_id: binary_sensor.octoprint_printing
       state: 'off'
+    - condition: template
+      value_template: "{{ (states('sensor.octoprint_tool_0_temperature') | int - 32) * 5/9 >= states('input_number.octoprint_expected_tool_temperature') }}"
+    - condition: template
+      value_template: "{{ (states('sensor.octoprint_bed_temperature') | int - 32) * 5/9 >= states('input_number.octoprint_expected_bed_temperature') }}"
     #- condition: numeric_state
       #entity_id: sensor.octoprint_tool_0_temperature
       #above: 374
@@ -1112,15 +1114,3 @@
   - data:
       entity_id: fan.downstairs_bathroom
     service: fan.turn_off
-
-################################################################################
-# Start HomeKit
-################################################################################
-- id: 'start_homekit'
-  alias: 'start_homekit'
-  initial_state: off
-  trigger:
-    - platform: homeassistant
-      event: start
-  action:
-    - service: homekit.start
