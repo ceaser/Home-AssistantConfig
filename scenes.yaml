@@ -433,3 +433,22 @@
       xy_color:
       - 0.323
       - 0.329
+- id: '1609570011554'
+  name: Stream Lights
+  entities:
+    light.elgato_key_light:
+      brightness: 51
+      color_temp: 201
+      friendly_name: Elgato Key Light
+      max_mireds: 344
+      min_mireds: 143
+      state: 'on'
+      supported_features: 3
+    light.elgato_key_light_2:
+      brightness: 51
+      color_temp: 201
+      friendly_name: Elgato Key Light
+      max_mireds: 344
+      min_mireds: 143
+      state: 'on'
+      supported_features: 3

@@ -24,6 +24,9 @@
                                     "entity": "input_number.dog_outside_minutes"
                                 },
                                 {
+                                    "entity": "scene.stream_lights"
+                                },
+                                {
                                     "entity": "scene.meeting"
                                 },
                                 {
