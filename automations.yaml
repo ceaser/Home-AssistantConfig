@@ -978,9 +978,10 @@
 - id: 'run_outside_night_lights_at_sunset'
   alias: 'Run Outside Night Lights at Sunset'
   trigger:
-  - platform: sun
-    event: sunset
-    #offset: "-00:45:00"
+  - platform: numeric_state
+    entity_id: sun.sun
+    value_template: "{{ state_attr('sun.sun', 'elevation') }}"
+    below: -6.0
   action:
    - service: scene.turn_on
      entity_id: scene.outside_night_lights_on
